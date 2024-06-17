@@ -1,5 +1,11 @@
+#ifndef WAIVE_FRONT_PLUGIN_UI_CPP
+#define WAIVE_FRONT_PLUGIN_UI_CPP
+
 #include "DistrhoUI.hpp"
 #include "ResizeHandle.hpp"
+#include "ViewerWindow.cpp"
+#include "Application.hpp"
+#include <iostream>
 
 START_NAMESPACE_DISTRHO
 
@@ -21,6 +27,8 @@ public:
 
         if (isResizable())
             fResizeHandle.hide();
+
+        repaint();
     }
 
 protected:
@@ -57,11 +65,30 @@ protected:
             {
                 editParameter(0, false);
             }
+
+            if (ImGui::Button("Open Viewer Window"))
+            {
+                openViewerWindow();
+            }
         }
         ImGui::End();
     }
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaiveFrontPluginUI)
+
+private:
+    ViewerWindow *viewerWindow = nullptr;
+
+    void openViewerWindow()
+    {
+        std::cout << "Opening viewer window" << std::endl;
+        Application &app = getApp();
+
+        if (viewerWindow == nullptr)
+        {
+            viewerWindow = new ViewerWindow(app, parameters);
+        }
+    }
 };
 
 UI *createUI()
@@ -70,3 +97,5 @@ UI *createUI()
 }
 
 END_NAMESPACE_DISTRHO
+
+#endif

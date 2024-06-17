@@ -13,7 +13,7 @@ project(${NAME})
 add_subdirectory(dpf)
 
 dpf_add_plugin(${NAME}
-  TARGETS vst2 vst3 au
+  TARGETS au # vst2 vst3 au
   FILES_DSP
       src/WaiveFrontPlugin.cpp
   FILES_UI
@@ -21,5 +21,9 @@ dpf_add_plugin(${NAME}
 	  dpf-widgets/opengl/DearImGui.cpp)
 
 target_include_directories(${NAME} PUBLIC src)
+target_include_directories(${NAME} PUBLIC dpf/distrho/extra)
 target_include_directories(${NAME} PUBLIC dpf-widgets/generic)
 target_include_directories(${NAME} PUBLIC dpf-widgets/opengl)
+
+# Copy the AU plugin to the right location. Name of target is ${NAME}-au, and destination is /Library/Audio/Plug-Ins/Components
+add_custom_command(TARGET ${NAME}-au POST_BUILD COMMAND cp -r bin/${NAME}.component /Library/Audio/Plug-Ins/Components)
