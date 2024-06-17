@@ -3,4 +3,4 @@
 	url = https://github.com/DISTRHO/DPF
 [submodule "dpf-widgets"]
 	path = dpf-widgets
-	url = https://github.com/DISTRHO/DPF-Widgets.git
+	url = https://github.com/superpositioncc/DPF-Widgets.git

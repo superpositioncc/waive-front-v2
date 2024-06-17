@@ -127,6 +127,7 @@ dkms.conf
 
 obj
 build
+bin
 
 CMakeLists.txt.user
 CMakeCache.txt

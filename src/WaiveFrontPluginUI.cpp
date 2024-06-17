@@ -2,7 +2,6 @@
 #define WAIVE_FRONT_PLUGIN_UI_CPP
 
 #include "DistrhoUI.hpp"
-#include "ResizeHandle.hpp"
 #include "ViewerWindow.cpp"
 #include "Application.hpp"
 #include <iostream>
@@ -15,20 +14,15 @@ class WaiveFrontPluginUI : public UI
 {
 public:
     float parameters[Parameters::NumParameters];
-    ResizeHandle fResizeHandle;
+    // ResizeHandle fResizeHandle;
 
     WaiveFrontPluginUI()
-        : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true),
-          fResizeHandle(this)
+        : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
     {
-        // std::memset(parameters, 0, sizeof(bool) * Parameters::NumParameters);
-
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
+        setSize(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT);
 
-        if (isResizable())
-            fResizeHandle.hide();
-
-        repaint();
+        openViewerWindow();
     }
 
 protected:
@@ -48,29 +42,11 @@ protected:
         ImGui::SetNextWindowPos(ImVec2(margin, margin));
         ImGui::SetNextWindowSize(ImVec2(width - 2 * margin, height - 2 * margin));
 
-        if (ImGui::Begin("Simple gain", nullptr, ImGuiWindowFlags_NoResize))
-        {
-            static char aboutText[256] = "This is a demo plugin made with ImGui.\n";
-            ImGui::InputTextMultiline("About", aboutText, sizeof(aboutText));
+        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_NoResize);
 
-            if (ImGui::SliderFloat("Value", &parameters[Value], 0.0f, 1.0f))
-            {
-                if (ImGui::IsItemActivated())
-                    editParameter(0, true);
+        if (ImGui::SliderFloat("Value", &parameters[Value], 0.0f, 1.0f))
+            setParameterValue(0, parameters[Value]);
 
-                setParameterValue(0, parameters[Value]);
-            }
-
-            if (ImGui::IsItemDeactivated())
-            {
-                editParameter(0, false);
-            }
-
-            if (ImGui::Button("Open Viewer Window"))
-            {
-                openViewerWindow();
-            }
-        }
         ImGui::End();
     }
 

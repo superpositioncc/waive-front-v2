@@ -38,6 +38,8 @@
 #define DISTRHO_UI_DEFAULT_HEIGHT 768
 #define DISTRHO_UI_USE_NANOVG 0
 
+#define DGL_USE_OPENGL3 1
+
 enum Parameters
 {
 	Value,

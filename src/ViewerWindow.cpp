@@ -21,6 +21,8 @@ public:
 
 private:
 	ViewerWidget *viewerWidget;
+
+	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ViewerWindow)
 };
 
 END_NAMESPACE_DISTRHO
