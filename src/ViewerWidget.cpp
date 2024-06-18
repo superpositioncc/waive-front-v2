@@ -23,6 +23,14 @@ public:
 		return initialized;
 	}
 
+	void setFrame(uint8_t *frame, int width, int height)
+	{
+		newFrame = true;
+		newFrameData = frame;
+		newFrameWidth = width;
+		newFrameHeight = height;
+	}
+
 protected:
 	void onDisplay() override
 	{
@@ -32,20 +40,23 @@ protected:
 			initialized = true;
 		}
 
-		const Window &win = getWindow();
-		const GraphicsContext &context = (getWindow().getGraphicsContext());
+		if (newFrame)
+		{
+			newFrame = false;
 
-		const uint width = win.getWidth();
-		const uint height = win.getHeight();
+			glBindTexture(GL_TEXTURE_2D, texture);
 
-		float value = parameters[Parameters::Value];
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, newFrameWidth, newFrameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, newFrameData);
+		}
 
-		glClearColor(value, value, value, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
-		glUniform1f(valueUniformLocation, value);
+		glUniform1f(thresholdUniformLocation, parameters[Parameters::Threshold]);
+		glUniform1f(widthUniformLocation, parameters[Parameters::Width]);
 		glBindVertexArray(VAO);
+		glBindTexture(GL_TEXTURE_2D, texture);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
@@ -60,6 +71,11 @@ protected:
 private:
 	float (&parameters)[Parameters::NumParameters];
 	bool initialized = false;
+
+	bool newFrame = false;
+	uint8_t *newFrameData;
+	int newFrameWidth;
+	int newFrameHeight;
 
 	// clang-format off
 	float vertices[16] = {
@@ -79,8 +95,10 @@ private:
 	unsigned int vertexShader;
 	unsigned int fragmentShader;
 	unsigned int shaderProgram;
+	unsigned int texture;
 
-	int valueUniformLocation;
+	int thresholdUniformLocation;
+	int widthUniformLocation;
 
 	const char *vertexShaderSource =
 #include "shaders/main.vert"
@@ -172,7 +190,18 @@ private:
 
 		glBindVertexArray(0);
 
-		valueUniformLocation = glGetUniformLocation(shaderProgram, "value");
+		thresholdUniformLocation = glGetUniformLocation(shaderProgram, "threshold");
+		widthUniformLocation = glGetUniformLocation(shaderProgram, "width");
+
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1280, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
 	}
 
 	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ViewerWidget)

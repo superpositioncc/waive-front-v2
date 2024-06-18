@@ -12,7 +12,9 @@ UI_TYPE = opengl3
 
 #--------------------------------------------------------------
 
-CXXFLAGS = -Isrc -Idpf/distrho/extra -Idpf-widgets/opengl
+CXXFLAGS = -Isrc -Idpf/distrho/extra -Idpf-widgets/opengl -I/opt/homebrew/include
+LDFLAGS = -L/opt/homebrew/lib -lavcodec -lavformat -lavutil -lswscale
+
 
 #--------------------------------------------------------------
 

@@ -14,9 +14,16 @@ public:
 		  viewerWidget(new ViewerWidget(*this, p))
 	{
 		setTitle("Viewer");
-		setSize(1024, 768);
+		setSize(1280, 720);
 		setResizable(true);
 		show();
+
+		setOffsetY(getOffsetY() - 720 / 2);
+	}
+
+	ViewerWidget *getViewerWidget()
+	{
+		return viewerWidget;
 	}
 
 private:

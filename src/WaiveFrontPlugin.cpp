@@ -39,9 +39,13 @@ protected:
 
         switch (index)
         {
-        case Value:
-            parameter.name = "Value";
-            parameter.symbol = "value";
+        case Threshold:
+            parameter.name = "Threshold";
+            parameter.symbol = "threshold";
+            break;
+        case Width:
+            parameter.name = "Width";
+            parameter.symbol = "width";
             break;
         default:
             break;
