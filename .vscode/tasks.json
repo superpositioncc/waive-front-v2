@@ -34,6 +34,12 @@
       "problemMatcher": ["$gcc"]
     },
     {
+      "label": "make and rerun",
+      "type": "shell",
+      "command": "make && killall WAIVE-FRONT-V2; make run",
+      "problemMatcher": ["$gcc"]
+    },
+    {
       "label": "make clean, make and run",
       "type": "shell",
       "command": "make clean && make && make run",

@@ -51,6 +51,12 @@ protected:
 		glBindVertexArray(0);
 	}
 
+	bool onMotion(const MotionEvent &event) override
+	{
+		setSize(getWindow().getWidth(), getWindow().getHeight());
+		return true;
+	}
+
 private:
 	float (&parameters)[Parameters::NumParameters];
 	bool initialized = false;
@@ -58,10 +64,10 @@ private:
 	// clang-format off
 	float vertices[16] = {
                      /* positions */     /* texture coords */
-/*  bottom left */   -0.5f, -0.5f,        0.0f, 0.0f,
-/*     top left */   -0.5f,  0.5f,        0.0f, 1.0f,
-/*    top right */    0.5f,  0.5f,        1.0f, 1.0f,
-/* bottom right */    0.5f, -0.5f,        1.0f, 0.0f
+/*  bottom left */   -1.0f, -1.0f,        0.0f, 0.0f,
+/*     top left */   -1.0f,  1.0f,        0.0f, 1.0f,
+/*    top right */    1.0f,  1.0f,        1.0f, 1.0f,
+/* bottom right */    1.0f, -1.0f,        1.0f, 0.0f
 	};
 	unsigned int indices[6] = {
 		0, 1, 2,
