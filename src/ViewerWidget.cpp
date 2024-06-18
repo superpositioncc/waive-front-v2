@@ -16,7 +16,11 @@ public:
 		: TopLevelWidget(window),
 		  parameters(p)
 	{
-		// glViewport(0, 0, 1024, 768);
+	}
+
+	bool isInitialized()
+	{
+		return initialized;
 	}
 
 protected:
@@ -40,37 +44,44 @@ protected:
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
+		glUniform1f(valueUniformLocation, value);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
 	}
 
 private:
 	float (&parameters)[Parameters::NumParameters];
 	bool initialized = false;
 
-	float vertices[9] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f};
+	// clang-format off
+	float vertices[16] = {
+                     /* positions */     /* texture coords */
+/*  bottom left */   -0.5f, -0.5f,        0.0f, 0.0f,
+/*     top left */   -0.5f,  0.5f,        0.0f, 1.0f,
+/*    top right */    0.5f,  0.5f,        1.0f, 1.0f,
+/* bottom right */    0.5f, -0.5f,        1.0f, 0.0f
+	};
+	unsigned int indices[6] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+	// clang-format on
 
-	unsigned int VAO, VBO;
+	unsigned int VAO, VBO, EBO;
 	unsigned int vertexShader;
 	unsigned int fragmentShader;
 	unsigned int shaderProgram;
 
-	const char *vertexShaderSource = "#version 330 core\n"
-									 "layout (location = 0) in vec3 aPos;\n"
-									 "void main()\n"
-									 "{\n"
-									 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-									 "}\0";
+	int valueUniformLocation;
 
-	const char *fragmentShaderSource = "#version 330 core\n"
-									   "out vec4 FragColor;\n"
-									   "void main()\n"
-									   "{\n"
-									   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-									   "}\n\0";
+	const char *vertexShaderSource =
+#include "shaders/main.vert"
+		;
+	const char *fragmentShaderSource =
+#include "shaders/main.frag"
+		;
 
 	void init()
 	{
@@ -138,13 +149,24 @@ private:
 
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
+		glGenBuffers(1, &EBO);
 
 		glBindVertexArray(VAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
 		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		glBindVertexArray(0);
+
+		valueUniformLocation = glGetUniformLocation(shaderProgram, "value");
 	}
 
 	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ViewerWidget)

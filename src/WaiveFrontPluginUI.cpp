@@ -48,6 +48,11 @@ protected:
             setParameterValue(0, parameters[Value]);
 
         ImGui::End();
+
+        if (viewerWindow != nullptr)
+        {
+            viewerWindow->repaint();
+        }
     }
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaiveFrontPluginUI)

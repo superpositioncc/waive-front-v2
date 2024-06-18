@@ -30,4 +30,4 @@ install: $(TARGETS)
 	@cp -a bin/$(NAME).component /Library/Audio/Plug-Ins/Components/
 
 run: $(TARGETS)
-	@open bin/$(NAME).app
+	@bin/$(NAME).app/Contents/MacOS/$(NAME)
