@@ -3,19 +3,20 @@
 void cinderTheme(ImGuiStyle &style)
 {
 	style.WindowMinSize = ImVec2(160, 20);
-	style.FramePadding = ImVec2(4, 2);
-	style.ItemSpacing = ImVec2(6, 2);
-	style.ItemInnerSpacing = ImVec2(6, 4);
+	style.FramePadding = ImVec2(8, 4);
+	style.ItemSpacing = ImVec2(12, 4);
+	style.ItemInnerSpacing = ImVec2(12, 8);
 	style.Alpha = 0.95f;
 	style.WindowRounding = 4.0f;
 	style.FrameRounding = 2.0f;
 	style.IndentSpacing = 6.0f;
-	style.ItemInnerSpacing = ImVec2(2, 4);
+	style.ItemInnerSpacing = ImVec2(4, 8);
 	style.ColumnsMinSpacing = 50.0f;
 	style.GrabMinSize = 14.0f;
 	style.GrabRounding = 16.0f;
 	style.ScrollbarSize = 12.0f;
 	style.ScrollbarRounding = 16.0f;
+	style.WindowMenuButtonPosition = ImGuiDir_None;
 
 	style.Colors[ImGuiCol_Text] = ImVec4(0.86f, 0.93f, 0.89f, 0.78f);
 	style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.86f, 0.93f, 0.89f, 0.28f);
