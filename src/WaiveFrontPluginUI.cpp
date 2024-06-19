@@ -9,7 +9,7 @@
 #include "video/VideoLoader.cpp"
 #include "video/VideoFrameDescription.h"
 #include <iostream>
-
+#include <chrono>
 #include "assets/fonts/SpaceMono_Regular.cpp"
 
 START_NAMESPACE_DISTRHO
@@ -20,7 +20,7 @@ class WaiveFrontPluginUI : public UI
 {
 public:
     float parameters[Parameters::NumParameters];
-    // ResizeHandle fResizeHandle;
+    float seek = 0;
 
     WaiveFrontPluginUI()
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
@@ -32,15 +32,14 @@ public:
 
         ImGuiIO &io = ImGui::GetIO();
         regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 48.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
+
+        videoLoader.loadVideo("/Users/Bram/Documents/WAIVE/video.mp4");
     }
 
 protected:
     void onFileSelected(const char *filename)
     {
-        VideoFrameDescription vfd = videoLoader.loadVideo(filename);
-
-        if (vfd.data != nullptr)
-            viewerWindow->getViewerWidget()->setFrame(vfd.data, vfd.width, vfd.height);
+        videoLoader.loadVideo(filename);
     }
 
     void parameterChanged(uint32_t index, float value) override
@@ -60,6 +59,16 @@ protected:
             window.setOffsetY(window.getOffsetY() + 720 / 2 + 100);
 
             cinderTheme(ImGui::GetStyle());
+        }
+
+        int64_t currentTime = getCurrentTime();
+
+        if (videoLoader.getStatus() == 1 && videoLoader.shouldGetNextFrame(currentTime))
+        {
+            VideoFrameDescription vfd = videoLoader.getFrame();
+
+            if (vfd.data != nullptr)
+                viewerWindow->getViewerWidget()->setFrame(vfd.data, vfd.width, vfd.height);
         }
 
         updateFileBrowser();
@@ -105,6 +114,11 @@ private:
     VideoLoader videoLoader;
 
     ImFont *regular;
+
+    int64_t getCurrentTime()
+    {
+        return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    }
 
     void openViewerWindow()
     {

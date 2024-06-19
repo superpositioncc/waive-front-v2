@@ -11,6 +11,9 @@ public:
         : Plugin(Parameters::NumParameters, 0, 0)
     {
         std::memset(parameters, 0, sizeof(float) * Parameters::NumParameters);
+
+        parameters[Threshold] = 0.5f;
+        parameters[Width] = 0.5f;
     }
 
 protected:
