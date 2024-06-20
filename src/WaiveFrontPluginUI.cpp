@@ -193,6 +193,12 @@ protected:
             ImGui::EndCombo();
         }
 
+        if (ImGui::Button("Select Random Tag"))
+        {
+            int randomIndex = std::rand() % dataSources.tags.size();
+            selectTag(dataSources.tags[randomIndex]);
+        }
+
         ImGui::Text(selectedItem != nullptr ? selectedItem->title.c_str() : "None");
 
         ImGui::End();

@@ -53,6 +53,9 @@ private:
 			return -1;
 		}
 
+		// create an array of new linesizes
+		(*rgb_frame)->linesize[0] = frame->width * 3;
+
 		// Convert the image from its native format to RGB
 		ret = sws_scale(sws_ctx, (uint8_t const *const *)frame->data,
 						frame->linesize, 0, frame->height,
@@ -214,6 +217,8 @@ public:
 
 	int loadVideo(const std::string &videoPath)
 	{
+		close();
+
 		format = avformat_alloc_context();
 		if (avformat_open_input(&format, videoPath.c_str(), nullptr, nullptr) < 0)
 		{
