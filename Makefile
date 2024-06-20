@@ -6,7 +6,10 @@ FILES_DSP = \
 	src/WaiveFrontPlugin.cpp
 FILES_UI = \
 	src/WaiveFrontPluginUI.cpp \
+	src/data/DataSources.cpp \
+	src/data/DataSource.cpp \
 	dpf-widgets/opengl/DearImGui.cpp
+	
 
 UI_TYPE = opengl3
 

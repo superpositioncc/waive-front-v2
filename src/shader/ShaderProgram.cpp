@@ -2,7 +2,8 @@
 
 #include "ShaderSource.cpp"
 #include "OpenGL.hpp"
-#include "Global.h"
+#include "../util/Logger.cpp"
+using namespace Util::Logger;
 
 namespace Shader
 {
@@ -46,7 +47,7 @@ namespace Shader
 			}
 			else
 			{
-				log("SHADER", "Shader program linked successfully.");
+				print("SHADER", "Shader program linked successfully.");
 			}
 
 			vertexShader.destroy();
@@ -64,7 +65,7 @@ namespace Shader
 			glGetIntegerv(GL_MAJOR_VERSION, &major);
 			glGetIntegerv(GL_MINOR_VERSION, &minor);
 
-			log("SHADER", "OpenGL version: " + std::to_string(major) + "." + std::to_string(minor));
+			print("SHADER", "OpenGL version: " + std::to_string(major) + "." + std::to_string(minor));
 		}
 
 		unsigned int get()

@@ -11,6 +11,11 @@
 #include <iostream>
 #include <chrono>
 #include "assets/fonts/SpaceMono_Regular.cpp"
+#include <dirent.h>
+#include "data/DataSources.hpp"
+#include "util/Logger.cpp"
+
+using namespace Util::Logger;
 
 START_NAMESPACE_DISTRHO
 
@@ -20,7 +25,7 @@ class WaiveFrontPluginUI : public UI
 {
 public:
     float parameters[Parameters::NumParameters];
-    float seek = 0;
+    DataSources dataSources;
 
     WaiveFrontPluginUI()
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
@@ -34,9 +39,60 @@ public:
         regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 48.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
 
         videoLoader.loadVideo("/Users/Bram/Documents/WAIVE/video.mp4");
+
+        loadDataSources("/Users/Bram/Documents/WAIVE");
     }
 
 protected:
+    bool isVideoFile(const char *filename)
+    {
+        std::string name = std::string(filename);
+        std::string extension = name.substr(name.find_last_of(".") + 1);
+
+        return extension == "mp4" || extension == "mov";
+    }
+
+    void loadDataSources(const char *directory)
+    {
+        DIR *dir = opendir(directory);
+        struct dirent *entry;
+
+        if (dir == NULL)
+        {
+            return;
+        }
+
+        while ((entry = readdir(dir)) != NULL)
+        {
+            if (entry->d_type == DT_DIR)
+            {
+                std::string name = std::string(entry->d_name);
+
+                if (name != "." && name != "..")
+                {
+                    std::string path = std::string(directory) + "/" + name;
+
+                    DataSource *dataSource = new DataSource(path);
+                    dataSource->load(&dataSources);
+
+                    if (dataSource->isValid())
+                        dataSources.sources.push_back(dataSource);
+                    else
+                        delete dataSource;
+                }
+            }
+        }
+
+        closedir(dir);
+
+        dataSources.collectItems();
+
+        for (DataSource *dataSource : dataSources.sources)
+        {
+            print("DATA", "Loaded data source " + dataSource->name);
+        }
+    }
+
     void onFileSelected(const char *filename)
     {
         videoLoader.loadVideo(filename);

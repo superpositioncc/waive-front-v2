@@ -18,7 +18,7 @@ namespace Util
 {
 	namespace Logger
 	{
-		static void log(const std::string &ns, const std::string &message, const std::string &color)
+		static void print(const std::string &ns, const std::string &message, const std::string &color)
 		{
 			// Use strftime to get the time as HH:MM:SS
 			time_t rawtime;
@@ -29,19 +29,19 @@ namespace Util
 			std::cout << DIM << timeStr << RESET << color << " [" << DISTRHO_PLUGIN_NAME << "][" << ns << "] " << RESET << message << std::endl;
 		}
 
-		static void log(const std::string &ns, const std::string &message)
+		static void print(const std::string &ns, const std::string &message)
 		{
-			log(ns, message, CYAN);
+			print(ns, message, CYAN);
 		}
 
 		static void error(const std::string &ns, const std::string &message)
 		{
-			log(ns, message, RED);
+			print(ns, message, RED);
 		}
 
 		static void warn(const std::string &ns, const std::string &message)
 		{
-			log(ns, message, YELLOW);
+			print(ns, message, YELLOW);
 		}
 	};
 };

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "OpenGL.hpp"
-#include "Global.h"
+#include "../util/Logger.cpp"
+using namespace Util::Logger;
 #include <iostream>
 #include <string>
 
@@ -35,7 +36,7 @@ namespace Shader
 			}
 			else
 			{
-				log("SHADER", typeName + " shader compiled successfully");
+				print("SHADER", typeName + " shader compiled successfully");
 			}
 		}
 

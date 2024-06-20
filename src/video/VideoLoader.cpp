@@ -9,7 +9,8 @@ extern "C"
 }
 
 #include "VideoFrameDescription.h"
-#include "Global.h"
+#include "../util/Logger.cpp"
+using namespace Util::Logger;
 #include <string>
 
 class VideoLoader
@@ -90,7 +91,7 @@ public:
 	VideoLoader()
 	{
 		av_log_set_level(AV_LOG_QUIET);
-		log("VIDEO", "FFmpeg version: " + std::string(av_version_info()));
+		print("VIDEO", "FFmpeg version: " + std::string(av_version_info()));
 	}
 
 	int getStatus()
@@ -284,7 +285,7 @@ public:
 			return -1;
 		}
 
-		log("VIDEO", "Video loaded: " + videoPath);
+		print("VIDEO", "Video loaded: " + videoPath);
 
 		status = 1;
 
