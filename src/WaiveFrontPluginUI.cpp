@@ -30,6 +30,8 @@ public:
     WaiveFrontPluginUI()
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
     {
+        std::srand(std::time(0));
+
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
         setSize(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT);
 
@@ -38,7 +40,7 @@ public:
         ImGuiIO &io = ImGui::GetIO();
         regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 48.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
 
-        videoLoader.loadVideo("/Users/Bram/Documents/WAIVE/video.mp4");
+        // videoLoader.loadVideo("/Users/Bram/Documents/WAIVE/video.mp4");
 
         loadDataSources("/Users/Bram/Documents/WAIVE");
     }
@@ -91,6 +93,34 @@ protected:
         {
             print("DATA", "Loaded data source " + dataSource->name);
         }
+
+        int randomIndex = std::rand() % dataSources.tags.size();
+        selectTag(dataSources.tags[randomIndex]);
+    }
+
+    void selectTag(DataTag *tag)
+    {
+        selectedTag = tag;
+
+        print("DATA", "Selected tag: " + tag->name);
+
+        // Select random item from tag
+        int randomIndex = std::rand() % tag->items.size();
+        selectedItem = tag->items[randomIndex];
+
+        print("DATA", "Selected item: " + selectedItem->title);
+
+        // Random scene
+        int randomScene = std::rand() % selectedItem->nScenes;
+        std::string zeroPaddedScene = std::to_string(randomScene);
+        zeroPaddedScene.insert(0, 3 - zeroPaddedScene.length(), '0');
+
+        std::string scenePath = selectedItem->source->path + "/material/" + selectedItem->filename + "_scene" + zeroPaddedScene + ".mp4";
+
+        if (isVideoFile(scenePath.c_str()))
+        {
+            videoLoader.loadVideo(scenePath.c_str());
+        }
     }
 
     void onFileSelected(const char *filename)
@@ -133,7 +163,7 @@ protected:
         const float height = getHeight();
         const float margin = 20.0f * getScaleFactor();
 
-        ImGui::SetNextWindowSizeConstraints(ImVec2(512, 0), ImVec2(width - 2 * margin, height - 2 * margin));
+        ImGui::SetNextWindowSizeConstraints(ImVec2(800, 0), ImVec2(width - 2 * margin, height - 2 * margin));
 
         ImGui::PushFont(regular);
 
@@ -145,10 +175,25 @@ protected:
         if (ImGui::SliderFloat("Width", &parameters[Width], 0.0f, 1.0f))
             setParameterValue(1, parameters[Width]);
 
-        if (ImGui::Button("Select Video"))
+        // if (ImGui::Button("Select Video"))
+        // {
+        //     openFileBrowser();
+        // }
+
+        if (ImGui::BeginCombo("Tag", selectedTag != nullptr ? selectedTag->name.c_str() : "None"))
         {
-            openFileBrowser();
+            for (DataTag *tag : dataSources.tags)
+            {
+                if (ImGui::Selectable(tag->name.c_str()))
+                {
+                    selectTag(tag);
+                }
+            }
+
+            ImGui::EndCombo();
         }
+
+        ImGui::Text(selectedItem != nullptr ? selectedItem->title.c_str() : "None");
 
         ImGui::End();
 
@@ -170,6 +215,9 @@ private:
     VideoLoader videoLoader;
 
     ImFont *regular;
+
+    DataTag *selectedTag = nullptr;
+    DataItem *selectedItem = nullptr;
 
     int64_t getCurrentTime()
     {

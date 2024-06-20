@@ -24,6 +24,7 @@ void DataSource::load(DataSources *sources)
 			dataItem->description = item["description"].get<std::string>();
 			dataItem->nScenes = item["nScenes"].get<int>();
 			dataItem->filename = item["filename"].get<std::string>();
+			dataItem->filename = dataItem->filename.substr(0, dataItem->filename.find_last_of("."));
 			dataItem->source = this;
 			dataItem->category = sources->findOrCreateCategory(item["category"].get<std::string>());
 

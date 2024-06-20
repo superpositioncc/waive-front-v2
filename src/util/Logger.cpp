@@ -22,7 +22,7 @@ namespace Util
 		{
 			// Use strftime to get the time as HH:MM:SS
 			time_t rawtime;
-			char timeStr[8];
+			char timeStr[9];
 			time(&rawtime);
 			strftime(timeStr, sizeof(timeStr), "%H:%M:%S", localtime(&rawtime));
 
