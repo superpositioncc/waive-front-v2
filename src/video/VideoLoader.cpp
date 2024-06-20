@@ -127,11 +127,7 @@ public:
 
 	VideoFrameDescription getFrame()
 	{
-		// deallocate previous frame
-		av_frame_unref(frame);
-		av_frame_unref(rgb_frame);
-		av_packet_unref(packet);
-
+		getReadyForNextFrame();
 		int data_size = 0;
 		bool got_frame = false;
 
@@ -217,8 +213,7 @@ public:
 
 	int loadVideo(const std::string &videoPath)
 	{
-		close();
-
+		getReadyForNextLoad();
 		format = avformat_alloc_context();
 		if (avformat_open_input(&format, videoPath.c_str(), nullptr, nullptr) < 0)
 		{
@@ -297,12 +292,19 @@ public:
 		return 0;
 	}
 
-	void close()
+	void getReadyForNextLoad()
 	{
 		av_parser_close(parser);
 		avcodec_free_context(&context);
 		av_frame_free(&frame);
 		av_packet_free(&packet);
 		avformat_close_input(&format);
+	}
+
+	void getReadyForNextFrame()
+	{
+		av_frame_unref(frame);
+		av_frame_unref(rgb_frame);
+		av_packet_unref(packet);
 	}
 };

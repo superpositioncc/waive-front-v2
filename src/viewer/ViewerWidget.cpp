@@ -9,6 +9,7 @@
 #include "../shader/ShaderTexture.cpp"
 #include "../shader/ShaderUniforms.h"
 #include <iostream>
+#include <vector>
 
 START_NAMESPACE_DISTRHO
 
@@ -36,13 +37,15 @@ public:
 		return initialized;
 	}
 
-	void setFrame(uint8_t *frame, int width, int height)
+	void setFrame(int i, uint8_t *frame, int width, int height)
 	{
-		frameData.data = frame;
-		frameData.width = width;
-		frameData.height = height;
+		if (!isInitialized())
+			return;
 
-		frameData.waiting = true;
+		frameData[i]->data = frame;
+		frameData[i]->width = width;
+		frameData[i]->height = height;
+		frameData[i]->waiting = true;
 	}
 
 protected:
@@ -69,9 +72,8 @@ private:
 
 	bool initialized = false;
 
-	FrameData frameData;
-
-	ShaderTexture texture;
+	std::vector<FrameData *> frameData;
+	std::vector<ShaderTexture *> textures;
 	ShaderProgram shaderProgram;
 	ShaderRectangle rectangle;
 	ShaderUniforms uniforms;
@@ -81,15 +83,30 @@ private:
 		shaderProgram.init();
 		rectangle.init();
 		uniforms.init(&shaderProgram);
-		texture.init();
+
+		for (int i = 0; i < 3; i++)
+		{
+			frameData.push_back(new FrameData());
+			textures.push_back(new ShaderTexture());
+
+			textures[i]->init();
+		}
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
 	}
 
 	void updateFrameData()
 	{
-		if (frameData.waiting)
+		for (int i = 0; i < 3; i++)
 		{
-			frameData.waiting = false;
-			texture.set(frameData.data, frameData.width, frameData.height);
+			FrameData *fd = frameData[i];
+
+			if (fd->waiting)
+			{
+				fd->waiting = false;
+				textures[i]->set(fd->data, fd->width, fd->height);
+			}
 		}
 	}
 
@@ -104,12 +121,16 @@ private:
 
 	void draw()
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
-		texture.bind();
-		rectangle.draw();
+
+		for (int i = 0; i < 3; i++)
+		{
+			textures[i]->bind();
+			rectangle.draw();
+		}
 	}
 
 	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ViewerWidget)

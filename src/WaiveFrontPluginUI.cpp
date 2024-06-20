@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include "data/DataSources.hpp"
 #include "util/Logger.cpp"
+#include <vector>
 
 using namespace Util::Logger;
 
@@ -40,9 +41,29 @@ public:
         ImGuiIO &io = ImGui::GetIO();
         regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 48.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
 
-        // videoLoader.loadVideo("/Users/Bram/Documents/WAIVE/video.mp4");
+        // MacOS and Linux
+        char *home = getenv("HOME");
+        // Windows
+        if (home == nullptr)
+        {
+            home = getenv("USERPROFILE");
+        }
 
-        loadDataSources("/Users/Bram/Documents/WAIVE");
+        for (int i = 0; i < 3; i++)
+        {
+            videoLoaders.push_back(new VideoLoader());
+            selectedTags.push_back(nullptr);
+            selectedItems.push_back(nullptr);
+        }
+
+        loadDataSources(std::string(home) + "/Documents/WAIVE");
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex = std::rand() % dataSources.tags.size();
+
+            selectTag(i, dataSources.tags[randomIndex]);
+        }
     }
 
 protected:
@@ -54,9 +75,9 @@ protected:
         return extension == "mp4" || extension == "mov";
     }
 
-    void loadDataSources(const char *directory)
+    void loadDataSources(std::string directory)
     {
-        DIR *dir = opendir(directory);
+        DIR *dir = opendir(directory.c_str());
         struct dirent *entry;
 
         if (dir == NULL)
@@ -93,40 +114,37 @@ protected:
         {
             print("DATA", "Loaded data source " + dataSource->name);
         }
-
-        int randomIndex = std::rand() % dataSources.tags.size();
-        selectTag(dataSources.tags[randomIndex]);
     }
 
-    void selectTag(DataTag *tag)
+    void selectTag(int i, DataTag *tag)
     {
-        selectedTag = tag;
+        selectedTags[i] = tag;
 
         print("DATA", "Selected tag: " + tag->name);
 
         // Select random item from tag
         int randomIndex = std::rand() % tag->items.size();
-        selectedItem = tag->items[randomIndex];
+        selectedItems[i] = tag->items[randomIndex];
 
-        print("DATA", "Selected item: " + selectedItem->title);
+        print("DATA", "Selected item: " + selectedItems[i]->title);
 
         // Random scene
-        int randomScene = std::rand() % selectedItem->nScenes;
+        int randomScene = std::rand() % selectedItems[i]->nScenes;
         std::string zeroPaddedScene = std::to_string(randomScene);
         zeroPaddedScene.insert(0, 3 - zeroPaddedScene.length(), '0');
 
-        std::string scenePath = selectedItem->source->path + "/material/" + selectedItem->filename + "_scene" + zeroPaddedScene + ".mp4";
+        std::string scenePath = selectedItems[i]->source->path + "/material/" + selectedItems[i]->filename + "_scene" + zeroPaddedScene + ".mp4";
 
         if (isVideoFile(scenePath.c_str()))
         {
-            videoLoader.loadVideo(scenePath.c_str());
+            videoLoaders[i]->loadVideo(scenePath.c_str());
         }
     }
 
-    void onFileSelected(const char *filename)
-    {
-        videoLoader.loadVideo(filename);
-    }
+    // void onFileSelected(const char *filename)
+    // {
+    //     videoLoader.loadVideo(filename);
+    // }
 
     void parameterChanged(uint32_t index, float value) override
     {
@@ -149,15 +167,20 @@ protected:
 
         int64_t currentTime = getCurrentTime();
 
-        if (videoLoader.getStatus() == 1 && videoLoader.shouldGetNextFrame(currentTime))
+        for (int i = 0; i < videoLoaders.size(); i++)
         {
-            VideoFrameDescription vfd = videoLoader.getFrame();
+            VideoLoader *videoLoader = videoLoaders[i];
 
-            if (vfd.data != nullptr)
-                viewerWindow->getViewerWidget()->setFrame(vfd.data, vfd.width, vfd.height);
+            if (videoLoader->getStatus() == 1 && videoLoader->shouldGetNextFrame(currentTime))
+            {
+                VideoFrameDescription vfd = videoLoader->getFrame();
+
+                if (vfd.data != nullptr)
+                    viewerWindow->getViewerWidget()->setFrame(i, vfd.data, vfd.width, vfd.height);
+            }
         }
 
-        updateFileBrowser();
+        // updateFileBrowser();
 
         const float width = getWidth();
         const float height = getHeight();
@@ -180,26 +203,29 @@ protected:
         //     openFileBrowser();
         // }
 
-        if (ImGui::BeginCombo("Tag", selectedTag != nullptr ? selectedTag->name.c_str() : "None"))
+        for (int i = 0; i < 3; i++)
         {
-            for (DataTag *tag : dataSources.tags)
+            if (ImGui::BeginCombo(("Tag " + std::to_string(i + 1)).c_str(), selectedTags[i] != nullptr ? selectedTags[i]->name.c_str() : "None"))
             {
-                if (ImGui::Selectable(tag->name.c_str()))
+                for (DataTag *tag : dataSources.tags)
                 {
-                    selectTag(tag);
+                    if (ImGui::Selectable(tag->name.c_str()))
+                    {
+                        selectTag(i, tag);
+                    }
                 }
+
+                ImGui::EndCombo();
             }
 
-            ImGui::EndCombo();
-        }
+            if (ImGui::Button(("Select Random Tag " + std::to_string(i + 1)).c_str()))
+            {
+                int randomIndex = std::rand() % dataSources.tags.size();
+                selectTag(i, dataSources.tags[randomIndex]);
+            }
 
-        if (ImGui::Button("Select Random Tag"))
-        {
-            int randomIndex = std::rand() % dataSources.tags.size();
-            selectTag(dataSources.tags[randomIndex]);
+            ImGui::Text(selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None");
         }
-
-        ImGui::Text(selectedItem != nullptr ? selectedItem->title.c_str() : "None");
 
         ImGui::End();
 
@@ -217,13 +243,12 @@ private:
     ViewerWindow *viewerWindow = nullptr;
     bool initialized = false;
 
-    FileBrowserHandle fileBrowserHandle = nullptr;
-    VideoLoader videoLoader;
-
+    // FileBrowserHandle fileBrowserHandle = nullptr;
     ImFont *regular;
 
-    DataTag *selectedTag = nullptr;
-    DataItem *selectedItem = nullptr;
+    std::vector<VideoLoader *> videoLoaders;
+    std::vector<DataTag *> selectedTags;
+    std::vector<DataItem *> selectedItems;
 
     int64_t getCurrentTime()
     {
@@ -240,39 +265,39 @@ private:
         }
     }
 
-    void openFileBrowser()
-    {
-        FileBrowserOptions options;
-        options.startDir = "/Users/Bram/Documents/WAIVE";
+    // void openFileBrowser()
+    // {
+    //     FileBrowserOptions options;
+    //     options.startDir = "/Users/Bram/Documents/WAIVE";
 
-        if (fileBrowserHandle != nullptr)
-        {
-            fileBrowserClose(fileBrowserHandle);
-        }
+    //     if (fileBrowserHandle != nullptr)
+    //     {
+    //         fileBrowserClose(fileBrowserHandle);
+    //     }
 
-        fileBrowserHandle = fileBrowserCreate(false, getWindow().getNativeWindowHandle(), 1, options);
-    }
+    //     fileBrowserHandle = fileBrowserCreate(false, getWindow().getNativeWindowHandle(), 1, options);
+    // }
 
-    void updateFileBrowser()
-    {
-        if (fileBrowserHandle != nullptr)
-        {
-            if (fileBrowserIdle(fileBrowserHandle))
-            {
-                const char *filename = fileBrowserGetPath(fileBrowserHandle);
+    // void updateFileBrowser()
+    // {
+    //     if (fileBrowserHandle != nullptr)
+    //     {
+    //         if (fileBrowserIdle(fileBrowserHandle))
+    //         {
+    //             const char *filename = fileBrowserGetPath(fileBrowserHandle);
 
-                if (filename != nullptr)
-                {
-                    onFileSelected(filename);
-                }
+    //             if (filename != nullptr)
+    //             {
+    //                 onFileSelected(filename);
+    //             }
 
-                fileBrowserClose(fileBrowserHandle);
-                fileBrowserHandle = nullptr;
+    //             fileBrowserClose(fileBrowserHandle);
+    //             fileBrowserHandle = nullptr;
 
-                getWindow().focus();
-            }
-        }
-    }
+    //             getWindow().focus();
+    //         }
+    //     }
+    // }
 };
 
 UI *createUI()
