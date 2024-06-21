@@ -3,15 +3,16 @@
 
 #include "DistrhoUI.hpp"
 #include "ViewerWidget.cpp"
+#include <vector>
 
 START_NAMESPACE_DISTRHO
 
 class ViewerWindow : public Window
 {
 public:
-	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters])
+	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled)
 		: Window(app),
-		  viewerWidget(new ViewerWidget(*this, p))
+		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
 		setTitle("Viewer");
 		setSize(1280, 720);

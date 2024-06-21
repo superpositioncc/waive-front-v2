@@ -21,9 +21,10 @@ using Shader::ShaderUniforms;
 class ViewerWidget : public TopLevelWidget
 {
 public:
-	ViewerWidget(Window &window, float (&p)[Parameters::NumParameters])
+	ViewerWidget(Window &window, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled)
 		: TopLevelWidget(window),
 		  parameters(p),
+		  layersEnabled(layersEnabled),
 		  shaderProgram(
 #include "../assets/shaders/main.vert"
 			  ,
@@ -69,6 +70,7 @@ protected:
 
 private:
 	float (&parameters)[Parameters::NumParameters];
+	std::vector<bool> *layersEnabled;
 
 	bool initialized = false;
 
@@ -128,6 +130,9 @@ private:
 
 		for (int i = 0; i < 3; i++)
 		{
+			if (!(*layersEnabled)[i])
+				continue;
+
 			textures[i]->bind();
 			rectangle.draw();
 		}

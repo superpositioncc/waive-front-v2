@@ -17,7 +17,7 @@ UI_TYPE = opengl3
 
 # enable debugging
 CXXFLAGS = -Isrc -Idpf/distrho/extra -Idpf-widgets/opengl -I/opt/homebrew/include -g -O0
-LDFLAGS = -L/opt/homebrew/lib -lavcodec -lavformat -lavutil -lswscale
+LDFLAGS = -L/opt/homebrew/lib -lavcodec -lavformat -lavutil -lswscale -lavfilter
 
 
 #--------------------------------------------------------------

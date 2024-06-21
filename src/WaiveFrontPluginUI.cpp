@@ -39,7 +39,7 @@ public:
         openViewerWindow();
 
         ImGuiIO &io = ImGui::GetIO();
-        regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 48.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
+        regular = io.Fonts->AddFontFromMemoryCompressedTTF(SpaceMono_Regular_compressed_data, SpaceMono_Regular_compressed_size, 32.0f, nullptr, io.Fonts->GetGlyphRangesDefault());
 
         // MacOS and Linux
         char *home = getenv("HOME");
@@ -54,6 +54,7 @@ public:
             videoLoaders.push_back(new VideoLoader());
             selectedTags.push_back(nullptr);
             selectedItems.push_back(nullptr);
+            layersEnabled.push_back(i == 0);
         }
 
         loadDataSources(std::string(home) + "/Documents/WAIVE");
@@ -169,6 +170,11 @@ protected:
 
         for (int i = 0; i < videoLoaders.size(); i++)
         {
+            if (!layersEnabled[i])
+            {
+                continue;
+            }
+
             VideoLoader *videoLoader = videoLoaders[i];
 
             if (videoLoader->getStatus() == 1 && videoLoader->shouldGetNextFrame(currentTime))
@@ -184,19 +190,25 @@ protected:
 
         const float width = getWidth();
         const float height = getHeight();
-        const float margin = 20.0f * getScaleFactor();
 
-        ImGui::SetNextWindowSizeConstraints(ImVec2(800, 0), ImVec2(width - 2 * margin, height - 2 * margin));
+        ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
+        ImGui::SetNextWindowPos(ImVec2(0, 0));
 
         ImGui::PushFont(regular);
 
-        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_NoResize);
+        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
+        ImGui::Text("Threshold");
+        ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Threshold", &parameters[Threshold], 0.0f, 1.0f))
             setParameterValue(0, parameters[Threshold]);
 
+        ImGui::Text("Width");
+        ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Width", &parameters[Width], 0.0f, 1.0f))
             setParameterValue(1, parameters[Width]);
+
+        ImGui::End();
 
         // if (ImGui::Button("Select Video"))
         // {
@@ -205,29 +217,61 @@ protected:
 
         for (int i = 0; i < 3; i++)
         {
-            if (ImGui::BeginCombo(("Tag " + std::to_string(i + 1)).c_str(), selectedTags[i] != nullptr ? selectedTags[i]->name.c_str() : "None"))
+            ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
+            ImGui::SetNextWindowPos(ImVec2((i + 1) * width / 4, 0));
+            ImGui::Begin(("Layer " + std::to_string(i + 1)).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+            std::string buttonLabel = layersEnabled[i] ? "Disable Layer " + std::to_string(i + 1) : "Enable Layer " + std::to_string(i + 1);
+
+            if (ImGui::Button(buttonLabel.c_str()))
             {
-                for (DataTag *tag : dataSources.tags)
+                layersEnabled[i] = !layersEnabled[i];
+            }
+
+            if (layersEnabled[i])
+            {
+                ImGui::Text("Tag");
+                if (ImGui::BeginCombo(("Tag " + std::to_string(i + 1)).c_str(), selectedTags[i] != nullptr ? selectedTags[i]->name.c_str() : "None"))
                 {
-                    if (ImGui::Selectable(tag->name.c_str()))
+                    for (DataTag *tag : dataSources.tags)
                     {
-                        selectTag(i, tag);
+                        if (ImGui::Selectable(tag->name.c_str()))
+                        {
+                            selectTag(i, tag);
+                        }
                     }
+
+                    ImGui::EndCombo();
                 }
 
-                ImGui::EndCombo();
+                if (ImGui::Button(("Select Random Tag " + std::to_string(i + 1)).c_str()))
+                {
+                    int randomIndex = std::rand() % dataSources.tags.size();
+                    selectTag(i, dataSources.tags[randomIndex]);
+                }
+
+                ImGui::TextWrapped(selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None");
+
+                std::vector<float> colors = videoLoaders[i]->getColors();
+
+                // make a grid of color buttons next to each other
+                ImGui::Columns(colors.size() / 3, nullptr, false);
+
+                for (int j = 0; j < colors.size(); j += 3)
+                {
+                    float r = colors[j];
+                    float g = colors[j + 1];
+                    float b = colors[j + 2];
+
+                    ImGui::ColorButton(("Color " + std::to_string(j / 3)).c_str(), ImVec4(r, g, b, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(width / 4 / 5, width / 4 / 5));
+                    ImGui::NextColumn();
+                }
+
+                ImGui::Columns(1);
             }
 
-            if (ImGui::Button(("Select Random Tag " + std::to_string(i + 1)).c_str()))
-            {
-                int randomIndex = std::rand() % dataSources.tags.size();
-                selectTag(i, dataSources.tags[randomIndex]);
-            }
-
-            ImGui::Text(selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None");
+            ImGui::End();
         }
-
-        ImGui::End();
 
         ImGui::PopFont();
 
@@ -250,6 +294,8 @@ private:
     std::vector<DataTag *> selectedTags;
     std::vector<DataItem *> selectedItems;
 
+    std::vector<bool> layersEnabled;
+
     int64_t getCurrentTime()
     {
         return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
@@ -261,7 +307,7 @@ private:
 
         if (viewerWindow == nullptr)
         {
-            viewerWindow = new ViewerWindow(app, parameters);
+            viewerWindow = new ViewerWindow(app, parameters, &layersEnabled);
         }
     }
 
