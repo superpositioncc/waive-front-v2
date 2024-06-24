@@ -68,6 +68,8 @@ public:
     }
 
 protected:
+    bool pRandomizeLayer[3] = {false, false, false};
+
     bool isVideoFile(const char *filename)
     {
         std::string name = std::string(filename);
@@ -154,6 +156,12 @@ protected:
         repaint();
     }
 
+    void randomizeLayer(int i)
+    {
+        int randomIndex = std::rand() % dataSources.tags.size();
+        selectTag(i, dataSources.tags[randomIndex]);
+    }
+
     void onImGuiDisplay() override
     {
         if (!initialized)
@@ -174,6 +182,39 @@ protected:
 
         if (parameters[EnableLayer3] != layersEnabled[2])
             layersEnabled[2] = parameters[EnableLayer3];
+
+        if (parameters[RandomizeLayer1] != pRandomizeLayer[0] && parameters[RandomizeLayer1])
+        {
+            pRandomizeLayer[0] = parameters[RandomizeLayer1];
+
+            randomizeLayer(0);
+        }
+        else if (!parameters[RandomizeLayer1])
+        {
+            pRandomizeLayer[0] = false;
+        }
+
+        if (parameters[RandomizeLayer2] != pRandomizeLayer[1] && parameters[RandomizeLayer2])
+        {
+            pRandomizeLayer[1] = parameters[RandomizeLayer2];
+
+            randomizeLayer(0);
+        }
+        else if (!parameters[RandomizeLayer2])
+        {
+            pRandomizeLayer[1] = false;
+        }
+
+        if (parameters[RandomizeLayer3] != pRandomizeLayer[2] && parameters[RandomizeLayer3])
+        {
+            pRandomizeLayer[2] = parameters[RandomizeLayer3];
+
+            randomizeLayer(0);
+        }
+        else if (!parameters[RandomizeLayer3])
+        {
+            pRandomizeLayer[2] = false;
+        }
 
         int64_t currentTime = getCurrentTime();
 
@@ -295,8 +336,7 @@ protected:
 
                 if (ImGui::Button(("Select Random Tag " + std::to_string(i + 1)).c_str()))
                 {
-                    int randomIndex = std::rand() % dataSources.tags.size();
-                    selectTag(i, dataSources.tags[randomIndex]);
+                    randomizeLayer(i);
                 }
 
                 ImGui::TextWrapped(selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None");

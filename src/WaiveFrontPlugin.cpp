@@ -1,4 +1,5 @@
 #include "DistrhoPlugin.hpp"
+#include "dpf/distrho/extra/String.hpp"
 
 START_NAMESPACE_DISTRHO
 
@@ -24,6 +25,9 @@ public:
         parameters[EnableLayer1] = 1.0f;
         parameters[EnableLayer2] = 0.0f;
         parameters[EnableLayer3] = 0.0f;
+        parameters[RandomizeLayer1] = 0.0f;
+        parameters[RandomizeLayer2] = 0.0f;
+        parameters[RandomizeLayer3] = 0.0f;
     }
 
 protected:
@@ -62,48 +66,55 @@ protected:
         //     break;
         case FocusDistance:
             parameter.name = "Focus Distance";
-            parameter.symbol = "focus_distance";
             break;
         case BlurSize:
             parameter.name = "Blur Size";
-            parameter.symbol = "blur_size";
             break;
         case Space:
             parameter.name = "Space";
-            parameter.symbol = "space";
             parameter.ranges.max = 0.2f;
             break;
         case Zoom:
             parameter.name = "Zoom";
-            parameter.symbol = "zoom";
             break;
         case BackgroundHue:
             parameter.name = "Background Hue";
-            parameter.symbol = "background_hue";
             break;
         case BackgroundSaturation:
             parameter.name = "Background Saturation";
-            parameter.symbol = "background_saturation";
             break;
         case BackgroundValue:
             parameter.name = "Background Value";
-            parameter.symbol = "background_value";
             break;
         case EnableLayer1:
             parameter.name = "Enable Layer 1";
-            parameter.symbol = "enable_layer_1";
+            parameter.hints |= kParameterIsBoolean;
             break;
         case EnableLayer2:
             parameter.name = "Enable Layer 2";
-            parameter.symbol = "enable_layer_2";
+            parameter.hints |= kParameterIsBoolean;
             break;
         case EnableLayer3:
             parameter.name = "Enable Layer 3";
-            parameter.symbol = "enable_layer_3";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeLayer1:
+            parameter.name = "Randomize Layer 1";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeLayer2:
+            parameter.name = "Randomize Layer 2";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeLayer3:
+            parameter.name = "Randomize Layer 3";
+            parameter.hints |= kParameterIsBoolean;
             break;
         default:
             break;
         }
+
+        parameter.symbol = String(parameter.name).replace(' ', '_').toLower();
     }
 
     float getParameterValue(uint32_t index) const override

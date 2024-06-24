@@ -53,6 +53,9 @@ enum Parameters
 	EnableLayer1,
 	EnableLayer2,
 	EnableLayer3,
+	RandomizeLayer1,
+	RandomizeLayer2,
+	RandomizeLayer3,
 	// Threshold,
 	// Width,
 	NumParameters
