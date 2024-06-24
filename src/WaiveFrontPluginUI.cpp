@@ -166,6 +166,15 @@ protected:
             cinderTheme(ImGui::GetStyle());
         }
 
+        if (parameters[EnableLayer1] != layersEnabled[0])
+            layersEnabled[0] = parameters[EnableLayer1];
+
+        if (parameters[EnableLayer2] != layersEnabled[1])
+            layersEnabled[1] = parameters[EnableLayer2];
+
+        if (parameters[EnableLayer3] != layersEnabled[2])
+            layersEnabled[2] = parameters[EnableLayer3];
+
         int64_t currentTime = getCurrentTime();
 
         for (int i = 0; i < videoLoaders.size(); i++)
