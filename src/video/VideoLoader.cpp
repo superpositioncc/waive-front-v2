@@ -150,6 +150,7 @@ public:
 		uint32_t *palette = (uint32_t *)paletteFrame->data[0];
 
 		int nColors = 5;
+
 		for (int i = 0; i < nColors; i++)
 		{
 			uint32_t color = palette[i];

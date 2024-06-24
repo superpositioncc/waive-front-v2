@@ -6,4 +6,5 @@ struct FrameData
 	unsigned char *data;
 	int width;
 	int height;
+	float colors[3 * 5];
 };

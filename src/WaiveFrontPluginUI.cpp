@@ -182,7 +182,7 @@ protected:
                 VideoFrameDescription vfd = videoLoader->getFrame();
 
                 if (vfd.data != nullptr)
-                    viewerWindow->getViewerWidget()->setFrame(i, vfd.data, vfd.width, vfd.height);
+                    viewerWindow->getViewerWidget()->setFrame(i, vfd.data, vfd.width, vfd.height, videoLoader->getColors());
             }
         }
 

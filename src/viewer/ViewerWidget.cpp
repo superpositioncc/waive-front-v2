@@ -38,7 +38,7 @@ public:
 		return initialized;
 	}
 
-	void setFrame(int i, uint8_t *frame, int width, int height)
+	void setFrame(int i, uint8_t *frame, int width, int height, std::vector<float> colors)
 	{
 		if (!isInitialized())
 			return;
@@ -47,6 +47,11 @@ public:
 		frameData[i]->width = width;
 		frameData[i]->height = height;
 		frameData[i]->waiting = true;
+
+		for (int j = 0; j < 3 * 5; j++)
+		{
+			frameData[i]->colors[j] = colors[j];
+		}
 	}
 
 protected:
@@ -116,9 +121,8 @@ private:
 	{
 		updateFrameData();
 
-		uniforms.threshold.set(parameters[Parameters::Threshold]);
-		uniforms.width.set(parameters[Parameters::Width]);
-		uniforms.use();
+		uniforms.threshold.set(&parameters[Parameters::Threshold]);
+		uniforms.width.set(&parameters[Parameters::Width]);
 	}
 
 	void draw()
@@ -134,7 +138,17 @@ private:
 				continue;
 
 			textures[i]->bind();
-			rectangle.draw();
+			uniforms.colors.set(frameData[i]->colors);
+
+			for (int j = 4; j >= 0; j--)
+			{
+				uniforms.colorIndex.set(&j);
+
+				float size = 1.0f - 0.1f * j;
+				uniforms.size.set(&size);
+				uniforms.use();
+				rectangle.draw();
+			}
 		}
 	}
 
