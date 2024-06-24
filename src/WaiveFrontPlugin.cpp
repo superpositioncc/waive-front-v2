@@ -12,8 +12,18 @@ public:
     {
         std::memset(parameters, 0, sizeof(float) * Parameters::NumParameters);
 
-        parameters[Threshold] = 0.5f;
-        parameters[Width] = 0.5f;
+        // parameters[Threshold] = 0.5f;
+        // parameters[Width] = 0.5f;
+        parameters[FocusDistance] = 0.5f;
+        parameters[BlurSize] = 0.05f;
+        parameters[Space] = 0.1f;
+        parameters[Zoom] = 0.0f;
+        parameters[BackgroundHue] = 0.0f;
+        parameters[BackgroundSaturation] = 0.0f;
+        parameters[BackgroundValue] = 0.0f;
+        parameters[EnableLayer1] = 1.0f;
+        parameters[EnableLayer2] = 0.0f;
+        parameters[EnableLayer3] = 0.0f;
     }
 
 protected:
@@ -42,13 +52,54 @@ protected:
 
         switch (index)
         {
-        case Threshold:
-            parameter.name = "Threshold";
-            parameter.symbol = "threshold";
+        // case Threshold:
+        //     parameter.name = "Threshold";
+        //     parameter.symbol = "threshold";
+        //     break;
+        // case Width:
+        //     parameter.name = "Width";
+        //     parameter.symbol = "width";
+        //     break;
+        case FocusDistance:
+            parameter.name = "Focus Distance";
+            parameter.symbol = "focus_distance";
             break;
-        case Width:
-            parameter.name = "Width";
-            parameter.symbol = "width";
+        case BlurSize:
+            parameter.name = "Blur Size";
+            parameter.symbol = "blur_size";
+            break;
+        case Space:
+            parameter.name = "Space";
+            parameter.symbol = "space";
+            parameter.ranges.max = 0.2f;
+            break;
+        case Zoom:
+            parameter.name = "Zoom";
+            parameter.symbol = "zoom";
+            break;
+        case BackgroundHue:
+            parameter.name = "Background Hue";
+            parameter.symbol = "background_hue";
+            break;
+        case BackgroundSaturation:
+            parameter.name = "Background Saturation";
+            parameter.symbol = "background_saturation";
+            break;
+        case BackgroundValue:
+            parameter.name = "Background Value";
+            parameter.symbol = "background_value";
+            break;
+        case EnableLayer1:
+            parameter.name = "Enable Layer 1";
+            parameter.symbol = "enable_layer_1";
+            break;
+        case EnableLayer2:
+            parameter.name = "Enable Layer 2";
+            parameter.symbol = "enable_layer_2";
+            break;
+        case EnableLayer3:
+            parameter.name = "Enable Layer 3";
+            parameter.symbol = "enable_layer_3";
             break;
         default:
             break;

@@ -6,8 +6,8 @@ precision highp float;
 #include "common.glsl"
 R""(
 
-uniform float threshold;
-uniform float width;
+uniform float focusAmount;
+uniform float blurSize;
 uniform sampler2D tex;
 uniform vec3[5] colors;
 uniform int colorIndex;
@@ -19,8 +19,8 @@ out vec4 color;
 void main()
 {
     vec2 random = vec2(random(v_texCoord.xy), random(v_texCoord.yx)) * 2.0 - 1.0;
-    float randomSize = 0.01;
-    vec4 smpl = texture(tex, vec2(v_texCoord.x, 1.0 - v_texCoord.y) + random * randomSize);
+    
+    vec4 smpl = texture(tex, vec2(v_texCoord.x, 1.0 - v_texCoord.y) + random * blurSize * (1.0 - focusAmount));
 
     int closestIndex = 0;
     float closestDist = distance(smpl.xyz, colors[closestIndex]);

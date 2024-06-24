@@ -198,15 +198,39 @@ protected:
 
         ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-        ImGui::Text("Threshold");
+        ImGui::Text("Blur Size");
         ImGui::SetNextItemWidth(width / 4);
-        if (ImGui::SliderFloat("Threshold", &parameters[Threshold], 0.0f, 1.0f))
-            setParameterValue(0, parameters[Threshold]);
+        if (ImGui::SliderFloat("Blur Size", &parameters[BlurSize], 0.0f, 1.0f))
+            setParameterValue(BlurSize, parameters[BlurSize]);
 
-        ImGui::Text("Width");
+        ImGui::Text("Focus Distance");
         ImGui::SetNextItemWidth(width / 4);
-        if (ImGui::SliderFloat("Width", &parameters[Width], 0.0f, 1.0f))
-            setParameterValue(1, parameters[Width]);
+        if (ImGui::SliderFloat("Focus Distance", &parameters[FocusDistance], 0.0f, 1.0f))
+            setParameterValue(FocusDistance, parameters[FocusDistance]);
+
+        ImGui::Text("Space");
+        ImGui::SetNextItemWidth(width / 4);
+        if (ImGui::SliderFloat("Space", &parameters[Space], 0.0f, 0.2f))
+            setParameterValue(Space, parameters[Space]);
+
+        ImGui::Text("Zoom");
+        ImGui::SetNextItemWidth(width / 4);
+        if (ImGui::SliderFloat("Zoom", &parameters[Zoom], 0.0f, 1.0f))
+            setParameterValue(Zoom, parameters[Zoom]);
+
+        ImGui::Text("Background Color");
+        ImGui::SetNextItemWidth(width / 4);
+        float hsv[3] = {parameters[BackgroundHue], parameters[BackgroundSaturation], parameters[BackgroundValue]};
+        if (ImGui::ColorPicker3("Background Color", hsv, ImGuiColorEditFlags_DisplayHSV | ImGuiColorEditFlags_InputHSV))
+        {
+            setParameterValue(BackgroundHue, hsv[0]);
+            setParameterValue(BackgroundSaturation, hsv[1]);
+            setParameterValue(BackgroundValue, hsv[2]);
+
+            parameters[BackgroundHue] = hsv[0];
+            parameters[BackgroundSaturation] = hsv[1];
+            parameters[BackgroundValue] = hsv[2];
+        }
 
         ImGui::End();
 
@@ -226,6 +250,22 @@ protected:
             if (ImGui::Button(buttonLabel.c_str()))
             {
                 layersEnabled[i] = !layersEnabled[i];
+
+                if (i == 0)
+                {
+                    parameters[EnableLayer1] = layersEnabled[i];
+                    setParameterValue(EnableLayer1, layersEnabled[i]);
+                }
+                else if (i == 1)
+                {
+                    parameters[EnableLayer2] = layersEnabled[i];
+                    setParameterValue(EnableLayer2, layersEnabled[i]);
+                }
+                else if (i == 2)
+                {
+                    parameters[EnableLayer3] = layersEnabled[i];
+                    setParameterValue(EnableLayer3, layersEnabled[i]);
+                }
             }
 
             if (layersEnabled[i])

@@ -3,6 +3,7 @@
 
 #include "DistrhoUI.hpp"
 #include "OpenGL.hpp"
+#include "util/Color.cpp"
 #include "FrameData.h"
 #include "../shader/ShaderRectangle.h"
 #include "../shader/ShaderProgram.cpp"
@@ -17,6 +18,11 @@ using Shader::ShaderProgram;
 using Shader::ShaderRectangle;
 using Shader::ShaderTexture;
 using Shader::ShaderUniforms;
+
+float clip(float n, float lower, float upper)
+{
+	return std::max(lower, std::min(n, upper));
+}
 
 class ViewerWidget : public TopLevelWidget
 {
@@ -121,31 +127,40 @@ private:
 	{
 		updateFrameData();
 
-		uniforms.threshold.set(&parameters[Parameters::Threshold]);
-		uniforms.width.set(&parameters[Parameters::Width]);
+		// uniforms.threshold.set(&parameters[Parameters::Threshold]);
+		// uniforms.width.set(&parameters[Parameters::Width]);
+
+		uniforms.blurSize.set(&parameters[Parameters::BlurSize]);
 	}
 
 	void draw()
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		float *background = Color::HSVtoRGB(parameters[Parameters::BackgroundHue], parameters[Parameters::BackgroundSaturation], parameters[Parameters::BackgroundValue]);
+
+		glClearColor(background[0], background[1], background[2], 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
 
-		for (int i = 0; i < 3; i++)
+		for (int j = 4; j >= 0; j--)
 		{
-			if (!(*layersEnabled)[i])
-				continue;
+			float p = (float)j / 4.0f;
+			float focus = 1.0 - clip(abs(parameters[Parameters::FocusDistance] - p) * 2.0f, 0.0, 1.0);
 
-			textures[i]->bind();
-			uniforms.colors.set(frameData[i]->colors);
+			uniforms.focusAmount.set(&focus);
+			uniforms.colorIndex.set(&j);
 
-			for (int j = 4; j >= 0; j--)
+			for (int i = 0; i < 3; i++)
 			{
-				uniforms.colorIndex.set(&j);
+				if (!(*layersEnabled)[i])
+					continue;
 
-				float size = 1.0f - 0.1f * j;
+				uniforms.colors.set(frameData[i]->colors);
+
+				float size = 1.0f - (parameters[Parameters::Space] * (1.0 + parameters[Parameters::Zoom] * 10.0)) * j + parameters[Parameters::Zoom] * 10.0f;
 				uniforms.size.set(&size);
+
+				textures[i]->bind();
 				uniforms.use();
 				rectangle.draw();
 			}
