@@ -16,17 +16,21 @@ void DataSource::load(DataSources *sources)
 
 		for (json item : data["items"])
 		{
+			auto category = item["category"][0];
+
+			if (category.type() == json::value_t::null)
+				continue;
 
 			DataItem *dataItem = new DataItem();
 
 			dataItem->id = item["id"].get<std::string>();
+			dataItem->sceneId = item["sceneId"].get<int>();
 			dataItem->title = item["title"].get<std::string>();
-			dataItem->description = item["description"].get<std::string>();
-			dataItem->nScenes = item["nScenes"].get<int>();
-			dataItem->filename = item["filename"].get<std::string>();
-			dataItem->filename = dataItem->filename.substr(0, dataItem->filename.find_last_of("."));
+			dataItem->filename = dataItem->id + "-" + std::to_string(dataItem->sceneId);
+			// dataItem->filename = item["filename"].get<std::string>();
+			// dataItem->filename = dataItem->filename.substr(0, dataItem->filename.find_last_of("."));
 			dataItem->source = this;
-			dataItem->category = sources->findOrCreateCategory(item["category"].get<std::string>());
+			dataItem->category = sources->findOrCreateCategory(item["category"].get<std::vector<std::string>>()[0]);
 
 			for (std::string tag : item["tags"].get<std::vector<std::string>>())
 			{
@@ -37,12 +41,16 @@ void DataSource::load(DataSources *sources)
 				addTagIfNotAdded(dataTag);
 			}
 
+			addCategoryIfNotAdded(dataItem->category);
+			dataItem->category->items.push_back(dataItem);
+
 			items.push_back(dataItem);
 		}
 	}
 	catch (const std::exception &e)
 	{
 		warn("DATA", "Failed to load data file: " + dataPath);
+		warn("DATA", e.what());
 		return;
 	}
 

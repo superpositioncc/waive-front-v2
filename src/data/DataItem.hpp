@@ -20,7 +20,7 @@ public:
 
 	std::string id;
 	std::string title;
-	std::string description;
 	std::string filename;
-	int nScenes;
+
+	int sceneId;
 };

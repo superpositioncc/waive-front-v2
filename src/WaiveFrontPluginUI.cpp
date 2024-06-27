@@ -52,7 +52,7 @@ public:
         for (int i = 0; i < 3; i++)
         {
             videoLoaders.push_back(new VideoLoader());
-            selectedTags.push_back(nullptr);
+            selectedCategories.push_back(nullptr);
             selectedItems.push_back(nullptr);
             layersEnabled.push_back(i == 0);
         }
@@ -61,9 +61,9 @@ public:
 
         for (int i = 0; i < 3; i++)
         {
-            int randomIndex = std::rand() % dataSources.tags.size();
+            int randomIndex = std::rand() % dataSources.categories.size();
 
-            selectTag(i, dataSources.tags[randomIndex]);
+            selectCategory(i, dataSources.categories[randomIndex]);
         }
     }
 
@@ -119,24 +119,25 @@ protected:
         }
     }
 
-    void selectTag(int i, DataTag *tag)
+    void selectCategory(int i, DataCategory *category)
     {
-        selectedTags[i] = tag;
+        selectedCategories[i] = category;
 
-        print("DATA", "Selected tag: " + tag->name);
+        print("DATA", "Selected category: " + category->name);
+        print("DATA", "Number of items: " + std::to_string(category->items.size()));
 
-        // Select random item from tag
-        int randomIndex = std::rand() % tag->items.size();
-        selectedItems[i] = tag->items[randomIndex];
+        // Select random item from category
+        int randomIndex = std::rand() % category->items.size();
+        selectedItems[i] = category->items[randomIndex];
 
         print("DATA", "Selected item: " + selectedItems[i]->title);
 
         // Random scene
-        int randomScene = std::rand() % selectedItems[i]->nScenes;
-        std::string zeroPaddedScene = std::to_string(randomScene);
-        zeroPaddedScene.insert(0, 3 - zeroPaddedScene.length(), '0');
+        // int randomScene = std::rand() % selectedItems[i]->nScenes;
+        // std::string zeroPaddedScene = std::to_string(randomScene);
+        // zeroPaddedScene.insert(0, 3 - zeroPaddedScene.length(), '0');
 
-        std::string scenePath = selectedItems[i]->source->path + "/material/" + selectedItems[i]->filename + "_scene" + zeroPaddedScene + ".mp4";
+        std::string scenePath = selectedItems[i]->source->path + "/items/" + selectedItems[i]->filename + ".mp4";
 
         if (isVideoFile(scenePath.c_str()))
         {
@@ -158,8 +159,8 @@ protected:
 
     void randomizeLayer(int i)
     {
-        int randomIndex = std::rand() % dataSources.tags.size();
-        selectTag(i, dataSources.tags[randomIndex]);
+        int randomIndex = std::rand() % dataSources.categories.size();
+        selectCategory(i, dataSources.categories[randomIndex]);
     }
 
     void onImGuiDisplay() override
@@ -320,21 +321,21 @@ protected:
 
             if (layersEnabled[i])
             {
-                ImGui::Text("Tag");
-                if (ImGui::BeginCombo(("Tag " + std::to_string(i + 1)).c_str(), selectedTags[i] != nullptr ? selectedTags[i]->name.c_str() : "None"))
+                ImGui::Text("Category");
+                if (ImGui::BeginCombo(("Category " + std::to_string(i + 1)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->name.c_str() : "None"))
                 {
-                    for (DataTag *tag : dataSources.tags)
+                    for (DataCategory *category : dataSources.categories)
                     {
-                        if (ImGui::Selectable(tag->name.c_str()))
+                        if (ImGui::Selectable(category->name.c_str()))
                         {
-                            selectTag(i, tag);
+                            selectCategory(i, category);
                         }
                     }
 
                     ImGui::EndCombo();
                 }
 
-                if (ImGui::Button(("Select Random Tag " + std::to_string(i + 1)).c_str()))
+                if (ImGui::Button(("Select Random Category " + std::to_string(i + 1)).c_str()))
                 {
                     randomizeLayer(i);
                 }
@@ -380,7 +381,7 @@ private:
     ImFont *regular;
 
     std::vector<VideoLoader *> videoLoaders;
-    std::vector<DataTag *> selectedTags;
+    std::vector<DataCategory *> selectedCategories;
     std::vector<DataItem *> selectedItems;
 
     std::vector<bool> layersEnabled;
