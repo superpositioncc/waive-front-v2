@@ -20,4 +20,5 @@ public:
 	DataCategory *findOrCreateCategory(std::string name);
 
 	void collectItems();
+	void sortCategories();
 };

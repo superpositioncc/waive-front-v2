@@ -46,3 +46,9 @@ void DataSources::collectItems()
 		}
 	}
 }
+
+void DataSources::sortCategories()
+{
+	std::sort(categories.begin(), categories.end(), [](DataCategory *a, DataCategory *b)
+			  { return a->order < b->order; });
+}

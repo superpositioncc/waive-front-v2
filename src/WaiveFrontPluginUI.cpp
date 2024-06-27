@@ -68,7 +68,8 @@ public:
     }
 
 protected:
-    bool pRandomizeLayer[3] = {false, false, false};
+    bool pRandomizeCategory[3] = {false, false, false};
+    bool pRandomizeItem[3] = {false, false, false};
 
     bool isVideoFile(const char *filename)
     {
@@ -117,6 +118,63 @@ protected:
         {
             print("DATA", "Loaded data source " + dataSource->name);
         }
+
+        std::string categoriesPath = directory + "/categories.json";
+
+        json categories;
+
+        try
+        {
+            std::ifstream file(categoriesPath);
+            file >> categories;
+
+            int order = 0;
+            for (json item : categories)
+            {
+                std::string name = item["category"].get<std::string>();
+                std::string presentationName = item["title"].get<std::string>();
+                std::vector<std::string> triggers = item["tags"].get<std::vector<std::string>>();
+
+                DataCategory *category;
+
+                for (DataCategory *c : dataSources.categories)
+                {
+                    if (c->name == name)
+                    {
+                        category = c;
+                        break;
+                    }
+                }
+
+                if (category == nullptr)
+                    continue;
+
+                category->presentationName = presentationName;
+                category->triggers = triggers;
+                category->order = order;
+
+                order++;
+            }
+
+            // Find any categories that have no presentation name
+            for (DataCategory *category : dataSources.categories)
+            {
+                if (category->presentationName.empty())
+                {
+                    warn("DATA", "Category " + category->name + " has no presentation name");
+                }
+            }
+
+            print("DATA", "Loaded categories from: " + categoriesPath);
+
+            dataSources.sortCategories();
+        }
+        catch (const std::exception &e)
+        {
+            warn("DATA", "Failed to load categories from: " + categoriesPath);
+            warn("DATA", e.what());
+            return;
+        }
     }
 
     void selectCategory(int i, DataCategory *category)
@@ -127,15 +185,14 @@ protected:
         print("DATA", "Number of items: " + std::to_string(category->items.size()));
 
         // Select random item from category
-        int randomIndex = std::rand() % category->items.size();
-        selectedItems[i] = category->items[randomIndex];
+        randomizeItem(i);
+    }
+
+    void selectItem(int i, DataItem *item)
+    {
+        selectedItems[i] = item;
 
         print("DATA", "Selected item: " + selectedItems[i]->title);
-
-        // Random scene
-        // int randomScene = std::rand() % selectedItems[i]->nScenes;
-        // std::string zeroPaddedScene = std::to_string(randomScene);
-        // zeroPaddedScene.insert(0, 3 - zeroPaddedScene.length(), '0');
 
         std::string scenePath = selectedItems[i]->source->path + "/items/" + selectedItems[i]->filename + ".mp4";
 
@@ -157,10 +214,16 @@ protected:
         repaint();
     }
 
-    void randomizeLayer(int i)
+    void randomizeCategory(int i)
     {
         int randomIndex = std::rand() % dataSources.categories.size();
         selectCategory(i, dataSources.categories[randomIndex]);
+    }
+
+    void randomizeItem(int i)
+    {
+        int randomIndex = std::rand() % selectedCategories[i]->items.size();
+        selectItem(i, selectedCategories[i]->items[randomIndex]);
     }
 
     void onImGuiDisplay() override
@@ -184,37 +247,70 @@ protected:
         if (parameters[EnableLayer3] != layersEnabled[2])
             layersEnabled[2] = parameters[EnableLayer3];
 
-        if (parameters[RandomizeLayer1] != pRandomizeLayer[0] && parameters[RandomizeLayer1])
+        if (parameters[RandomizeCategory1] != pRandomizeCategory[0] && parameters[RandomizeCategory1])
         {
-            pRandomizeLayer[0] = parameters[RandomizeLayer1];
+            pRandomizeCategory[0] = parameters[RandomizeCategory1];
 
-            randomizeLayer(0);
+            randomizeCategory(0);
         }
-        else if (!parameters[RandomizeLayer1])
+        else if (!parameters[RandomizeCategory1])
         {
-            pRandomizeLayer[0] = false;
-        }
-
-        if (parameters[RandomizeLayer2] != pRandomizeLayer[1] && parameters[RandomizeLayer2])
-        {
-            pRandomizeLayer[1] = parameters[RandomizeLayer2];
-
-            randomizeLayer(0);
-        }
-        else if (!parameters[RandomizeLayer2])
-        {
-            pRandomizeLayer[1] = false;
+            pRandomizeCategory[0] = false;
         }
 
-        if (parameters[RandomizeLayer3] != pRandomizeLayer[2] && parameters[RandomizeLayer3])
+        if (parameters[RandomizeCategory2] != pRandomizeCategory[1] && parameters[RandomizeCategory2])
         {
-            pRandomizeLayer[2] = parameters[RandomizeLayer3];
+            pRandomizeCategory[1] = parameters[RandomizeCategory2];
 
-            randomizeLayer(0);
+            randomizeCategory(0);
         }
-        else if (!parameters[RandomizeLayer3])
+        else if (!parameters[RandomizeCategory2])
         {
-            pRandomizeLayer[2] = false;
+            pRandomizeCategory[1] = false;
+        }
+
+        if (parameters[RandomizeCategory3] != pRandomizeCategory[2] && parameters[RandomizeCategory3])
+        {
+            pRandomizeCategory[2] = parameters[RandomizeCategory3];
+
+            randomizeCategory(0);
+        }
+        else if (!parameters[RandomizeCategory3])
+        {
+            pRandomizeCategory[2] = false;
+        }
+
+        if (parameters[RandomizeItem1] != pRandomizeItem[0] && parameters[RandomizeItem1])
+        {
+            pRandomizeItem[0] = parameters[RandomizeItem1];
+
+            randomizeItem(0);
+        }
+        else if (!parameters[RandomizeItem1])
+        {
+            pRandomizeItem[0] = false;
+        }
+
+        if (parameters[RandomizeItem2] != pRandomizeItem[1] && parameters[RandomizeItem2])
+        {
+            pRandomizeItem[1] = parameters[RandomizeItem2];
+
+            randomizeItem(0);
+        }
+        else if (!parameters[RandomizeItem2])
+        {
+            pRandomizeItem[1] = false;
+        }
+
+        if (parameters[RandomizeItem3] != pRandomizeItem[2] && parameters[RandomizeItem3])
+        {
+            pRandomizeItem[2] = parameters[RandomizeItem3];
+
+            randomizeItem(0);
+        }
+        else if (!parameters[RandomizeItem3])
+        {
+            pRandomizeItem[2] = false;
         }
 
         int64_t currentTime = getCurrentTime();
@@ -322,11 +418,11 @@ protected:
             if (layersEnabled[i])
             {
                 ImGui::Text("Category");
-                if (ImGui::BeginCombo(("Category " + std::to_string(i + 1)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->name.c_str() : "None"))
+                if (ImGui::BeginCombo(("Category " + std::to_string(i + 1)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->presentationName.c_str() : "None"))
                 {
                     for (DataCategory *category : dataSources.categories)
                     {
-                        if (ImGui::Selectable(category->name.c_str()))
+                        if (ImGui::Selectable(category->presentationName.c_str()))
                         {
                             selectCategory(i, category);
                         }
@@ -337,7 +433,26 @@ protected:
 
                 if (ImGui::Button(("Select Random Category " + std::to_string(i + 1)).c_str()))
                 {
-                    randomizeLayer(i);
+                    randomizeCategory(i);
+                }
+
+                ImGui::Text("Item");
+                if (ImGui::BeginCombo(("Item " + std::to_string(i + 1)).c_str(), selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None"))
+                {
+                    for (DataItem *item : selectedCategories[i]->items)
+                    {
+                        if (ImGui::Selectable(item->title.c_str()))
+                        {
+                            selectItem(i, item);
+                        }
+                    }
+
+                    ImGui::EndCombo();
+                }
+
+                if (ImGui::Button(("Select Random Item " + std::to_string(i + 1)).c_str()))
+                {
+                    randomizeItem(i);
                 }
 
                 ImGui::TextWrapped(selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None");

@@ -25,9 +25,12 @@ public:
         parameters[EnableLayer1] = 1.0f;
         parameters[EnableLayer2] = 0.0f;
         parameters[EnableLayer3] = 0.0f;
-        parameters[RandomizeLayer1] = 0.0f;
-        parameters[RandomizeLayer2] = 0.0f;
-        parameters[RandomizeLayer3] = 0.0f;
+        parameters[RandomizeCategory1] = 0.0f;
+        parameters[RandomizeCategory2] = 0.0f;
+        parameters[RandomizeCategory3] = 0.0f;
+        parameters[RandomizeItem1] = 0.0f;
+        parameters[RandomizeItem2] = 0.0f;
+        parameters[RandomizeItem3] = 0.0f;
     }
 
 protected:
@@ -98,16 +101,28 @@ protected:
             parameter.name = "Enable Layer 3";
             parameter.hints |= kParameterIsBoolean;
             break;
-        case RandomizeLayer1:
-            parameter.name = "Randomize Layer 1";
+        case RandomizeCategory1:
+            parameter.name = "Randomize Category 1";
             parameter.hints |= kParameterIsBoolean;
             break;
-        case RandomizeLayer2:
-            parameter.name = "Randomize Layer 2";
+        case RandomizeCategory2:
+            parameter.name = "Randomize Category 2";
             parameter.hints |= kParameterIsBoolean;
             break;
-        case RandomizeLayer3:
-            parameter.name = "Randomize Layer 3";
+        case RandomizeCategory3:
+            parameter.name = "Randomize Category 3";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeItem1:
+            parameter.name = "Randomize Item 1";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeItem2:
+            parameter.name = "Randomize Item 2";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case RandomizeItem3:
+            parameter.name = "Randomize Item 3";
             parameter.hints |= kParameterIsBoolean;
             break;
         default:
