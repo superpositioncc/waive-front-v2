@@ -27,6 +27,8 @@ Users/
 
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them.**
 
+*At this moment, there are no pre-built releases available. Use the build instructions below to build your own.*
+
 Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page, or build it yourself from the instructions below. Choose which plugin format you prefer and place it in your plugins path of your DAW. 
 
 Common (system-wide) plugin paths:
