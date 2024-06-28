@@ -13,6 +13,8 @@
 
 First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into your Documents folder. You should be left with this structure:
 
+Next, make sure you have `ffmpeg` version 7.0.1 installed. On MacOS, the easiest way to do this is using `homebrew`.
+
 ```
 Users/
 ├─ Your Name/
@@ -45,7 +47,9 @@ WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC 
 
 # Build instructions
 
-Make sure you have installed the `ffmpeg` libraries (tested with version 7.0.1).
+**Dependencies** *On MacOS, both of these can be installed using Homebrew.*
+`nlohmann-json@3.11.3`
+`ffmpeg@7.0.1`
 
 ```bash
 git clone --recursive https://github.com/superpositioncc/waive-front-v2
