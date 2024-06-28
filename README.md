@@ -47,8 +47,9 @@ WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC 
 
 # Build instructions
 
-**Dependencies** *On MacOS, both of these can be installed using Homebrew.*
-`nlohmann-json@3.11.3`
+**Dependencies** *On MacOS, both of these can be installed using Homebrew.*  
+
+`nlohmann-json@3.11.3`  
 `ffmpeg@7.0.1`
 
 ```bash
