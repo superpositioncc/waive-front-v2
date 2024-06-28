@@ -127,10 +127,11 @@ private:
 	{
 		updateFrameData();
 
-		// uniforms.threshold.set(&parameters[Parameters::Threshold]);
-		// uniforms.width.set(&parameters[Parameters::Width]);
-
 		uniforms.blurSize.set(&parameters[Parameters::BlurSize]);
+
+		auto currentTime = std::chrono::system_clock::now();
+		float timeInSeconds = std::chrono::duration<float>(currentTime.time_since_epoch()).count();
+		uniforms.time.set(&timeInSeconds);
 	}
 
 	void draw()

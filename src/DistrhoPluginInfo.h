@@ -59,8 +59,6 @@ enum Parameters
 	RandomizeItem1,
 	RandomizeItem2,
 	RandomizeItem3,
-	// Threshold,
-	// Width,
 	NumParameters
 };
 

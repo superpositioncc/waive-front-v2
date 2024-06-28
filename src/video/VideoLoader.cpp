@@ -163,12 +163,6 @@ public:
 			colors.push_back(b / 255.0f);
 		}
 
-		print("VIDEO", "Extracted colors:");
-		for (int i = 0; i < colors.size(); i += 3)
-		{
-			print("VIDEO", std::to_string(colors[i]) + ", " + std::to_string(colors[i + 1]) + ", " + std::to_string(colors[i + 2]));
-		}
-
 		return colors;
 	}
 

@@ -8,7 +8,10 @@ FILES_UI = \
 	src/WaiveFrontPluginUI.cpp \
 	src/data/DataSources.cpp \
 	src/data/DataSource.cpp \
-	dpf-widgets/opengl/DearImGui.cpp
+	dpf-widgets/opengl/DearImGui.cpp \
+	oscpack/osc/OscReceivedElements.cpp \
+	oscpack/ip/posix/UdpSocket.cpp \
+
 	
 
 UI_TYPE = opengl3
@@ -16,7 +19,7 @@ UI_TYPE = opengl3
 #--------------------------------------------------------------
 
 # enable debugging
-CXXFLAGS = -Isrc -Idpf/distrho/extra -Idpf-widgets/opengl -I/opt/homebrew/include -g -O0
+CXXFLAGS = -Isrc -Idpf/distrho/extra -Idpf-widgets/opengl -Ioscpack -I/opt/homebrew/include -g -O0
 LDFLAGS = -L/opt/homebrew/lib -lavcodec -lavformat -lavutil -lswscale -lavfilter
 
 

@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.ino": "cpp",
+    "*.pde": "pde",
+    "string": "cpp"
+  }
+}

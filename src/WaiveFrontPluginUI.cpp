@@ -15,6 +15,7 @@
 #include "data/DataSources.hpp"
 #include "util/Logger.cpp"
 #include <vector>
+#include "osc/OSCServer.cpp"
 
 using namespace Util::Logger;
 
@@ -27,6 +28,7 @@ class WaiveFrontPluginUI : public UI
 public:
     float parameters[Parameters::NumParameters];
     DataSources dataSources;
+    OSCServer *oscServer;
 
     WaiveFrontPluginUI()
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
@@ -65,11 +67,14 @@ public:
 
             selectCategory(i, dataSources.categories[randomIndex]);
         }
+
+        oscServer = new OSCServer(8000, &dataSources);
     }
 
 protected:
     bool pRandomizeCategory[3] = {false, false, false};
     bool pRandomizeItem[3] = {false, false, false};
+    bool allowOSC = true;
 
     bool isVideoFile(const char *filename)
     {
@@ -129,13 +134,13 @@ protected:
             file >> categories;
 
             int order = 0;
-            for (json item : categories)
+            for (json cat : categories)
             {
-                std::string name = item["category"].get<std::string>();
-                std::string presentationName = item["title"].get<std::string>();
-                std::vector<std::string> triggers = item["tags"].get<std::vector<std::string>>();
+                std::string name = cat["category"].get<std::string>();
+                std::string presentationName = cat["title"].get<std::string>();
+                std::vector<std::string> triggers = cat["tags"].get<std::vector<std::string>>();
 
-                DataCategory *category;
+                DataCategory *category = nullptr;
 
                 for (DataCategory *c : dataSources.categories)
                 {
@@ -182,9 +187,6 @@ protected:
         selectedCategories[i] = category;
 
         print("DATA", "Selected category: " + category->name);
-        print("DATA", "Number of items: " + std::to_string(category->items.size()));
-
-        // Select random item from category
         randomizeItem(i);
     }
 
@@ -201,11 +203,6 @@ protected:
             videoLoaders[i]->loadVideo(scenePath.c_str());
         }
     }
-
-    // void onFileSelected(const char *filename)
-    // {
-    //     videoLoader.loadVideo(filename);
-    // }
 
     void parameterChanged(uint32_t index, float value) override
     {
@@ -313,6 +310,13 @@ protected:
             pRandomizeItem[2] = false;
         }
 
+        if (allowOSC && oscServer->available())
+        {
+            OSCMessage message = oscServer->getMessage();
+
+            selectCategory(0, message.categories[0]);
+        }
+
         int64_t currentTime = getCurrentTime();
 
         for (int i = 0; i < videoLoaders.size(); i++)
@@ -332,8 +336,6 @@ protected:
                     viewerWindow->getViewerWidget()->setFrame(i, vfd.data, vfd.width, vfd.height, videoLoader->getColors());
             }
         }
-
-        // updateFileBrowser();
 
         const float width = getWidth();
         const float height = getHeight();
@@ -379,18 +381,14 @@ protected:
             parameters[BackgroundValue] = hsv[2];
         }
 
+        ImGui::Toggle((std::string("OSC is ") + std::string(allowOSC ? "enabled" : "disabled")).c_str(), &allowOSC);
         ImGui::End();
-
-        // if (ImGui::Button("Select Video"))
-        // {
-        //     openFileBrowser();
-        // }
 
         for (int i = 0; i < 3; i++)
         {
             ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
             ImGui::SetNextWindowPos(ImVec2((i + 1) * width / 4, 0));
-            ImGui::Begin(("Layer " + std::to_string(i + 1)).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+            ImGui::Begin(("Layer " + std::to_string(i + 1) + (allowOSC && i == 0 ? " (OSC)" : "")).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
             std::string buttonLabel = layersEnabled[i] ? "Disable Layer " + std::to_string(i + 1) : "Enable Layer " + std::to_string(i + 1);
 
@@ -459,7 +457,6 @@ protected:
 
                 std::vector<float> colors = videoLoaders[i]->getColors();
 
-                // make a grid of color buttons next to each other
                 ImGui::Columns(colors.size() / 3, nullptr, false);
 
                 for (int j = 0; j < colors.size(); j += 3)
@@ -492,7 +489,6 @@ private:
     ViewerWindow *viewerWindow = nullptr;
     bool initialized = false;
 
-    // FileBrowserHandle fileBrowserHandle = nullptr;
     ImFont *regular;
 
     std::vector<VideoLoader *> videoLoaders;
@@ -515,40 +511,6 @@ private:
             viewerWindow = new ViewerWindow(app, parameters, &layersEnabled);
         }
     }
-
-    // void openFileBrowser()
-    // {
-    //     FileBrowserOptions options;
-    //     options.startDir = "/Users/Bram/Documents/WAIVE";
-
-    //     if (fileBrowserHandle != nullptr)
-    //     {
-    //         fileBrowserClose(fileBrowserHandle);
-    //     }
-
-    //     fileBrowserHandle = fileBrowserCreate(false, getWindow().getNativeWindowHandle(), 1, options);
-    // }
-
-    // void updateFileBrowser()
-    // {
-    //     if (fileBrowserHandle != nullptr)
-    //     {
-    //         if (fileBrowserIdle(fileBrowserHandle))
-    //         {
-    //             const char *filename = fileBrowserGetPath(fileBrowserHandle);
-
-    //             if (filename != nullptr)
-    //             {
-    //                 onFileSelected(filename);
-    //             }
-
-    //             fileBrowserClose(fileBrowserHandle);
-    //             fileBrowserHandle = nullptr;
-
-    //             getWindow().focus();
-    //         }
-    //     }
-    // }
 };
 
 UI *createUI()
