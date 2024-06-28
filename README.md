@@ -1,8 +1,13 @@
 # WAIVE-FRONT V2
 
-<img src="assets/viewer.png" alt="WAIVE-FRONT Viewer" width="45%"/>
-<img src="assets/parameters.png" alt="WAIVE-FRONT Parameters" width="45%"/>
+<p align="center">
+	<img src="assets/viewer.png" alt="WAIVE-FRONT Viewer" width="45%"/>
+	<img src="assets/parameters.png" alt="WAIVE-FRONT Parameters" width="45%"/>
+</p>
 
+<p align="center">
+<em>Interactive, fully automatable visual generation software based on European digital cultural heritage archives.</em>
+</p>
 
 # Usage
 
@@ -18,9 +23,21 @@ Users/
 │  │  │  ├─ ...
 ```
 
-❗ Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them.
+⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them.**
 
-Download the build for your operating system from the *releases* page and install it to the correct location, or build it yourself from the instructions below.
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page, or build it yourself from the instructions below. Choose which plugin format you prefer and place it in your plugins path of your DAW. 
+
+Common (system-wide) plugin paths:
+      
+|         | VST2                                 | VST3*                                | Audio Units                                 |
+| ------- | ------------------------------------ | ------------------------------------ | ------------------------------------ |
+| macOS   | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/Components`        |
+| Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | *n/a*                      |
+| Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | *n/a* |
+      
+⚠️ **Known issue: if you are using Ableton Live on MacOS, only the Audio Units component will work.**
+
+In your DAW, rescan plugins if it does not automatically. 
 
 # OSC control
 
