@@ -1,5 +1,3 @@
-// File: '/Users/bram/Downloads/fonts/SpaceMono-Regular.ttf' (90904 bytes)
-// Exported using binary_to_compressed_c.cpp
 static const unsigned int SpaceMono_Regular_compressed_size = 56688;
 static const unsigned int SpaceMono_Regular_compressed_data[56688/4] =
 {
