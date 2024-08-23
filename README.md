@@ -37,8 +37,6 @@ Common (system-wide) plugin paths:
 | Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | *n/a*                      |
 | Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | *n/a* |
       
-⚠️ **Known issue: if you are using Ableton Live on MacOS, only the Audio Units component will work.**
-
 In your DAW, rescan plugins if it does not automatically. 
 
 # OSC control
