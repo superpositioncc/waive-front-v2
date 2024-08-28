@@ -1,3 +1,8 @@
+/*
+Based on Cinder-ImGui by Simon Geilfus
+https://github.com/simongeilfus/Cinder-ImGui
+*/
+
 #include "DearImGui.hpp"
 
 void cinderTheme(ImGuiStyle &style)
