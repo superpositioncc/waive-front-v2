@@ -1,5 +1,7 @@
 # WAIVE-FRONT V2
 
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/superpositioncc/waive-front-v2/doxygen-gh-pages.yml?label=docs)](https://superpositioncc.github.io/waive-front-v2) [![C++](https://img.shields.io/badge/C++-%2300599C.svg?logo=c%2B%2B&logoColor=white)](#) [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-121013?logo=github&logoColor=white)](https://superpositioncc.github.io/waive-front-v2)
+
 <p align="center">
 	<img src="assets/viewer.png" alt="WAIVE-FRONT Viewer" width="45%"/>
 	<img src="assets/parameters.png" alt="WAIVE-FRONT Parameters" width="45%"/>
@@ -73,6 +75,10 @@ make run
 # To install the VST2, VST3 and AU (on MacOS) builds
 make install
 ```
+
+# Development
+
+Want to add new features or improve on existing ones? Squash some bugs? Pull requests are very welcome! Documentation for the code is available [here](https://superpositioncc.github.io/waive-front-v2/).
 
 # Shipping on MacOS
 
