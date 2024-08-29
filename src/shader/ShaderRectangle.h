@@ -20,8 +20,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "OpenGL.hpp"
 
+/**
+ * @brief Simple functions related to GLSL shader management, compilation and usage
+ */
 namespace Shader
 {
+	/**
+	 * @brief A class to draw a rectangle using a shader program
+	 *
+	 */
 	class ShaderRectangle
 	{
 	public:
@@ -29,6 +36,10 @@ namespace Shader
 		{
 		}
 
+		/**
+		 * @brief Initialize the rectangle, by creating the VAO, VBO and EBO
+		 *
+		 */
 		void init()
 		{
 			if (initialized)
@@ -54,6 +65,10 @@ namespace Shader
 			glBindVertexArray(0);
 		}
 
+		/**
+		 * @brief Draw the rectangle
+		 *
+		 */
 		void draw()
 		{
 			glBindVertexArray(VAO);
@@ -64,7 +79,7 @@ namespace Shader
 	private:
 		unsigned int VAO, VBO, EBO;
 
-		bool initialized = false;
+		bool initialized = false; /**< Whether the rectangle has been initialized */
 
 		// clang-format off
 	float vertices[16] = {
@@ -73,12 +88,12 @@ namespace Shader
 	/*     top left */   -1.0f,  1.0f,        0.0f, 1.0f,
 	/*    top right */    1.0f,  1.0f,        1.0f, 1.0f,
 	/* bottom right */    1.0f, -1.0f,        1.0f, 0.0f
-	};
+	}; /**< The vertices of the rectangle */
 
 	unsigned int indices[6] = {
 		0, 1, 2,
 		2, 3, 0
-	};
+	}; /**< The indices of the rectangle */
 		// clang-format on
 	};
 };

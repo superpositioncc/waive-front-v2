@@ -25,12 +25,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 class DataItem;
 
+/**
+ * @brief Stores a category of data items
+ *
+ */
 class DataCategory
 {
 public:
-	std::string name;
-	std::string presentationName;
-	std::vector<DataItem *> items;
-	std::vector<std::string> triggers;
-	int order = 0;
+	std::string name;				   /**< Name of the category */
+	std::string presentationName;	   /**< Name of the category as it should be presented */
+	std::vector<DataItem *> items;	   /**< Items in the category */
+	std::vector<std::string> triggers; /**< OSC triggers words for the category */
+	int order = 0;					   /**< Order of the category in the list */
 };

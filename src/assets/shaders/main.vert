@@ -16,6 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file main.vert
+ * @brief The main vertex shader for the WAIVE-FRONT -- simply passes through the position and texture coordinates.
+ *
+ */
+
 R""(
 #version 410 core
 precision highp float;

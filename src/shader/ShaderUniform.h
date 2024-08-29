@@ -23,23 +23,42 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace Util::Logger;
 
+/**
+ * @brief Simple functions related to GLSL shader management, compilation and usage
+ */
 namespace Shader
 {
+	/**
+	 * @brief A class to manage a uniform in a shader program
+	 *
+	 * @tparam T The type of the uniform
+	 */
 	template <typename T>
 	class ShaderUniform
 	{
 	public:
-		char *name;
-		int size = 1;
+		char *name;	  /**< The name of the uniform */
+		int size = 1; /**< The number of elements of the uniform */
 
-		T *value = nullptr;
-		int location = -1;
+		T *value = nullptr; /**< The value of the uniform */
+		int location = -1;	/**< The location of the uniform in the shader program */
 
+		/**
+		 * @brief Construct a new Shader Uniform object
+		 *
+		 * @param name The name of the uniform
+		 * @param size The number of elements of the uniform
+		 */
 		ShaderUniform(char *name, int size)
 			: name(name), size(size)
 		{
 		}
 
+		/**
+		 * @brief Find the location of the uniform in the shader program
+		 *
+		 * @param shaderProgram The shader program
+		 */
 		void find(unsigned int shaderProgram)
 		{
 			location = glGetUniformLocation(shaderProgram, name);
@@ -48,6 +67,10 @@ namespace Shader
 				warn("SHADER", "Uniform " + std::string(name) + " not found");
 		}
 
+		/**
+		 * @brief Use the uniform in the shader program
+		 *
+		 */
 		void use()
 		{
 			if (std::is_same<T, int>::value)
@@ -70,6 +93,11 @@ namespace Shader
 			}
 		}
 
+		/**
+		 * @brief Set the value of the uniform
+		 *
+		 * @param value The value of the uniform
+		 */
 		void set(T *value)
 		{
 			this->value = value;

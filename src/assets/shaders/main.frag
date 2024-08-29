@@ -16,6 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file main.frag
+ * @brief The main fragment shader for the WAIVE-FRONT -- the meat and potatoes of the program.
+ *
+ */
+
 R""(
 #version 410 core
 precision highp float;

@@ -18,9 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+/**
+ * @brief Stores a video frame description
+ *
+ */
 struct VideoFrameDescription
 {
-	unsigned char *data;
-	int width;
-	int height;
+	unsigned char *data; /**< Data of the frame */
+	int width;			 /**< Width of the frame */
+	int height;			 /**< Height of the frame */
 };

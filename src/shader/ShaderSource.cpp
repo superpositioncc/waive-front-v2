@@ -24,17 +24,34 @@ using namespace Util::Logger;
 #include <iostream>
 #include <string>
 
+/**
+ * @brief Simple functions related to GLSL shader management, compilation and usage
+ */
 namespace Shader
 {
+	/**
+	 * @brief A class that represents GLSL shader source code and its compilation
+	 *
+	 */
 	class ShaderSource
 	{
 	public:
+		/**
+		 * @brief Construct a new Shader Source object
+		 *
+		 * @param source The source code of the shader
+		 * @param type The type of the shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER)
+		 */
 		ShaderSource(const char *source, unsigned int type)
 		{
 			this->source = source;
 			this->type = type;
 		}
 
+		/**
+		 * @brief Compile the shader
+		 *
+		 */
 		void compile()
 		{
 			const std::string typeName = (type == GL_VERTEX_SHADER) ? "Vertex" : "Fragment";
@@ -58,19 +75,28 @@ namespace Shader
 			}
 		}
 
+		/**
+		 * @brief Get the shader ID
+		 *
+		 * @return unsigned int The shader ID
+		 */
 		unsigned int get()
 		{
 			return shader;
 		}
 
+		/**
+		 * @brief Destroy the shader
+		 *
+		 */
 		void destroy()
 		{
 			glDeleteShader(shader);
 		}
 
 	private:
-		const char *source;
-		unsigned int shader;
-		unsigned int type;
+		const char *source;	 /**< The source code of the shader */
+		unsigned int shader; /**< The shader ID */
+		unsigned int type;	 /**< The type of the shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER) */
 	};
 };

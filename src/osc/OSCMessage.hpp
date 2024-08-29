@@ -22,10 +22,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <vector>
 #include "../data/DataCategory.hpp"
 
+/**
+ * @brief Stores an OSC message
+ *
+ */
 struct OSCMessage
 {
-	std::string sampleName;
-	std::vector<DataCategory *> categories;
-	int note;
-	bool seen;
+	std::string sampleName;					/**< Name of the sample being played by WAIVE */
+	std::vector<DataCategory *> categories; /**< Categories of the message */
+	int note;								/**< Note of the message */
+	bool seen;								/**< Whether the message has been seen */
 };

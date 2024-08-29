@@ -32,8 +32,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define RESET "\x1b[0m"
 #define DIM "\x1b[2m"
 
+/**
+ * @brief Various utility functions
+ */
 namespace Util
 {
+	/**
+	 * @brief Functions to log messages to the console including a timestamp and namespace
+	 */
 	namespace Logger
 	{
 		/**

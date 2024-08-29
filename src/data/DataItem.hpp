@@ -29,16 +29,20 @@ class DataTag;
 class DataSource;
 class DataCategory;
 
+/**
+ * @brief Stores a data item
+ *
+ */
 class DataItem
 {
 public:
-	std::vector<DataTag *> tags;
-	DataCategory *category;
-	DataSource *source;
+	std::vector<DataTag *> tags; /**< Tags of the item */
+	DataCategory *category;		 /**< Category of the item */
+	DataSource *source;			 /**< Source of the item */
 
-	std::string id;
-	std::string title;
-	std::string filename;
+	std::string id;		  /**< ID of the item */
+	std::string title;	  /**< Title of the item */
+	std::string filename; /**< Filename of the item */
 
-	int sceneId;
+	int sceneId; /**< Scene ID of the item */
 };

@@ -18,11 +18,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+/**
+ * @brief Stores data of a frame
+ *
+ */
 struct FrameData
 {
-	bool waiting = false;
-	unsigned char *data;
-	int width;
-	int height;
-	float colors[3 * 5];
+	bool waiting = false; /**< Whether the frame is waiting to be displayed */
+	unsigned char *data;  /**< Data of the frame */
+	int width;			  /**< Width of the frame */
+	int height;			  /**< Height of the frame */
+	float colors[3 * 5];  /**< Colors of the frame */
 };

@@ -41,13 +41,21 @@ START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------------------------------------------
 
+/**
+ * @brief The WaiveFrontPluginUI class is the main DPF UI and synchronizes the UI with the plugin
+ *
+ */
 class WaiveFrontPluginUI : public UI
 {
 public:
-    float parameters[Parameters::NumParameters];
-    DataSources dataSources;
-    OSCServer *oscServer;
+    float parameters[Parameters::NumParameters]; /**< The parameters of the plugin */
+    DataSources dataSources;                     /**< The data sources */
+    OSCServer *oscServer;                        /**< The OSC server */
 
+    /**
+     * @brief Construct a new WAIVE-FRONT Plugin UI object
+     *
+     */
     WaiveFrontPluginUI()
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
     {
@@ -90,10 +98,17 @@ public:
     }
 
 protected:
-    bool pRandomizeCategory[3] = {false, false, false};
-    bool pRandomizeItem[3] = {false, false, false};
-    bool allowOSC = true;
+    bool pRandomizeCategory[3] = {false, false, false}; /**< Whether to randomize the category on the next frame */
+    bool pRandomizeItem[3] = {false, false, false};     /**< Whether to randomize the item on the next frame */
+    bool allowOSC = true;                               /**< Whether to allow OSC control */
 
+    /**
+     * @brief Check if a file is a video file
+     *
+     * @param filename The filename to check
+     * @return true
+     * @return false
+     */
     bool isVideoFile(const char *filename)
     {
         std::string name = std::string(filename);
@@ -102,6 +117,11 @@ protected:
         return extension == "mp4" || extension == "mov";
     }
 
+    /**
+     * @brief Load the data sources from a directory
+     *
+     * @param directory Path to the directory
+     */
     void loadDataSources(std::string directory)
     {
         DIR *dir = opendir(directory.c_str());
@@ -200,6 +220,12 @@ protected:
         }
     }
 
+    /**
+     * @brief Select a category
+     *
+     * @param i The index of the layer to change the category for
+     * @param category The category to select
+     */
     void selectCategory(int i, DataCategory *category)
     {
         selectedCategories[i] = category;
@@ -208,6 +234,12 @@ protected:
         randomizeItem(i);
     }
 
+    /**
+     * @brief Select an item
+     *
+     * @param i The index of the layer to change the item for
+     * @param item The item to select
+     */
     void selectItem(int i, DataItem *item)
     {
         selectedItems[i] = item;
@@ -222,6 +254,12 @@ protected:
         }
     }
 
+    /**
+     * @brief Handle a parameter change
+     *
+     * @param index The index of the parameter
+     * @param value The new value of the parameter
+     */
     void parameterChanged(uint32_t index, float value) override
     {
         parameters[index] = value;
@@ -229,18 +267,32 @@ protected:
         repaint();
     }
 
+    /**
+     * @brief Randomize a category
+     *
+     * @param i The index of the layer to randomize the category for
+     */
     void randomizeCategory(int i)
     {
         int randomIndex = std::rand() % dataSources.categories.size();
         selectCategory(i, dataSources.categories[randomIndex]);
     }
 
+    /**
+     * @brief Randomize an item
+     *
+     * @param i The index of the layer to randomize the item for
+     */
     void randomizeItem(int i)
     {
         int randomIndex = std::rand() % selectedCategories[i]->items.size();
         selectItem(i, selectedCategories[i]->items[randomIndex]);
     }
 
+    /**
+     * @brief Display the ImGui UI
+     *
+     */
     void onImGuiDisplay() override
     {
         if (!initialized)
@@ -504,22 +556,31 @@ protected:
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaiveFrontPluginUI)
 
 private:
-    ViewerWindow *viewerWindow = nullptr;
-    bool initialized = false;
+    ViewerWindow *viewerWindow = nullptr; /**< The viewer window */
+    bool initialized = false;             /**< Whether the UI has been initialized */
 
-    ImFont *regular;
+    ImFont *regular; /**< The regular font */
 
-    std::vector<VideoLoader *> videoLoaders;
-    std::vector<DataCategory *> selectedCategories;
-    std::vector<DataItem *> selectedItems;
+    std::vector<VideoLoader *> videoLoaders;        /**< The video loaders */
+    std::vector<DataCategory *> selectedCategories; /**< The selected categories */
+    std::vector<DataItem *> selectedItems;          /**< The selected items */
 
-    std::vector<bool> layersEnabled;
+    std::vector<bool> layersEnabled; /**< The layers that are enabled */
 
+    /**
+     * @brief Get the current time
+     *
+     * @return int64_t The current time
+     */
     int64_t getCurrentTime()
     {
         return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     }
 
+    /**
+     * @brief Open the viewer window
+     *
+     */
     void openViewerWindow()
     {
         Application &app = getApp();

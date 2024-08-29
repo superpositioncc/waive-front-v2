@@ -26,17 +26,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "DataItem.hpp"
 #include "DataTag.hpp"
 
+/**
+ * @brief Stores all data sources
+ *
+ */
 class DataSources
 {
 public:
-	std::vector<DataSource *> sources;
-	std::vector<DataTag *> tags;
-	std::vector<DataItem *> items;
-	std::vector<DataCategory *> categories;
+	std::vector<DataSource *> sources;		/**< All data sources */
+	std::vector<DataTag *> tags;			/**< All tags */
+	std::vector<DataItem *> items;			/**< All items */
+	std::vector<DataCategory *> categories; /**< All categories */
 
-	DataTag *findOrCreateTag(std::string name);
-	DataCategory *findOrCreateCategory(std::string name);
+	DataTag *findOrCreateTag(std::string name);			  /**< Find or create a tag */
+	DataCategory *findOrCreateCategory(std::string name); /**< Find or create a category */
 
-	void collectItems();
-	void sortCategories();
+	void collectItems();   /**< Collect all items from the sources */
+	void sortCategories(); /**< Sort the categories */
 };

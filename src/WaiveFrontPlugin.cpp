@@ -21,11 +21,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 START_NAMESPACE_DISTRHO
 
+/**
+ * @brief The WaiveFrontPlugin class is the main DPF plugin and synchronizes the plugin with the DAW
+ *
+ */
 class WaiveFrontPlugin : public Plugin
 {
 public:
-    float parameters[Parameters::NumParameters];
+    float parameters[Parameters::NumParameters]; /**< The parameters of the plugin */
 
+    /**
+     * @brief Construct a new Waive Front Plugin object
+     *
+     */
     WaiveFrontPlugin()
         : Plugin(Parameters::NumParameters, 0, 0)
     {
@@ -52,14 +60,21 @@ public:
     }
 
 protected:
-    const char *getLabel() const override { return DISTRHO_PLUGIN_NAME; }
-    const char *getDescription() const override { return DISTRHO_PLUGIN_NAME; }
-    const char *getMaker() const override { return DISTRHO_PLUGIN_BRAND; }
-    const char *getHomePage() const override { return DISTRHO_PLUGIN_URI; }
-    const char *getLicense() const override { return "ISC"; }
+    const char *getLabel() const override { return DISTRHO_PLUGIN_NAME; }       /**< Get the label of the plugin */
+    const char *getDescription() const override { return DISTRHO_PLUGIN_NAME; } /**< Get the description of the plugin */
+    const char *getMaker() const override { return DISTRHO_PLUGIN_BRAND; }      /**< Get the maker of the plugin */
+    const char *getHomePage() const override { return DISTRHO_PLUGIN_URI; }     /**< Get the homepage of the plugin */
+    const char *getLicense() const override { return "GPLv3"; }                 /**< Get the license of the plugin */
 
-    uint32_t getVersion() const override { return d_version(1, 0, 0); }
+    uint32_t getVersion() const override { return d_version(1, 0, 0); } /**< Get the version of the plugin */
 
+    /**
+     * @brief Initialize the audio port
+     *
+     * @param input Whether the port is an input or output
+     * @param index The index of the port
+     * @param port The port to initialize
+     */
     void initAudioPort(bool input, uint32_t index, AudioPort &port) override
     {
         port.groupId = kPortGroupStereo;
@@ -67,6 +82,12 @@ protected:
         Plugin::initAudioPort(input, index, port);
     }
 
+    /**
+     * @brief Initialize the parameter
+     *
+     * @param index The index of the parameter
+     * @param parameter The parameter to initialize
+     */
     void initParameter(uint32_t index, Parameter &parameter) override
     {
         parameter.hints = kParameterIsAutomatable;
@@ -77,14 +98,6 @@ protected:
 
         switch (index)
         {
-        // case Threshold:
-        //     parameter.name = "Threshold";
-        //     parameter.symbol = "threshold";
-        //     break;
-        // case Width:
-        //     parameter.name = "Width";
-        //     parameter.symbol = "width";
-        //     break;
         case FocusDistance:
             parameter.name = "Focus Distance";
             break;
@@ -150,16 +163,35 @@ protected:
         parameter.symbol = String(parameter.name).replace(' ', '_').toLower();
     }
 
+    /**
+     * @brief Get the value of a parameter
+     *
+     * @param index The index of the parameter
+     * @return float The value of the parameter
+     */
     float getParameterValue(uint32_t index) const override
     {
         return parameters[index];
     }
 
+    /**
+     * @brief Set the value of a parameter
+     *
+     * @param index The index of the parameter
+     * @param value The value of the parameter
+     */
     void setParameterValue(uint32_t index, float value) override
     {
         parameters[index] = value;
     }
 
+    /**
+     * @brief Run the plugin
+     *
+     * @param inputs The input audio
+     * @param outputs The output audio
+     * @param frames The number of frames
+     */
     void run(const float **inputs, float **outputs, uint32_t frames) override
     {
         // Don't alter the audio, just pass it through

@@ -34,24 +34,45 @@ using json = nlohmann::json;
 
 class DataSources;
 
+/**
+ * @brief Represents a data source
+ *
+ */
 class DataSource
 {
 public:
-	std::string name;
-	std::string path;
+	std::string name; /**< Name of the source */
+	std::string path; /**< Path to the source */
 
-	std::vector<DataTag *> tags;
-	std::vector<DataItem *> items;
-	std::vector<DataCategory *> categories;
+	std::vector<DataTag *> tags;			/**< All tags in the source */
+	std::vector<DataItem *> items;			/**< All items in the source */
+	std::vector<DataCategory *> categories; /**< All categories in the source */
 
+	/**
+	 * @brief Construct a new DataSource object
+	 *
+	 * @param path Path to the source
+	 */
 	DataSource(std::string path) : path(path) {}
 
+	/**
+	 * @brief Whether the source is valid
+	 *
+	 * @return true The source is valid
+	 * @return false The source is not valid
+	 */
 	bool isValid() { return valid; }
+
+	/**
+	 * @brief Load the source
+	 *
+	 * @param sources Data sources to load into
+	 */
 	void load(DataSources *sources);
 
 private:
-	bool valid;
+	bool valid; /**< Whether the source is valid */
 
-	void addCategoryIfNotAdded(DataCategory *category);
-	void addTagIfNotAdded(DataTag *tag);
+	void addCategoryIfNotAdded(DataCategory *category); /**< Add a category if it is not added already */
+	void addTagIfNotAdded(DataTag *tag);				/**< Add a tag if it is not added already */
 };

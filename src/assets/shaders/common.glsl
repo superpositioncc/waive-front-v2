@@ -16,6 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file common.glsl
+ * @brief Common GLSL functions and macros.
+ *
+ */
+
 R""(
 float random (vec2 st) {
     return fract(sin(dot(st.xy,

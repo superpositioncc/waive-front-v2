@@ -16,6 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/*! \mainpage WAIVE-FRONT
+ *
+ * Welcome to the WAIVE-FRONT documentation. To start out, have a look at the WaiveFrontPluginUI class, which is the backbone of the plugin's user interface. From there, you can look at the ViewerWidget class, which handles the presentation views. If you're interested in the visual aspect of WAIVE-FRONT, check out the shaders in the /assets folder, mainly in main.frag. Video decoding is handled by the VideoLoader and OSC communication is handled by the OSCServer. Have fun, and of course, pull requests are welcome!
+ */
+
 #ifndef DISTRHO_PLUGIN_INFO_H_INCLUDED
 #define DISTRHO_PLUGIN_INFO_H_INCLUDED
 
@@ -62,6 +67,6 @@ enum Parameters
 	RandomizeItem2,
 	RandomizeItem3,
 	NumParameters
-};
+}; /**< The parameters of the VST plugin */
 
 #endif // DISTRHO_PLUGIN_INFO_H_INCLUDED

@@ -37,14 +37,33 @@ using Shader::ShaderRectangle;
 using Shader::ShaderTexture;
 using Shader::ShaderUniforms;
 
+/**
+ * @brief Clip a value between a lower and upper bound
+ *
+ * @param n
+ * @param lower
+ * @param upper
+ * @return float
+ */
 float clip(float n, float lower, float upper)
 {
 	return std::max(lower, std::min(n, upper));
 }
 
+/**
+ * @brief Viewer widget is the widget that displays the shader. It is the main widget of the viewer window and the presentation that the audience sees
+ *
+ */
 class ViewerWidget : public TopLevelWidget
 {
 public:
+	/**
+	 * @brief Construct a new Viewer Widget object
+	 *
+	 * @param window Window
+	 * @param p Parameters
+	 * @param layersEnabled Vector of booleans representing which layers have been enabled
+	 */
 	ViewerWidget(Window &window, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled)
 		: TopLevelWidget(window),
 		  parameters(p),
@@ -57,11 +76,26 @@ public:
 	{
 	}
 
+	/**
+	 * @brief Check if the widget is initialized
+	 *
+	 * @return true
+	 * @return false
+	 */
 	bool isInitialized()
 	{
 		return initialized;
 	}
 
+	/**
+	 * @brief Set the frame data
+	 *
+	 * @param i The index of the layer to set the frame data for
+	 * @param frame The frame data
+	 * @param width The width of the frame
+	 * @param height The height of the frame
+	 * @param colors The colors of the frame
+	 */
 	void setFrame(int i, uint8_t *frame, int width, int height, std::vector<float> colors)
 	{
 		if (!isInitialized())
@@ -79,6 +113,10 @@ public:
 	}
 
 protected:
+	/**
+	 * @brief Display the widget
+	 *
+	 */
 	void onDisplay() override
 	{
 		if (!initialized)
@@ -91,6 +129,13 @@ protected:
 		draw();
 	}
 
+	/**
+	 * @brief Handle a window resize event
+	 *
+	 * @param event The window resize event
+	 * @return true
+	 * @return false
+	 */
 	bool onMotion(const MotionEvent &event) override
 	{
 		setSize(getWindow().getWidth(), getWindow().getHeight());
@@ -98,17 +143,21 @@ protected:
 	}
 
 private:
-	float (&parameters)[Parameters::NumParameters];
-	std::vector<bool> *layersEnabled;
+	float (&parameters)[Parameters::NumParameters]; /**< The parameters of the shader */
+	std::vector<bool> *layersEnabled;				/**< Vector of booleans representing which layers have been enabled */
 
-	bool initialized = false;
+	bool initialized = false; /**< Whether the widget has been initialized */
 
-	std::vector<FrameData *> frameData;
-	std::vector<ShaderTexture *> textures;
-	ShaderProgram shaderProgram;
-	ShaderRectangle rectangle;
-	ShaderUniforms uniforms;
+	std::vector<FrameData *> frameData;	   /**< The frame data for each layer */
+	std::vector<ShaderTexture *> textures; /**< The textures for each layer */
+	ShaderProgram shaderProgram;		   /**< The shader program */
+	ShaderRectangle rectangle;			   /**< The shader rectangle */
+	ShaderUniforms uniforms;			   /**< The shader uniforms */
 
+	/**
+	 * @brief Initialize the widget
+	 *
+	 */
 	void init()
 	{
 		shaderProgram.init();
@@ -127,6 +176,10 @@ private:
 		glEnable(GL_BLEND);
 	}
 
+	/**
+	 * @brief Checks if the frame data has been updated and updates the textures
+	 *
+	 */
 	void updateFrameData()
 	{
 		for (int i = 0; i < 3; i++)
@@ -141,6 +194,10 @@ private:
 		}
 	}
 
+	/**
+	 * @brief Update frame data and set the uniforms
+	 *
+	 */
 	void update()
 	{
 		updateFrameData();
@@ -152,9 +209,13 @@ private:
 		uniforms.time.set(&timeInSeconds);
 	}
 
+	/**
+	 * @brief Draw the widget
+	 *
+	 */
 	void draw()
 	{
-		float *background = Color::HSVtoRGB(parameters[Parameters::BackgroundHue], parameters[Parameters::BackgroundSaturation], parameters[Parameters::BackgroundValue]);
+		float *background = Util::Color::HSVtoRGB(parameters[Parameters::BackgroundHue], parameters[Parameters::BackgroundSaturation], parameters[Parameters::BackgroundValue]);
 
 		glClearColor(background[0], background[1], background[2], 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

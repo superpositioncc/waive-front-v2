@@ -37,11 +37,22 @@ using namespace Util::Logger;
 #include <vector>
 #include <unistd.h>
 
+/**
+ * @brief Class to load a video and extract frames and colors from it
+ *
+ */
 class VideoLoader
 {
 private:
-	std::vector<float> colors;
+	std::vector<float> colors; /**< Colors extracted from the video */
 
+	/**
+	 * @brief Convert a frame to RGB
+	 *
+	 * @param frame Frame to convert
+	 * @param rgb_frame Converted frame
+	 * @return int 0 if successful, -1 otherwise
+	 */
 	int convertToRGB(AVFrame *frame, AVFrame **rgb_frame)
 	{
 		// Allocate an AVFrame structure
@@ -101,46 +112,65 @@ private:
 		return 0;
 	}
 
-	AVFormatContext *format;
-	AVCodecParameters *codecParameters;
-	const AVCodec *codec;
-	AVCodecContext *context;
-	AVCodecParserContext *parser;
-	AVPacket *packet;
-	AVFrame *frame;
-	AVFrame *rgb_frame;
-	uint8_t *data;
-	int videoStreamIndex;
-	int status;
+	AVFormatContext *format;			/**< Format context */
+	AVCodecParameters *codecParameters; /**< Codec parameters */
+	const AVCodec *codec;				/**< Codec */
+	AVCodecContext *context;			/**< Codec context */
+	AVCodecParserContext *parser;		/**< Parser context */
+	AVPacket *packet;					/**< Packet */
+	AVFrame *frame;						/**< Frame */
+	AVFrame *rgb_frame;					/**< RGB frame */
+	uint8_t *data;						/**< Data */
+	int videoStreamIndex;				/**< Video stream index */
+	int status;							/**< Status */
 
-	int64_t lastFrameTime = 0;
-	int64_t frameDuration = 0;
+	int64_t lastFrameTime = 0; /**< Last frame time */
+	int64_t frameDuration = 0; /**< Frame duration */
 
 	// For the palettegen filter
-	AVFilterGraph *filterGraph;
-	AVFilterContext *bufferSrcContext, *bufferSinkContext;
-	const AVFilter *bufferSrc, *bufferSink;
-	AVFrame *paletteFrame;
-	AVFilterInOut *outputs, *inputs;
+	AVFilterGraph *filterGraph;							   /**< Filter graph for the palettegen filter */
+	AVFilterContext *bufferSrcContext, *bufferSinkContext; /**< Buffer source and sink contexts */
+	const AVFilter *bufferSrc, *bufferSink;				   /**< Buffer source and sink */
+	AVFrame *paletteFrame;								   /**< Palette frame */
+	AVFilterInOut *outputs, *inputs;					   /**< Filter in/out */
 
 public:
+	/**
+	 * @brief Construct a new VideoLoader object
+	 *
+	 */
 	VideoLoader()
 	{
 		av_log_set_level(AV_LOG_QUIET);
 		print("VIDEO", "FFmpeg version: " + std::string(av_version_info()));
 	}
 
+	/**
+	 * @brief Get the status of the video loader
+	 *
+	 * @return int Status
+	 */
 	int getStatus()
 	{
 		return status;
 	}
 
+	/**
+	 * @brief Rewind the video
+	 *
+	 */
 	void rewind()
 	{
 		avcodec_flush_buffers(context);
 		av_seek_frame(format, videoStreamIndex, 0, AVSEEK_FLAG_BACKWARD);
 	}
 
+	/**
+	 * @brief Extract colors from a frame
+	 *
+	 * @param frame Frame to extract colors from
+	 * @return std::vector<float> Colors extracted from the frame
+	 */
 	std::vector<float> extractColors(AVFrame *frame)
 	{
 		if (av_buffersrc_add_frame(bufferSrcContext, frame) < 0)
@@ -184,6 +214,12 @@ public:
 		return colors;
 	}
 
+	/**
+	 * @brief Check if the next frame should be retrieved
+	 *
+	 * @param currentTime Current time
+	 * @return bool Whether the next frame should be retrieved
+	 */
 	bool shouldGetNextFrame(int64_t currentTime)
 	{
 		if (frameDuration == 0)
@@ -201,6 +237,11 @@ public:
 		return false;
 	}
 
+	/**
+	 * @brief Get the next frame from the video
+	 *
+	 * @return VideoFrameDescription Frame description
+	 */
 	VideoFrameDescription getFrame()
 	{
 		getReadyForNextFrame();
@@ -290,11 +331,22 @@ public:
 		return videoFrameDescription;
 	}
 
+	/**
+	 * @brief Get the colors extracted from the video
+	 *
+	 * @return std::vector<float> Colors extracted from the video
+	 */
 	std::vector<float> getColors()
 	{
 		return colors;
 	}
 
+	/**
+	 * @brief Load a video
+	 *
+	 * @param videoPath Path to the video
+	 * @return int 0 if successful, -1 otherwise
+	 */
 	int loadVideo(const std::string &videoPath)
 	{
 		getReadyForNextLoad();
@@ -451,6 +503,10 @@ public:
 		return 0;
 	}
 
+	/**
+	 * @brief Free resources and get ready for the next load
+	 *
+	 */
 	void getReadyForNextLoad()
 	{
 		av_parser_close(parser);
@@ -468,6 +524,10 @@ public:
 		colors.clear();
 	}
 
+	/**
+	 * @brief Free resources and get ready for the next frame
+	 *
+	 */
 	void getReadyForNextFrame()
 	{
 		av_frame_unref(frame);

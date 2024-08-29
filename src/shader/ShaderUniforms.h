@@ -21,8 +21,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "ShaderUniform.h"
 #include "ShaderProgram.cpp"
 
+/**
+ * @brief Simple functions related to GLSL shader management, compilation and usage
+ */
 namespace Shader
 {
+	/**
+	 * @brief A struct to manage the uniforms of the WAIVE-FRONT main shader program
+	 *
+	 */
 	struct ShaderUniforms
 	{
 		ShaderUniform<float> focusAmount = ShaderUniform<float>("focusAmount", 1);

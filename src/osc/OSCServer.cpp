@@ -30,9 +30,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace Util::Logger;
 
+/**
+ * @brief OSC server
+ *
+ */
 class OSCServer : public osc::OscPacketListener
 {
 public:
+	/**
+	 * @brief Construct a new OSCServer object
+	 *
+	 * @param port The port to listen on
+	 * @param dataSources The data sources
+	 */
 	OSCServer(int port, DataSources *dataSources) : dataSources(dataSources)
 	{
 		init(port);
@@ -44,6 +54,11 @@ public:
 		stop();
 	}
 
+	/**
+	 * @brief Initialize the server
+	 *
+	 * @param port The port to listen on
+	 */
 	void init(int port)
 	{
 		socket = new UdpListeningReceiveSocket(
@@ -55,6 +70,10 @@ public:
 							 { socket->RunUntilSigInt(); });
 	}
 
+	/**
+	 * @brief Stop the server
+	 *
+	 */
 	void stop()
 	{
 		socket->AsynchronousBreak();
@@ -65,17 +84,33 @@ public:
 		delete socket;
 	}
 
+	/**
+	 * @brief Whether a message is available
+	 *
+	 * @return true A message is available
+	 * @return false A message is not available
+	 */
 	bool available()
 	{
 		return !latestMessage.seen;
 	}
 
+	/**
+	 * @brief Get the latest message
+	 *
+	 * @return OSCMessage The latest message
+	 */
 	OSCMessage getMessage()
 	{
 		latestMessage.seen = true;
 		return latestMessage;
 	}
 
+	/**
+	 * @brief Change the port
+	 *
+	 * @param port The new port
+	 */
 	void changePort(int port)
 	{
 		socket->AsynchronousBreak();
@@ -91,6 +126,12 @@ public:
 	}
 
 protected:
+	/**
+	 * @brief Process a message
+	 *
+	 * @param m The message
+	 * @param remoteEndpoint The remote endpoint
+	 */
 	virtual void ProcessMessage(const osc::ReceivedMessage &m,
 								const IpEndpointName &remoteEndpoint)
 	{
@@ -162,9 +203,9 @@ protected:
 	}
 
 private:
-	UdpListeningReceiveSocket *socket;
-	std::thread thread;
+	UdpListeningReceiveSocket *socket; /**< The socket */
+	std::thread thread;				   /**< The thread */
 
-	OSCMessage latestMessage;
-	DataSources *dataSources;
+	OSCMessage latestMessage; /**< The latest message */
+	DataSources *dataSources; /**< The data sources */
 };

@@ -20,8 +20,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "OpenGL.hpp"
 
+/**
+ * @brief Simple functions related to GLSL shader management, compilation and usage
+ */
 namespace Shader
 {
+	/**
+	 * @brief A class to manage a texture in a shader program
+	 *
+	 */
 	class ShaderTexture
 	{
 	public:
@@ -29,6 +36,10 @@ namespace Shader
 		{
 		}
 
+		/**
+		 * @brief Initialize the texture, by creating a texture object
+		 *
+		 */
 		void init()
 		{
 			if (initialized)
@@ -47,11 +58,22 @@ namespace Shader
 			set(nullptr, 16, 16);
 		}
 
+		/**
+		 * @brief Bind the texture to the current shader program
+		 *
+		 */
 		void bind()
 		{
 			glBindTexture(GL_TEXTURE_2D, texture);
 		}
 
+		/**
+		 * @brief Set the texture data
+		 *
+		 * @param data The texture data
+		 * @param width The width of the texture
+		 * @param height The height of the texture
+		 */
 		void set(const unsigned char *data, int width, int height)
 		{
 			bind();
@@ -60,8 +82,8 @@ namespace Shader
 		}
 
 	private:
-		bool initialized = false;
+		bool initialized = false; /**< Whether the texture has been initialized */
 
-		unsigned int texture;
+		unsigned int texture; /**< The texture ID */
 	};
 };

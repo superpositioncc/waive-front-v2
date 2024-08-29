@@ -23,9 +23,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "DataItem.hpp"
 
+/**
+ * @brief Stores a data tag
+ *
+ */
 class DataTag
 {
 public:
-	std::string name;
-	std::vector<DataItem *> items;
+	std::string name;			   /**< Name of the tag */
+	std::vector<DataItem *> items; /**< Items with the tag */
 };
