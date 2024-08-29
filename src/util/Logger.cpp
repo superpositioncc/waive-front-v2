@@ -36,6 +36,13 @@ namespace Util
 {
 	namespace Logger
 	{
+		/**
+		 * @brief Print a message to the console
+		 *
+		 * @param ns Namespace of the message
+		 * @param message Message to print
+		 * @param color Color of the message
+		 */
 		static void print(const std::string &ns, const std::string &message, const std::string &color)
 		{
 			// Use strftime to get the time as HH:MM:SS
@@ -47,16 +54,34 @@ namespace Util
 			std::cout << DIM << timeStr << RESET << color << " [" << DISTRHO_PLUGIN_NAME << "][" << ns << "] " << RESET << message << std::endl;
 		}
 
+		/**
+		 * @brief Print a message to the console in the default color
+		 *
+		 * @param ns Namespace of the message
+		 * @param message Message to print
+		 */
 		static void print(const std::string &ns, const std::string &message)
 		{
 			print(ns, message, CYAN);
 		}
 
+		/**
+		 * @brief Print an error message to the console in red
+		 *
+		 * @param ns Namespace of the message
+		 * @param message Message to print
+		 */
 		static void error(const std::string &ns, const std::string &message)
 		{
 			print(ns, message, RED);
 		}
 
+		/**
+		 * @brief Print a warning message to the console in yellow
+		 *
+		 * @param ns Namespace of the message
+		 * @param message Message to print
+		 */
 		static void warn(const std::string &ns, const std::string &message)
 		{
 			print(ns, message, YELLOW);
