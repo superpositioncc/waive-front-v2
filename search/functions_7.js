@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hsvtorgb_0',['HSVtoRGB',['../namespaceColor.html#ae8cb39adb4894b068b6597a0b9759eaa',1,'Color']]]
+  ['hsvtorgb_0',['HSVtoRGB',['../namespaceUtil_1_1Color.html#abbc848ac45401223a0e45cd7262f0ab9',1,'Util::Color']]]
 ];

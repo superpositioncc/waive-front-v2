@@ -95,23 +95,39 @@ $(document).ready(function(){initNavTree('classShader_1_1ShaderTexture.html','')
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classShader_1_1ShaderTexture-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Shader::ShaderTexture Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to manage a texture in a shader program.  
+ <a href="classShader_1_1ShaderTexture.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a79747c0bfa937fb3720c92b7e928db43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a79747c0bfa937fb3720c92b7e928db43">ShaderTexture</a> ()</td></tr>
 <tr class="separator:a79747c0bfa937fb3720c92b7e928db43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a657f197eb48d3074c0aa48454049b970"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a657f197eb48d3074c0aa48454049b970">init</a> ()</td></tr>
+<tr class="memdesc:a657f197eb48d3074c0aa48454049b970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the texture, by creating a texture object.  <br /></td></tr>
 <tr class="separator:a657f197eb48d3074c0aa48454049b970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a072e9f13bc285a75be3f94a8964591b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a072e9f13bc285a75be3f94a8964591b3">bind</a> ()</td></tr>
+<tr class="memdesc:a072e9f13bc285a75be3f94a8964591b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind the texture to the current shader program.  <br /></td></tr>
 <tr class="separator:a072e9f13bc285a75be3f94a8964591b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00a6c51da06b1114833606f3d40a1614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a00a6c51da06b1114833606f3d40a1614">set</a> (const unsigned char *data, int width, int height)</td></tr>
+<tr class="memdesc:a00a6c51da06b1114833606f3d40a1614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the texture data.  <br /></td></tr>
 <tr class="separator:a00a6c51da06b1114833606f3d40a1614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a16a9c30205bb8426a9c6a00ff81169b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a16a9c30205bb8426a9c6a00ff81169b6">initialized</a> = false</td></tr>
+<tr class="separator:a16a9c30205bb8426a9c6a00ff81169b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72244b2739deb741b0bff335d5d3d5a8"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderTexture.html#a72244b2739deb741b0bff335d5d3d5a8">texture</a></td></tr>
+<tr class="separator:a72244b2739deb741b0bff335d5d3d5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to manage a texture in a shader program. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a79747c0bfa937fb3720c92b7e928db43" name="a79747c0bfa937fb3720c92b7e928db43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79747c0bfa937fb3720c92b7e928db43">&#9670;&#160;</a></span>ShaderTexture()</h2>
 
@@ -161,6 +177,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Bind the texture to the current shader program. </p>
+
 </div>
 </div>
 <a id="a657f197eb48d3074c0aa48454049b970" name="a657f197eb48d3074c0aa48454049b970"></a>
@@ -185,6 +203,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initialize the texture, by creating a texture object. </p>
 
 </div>
 </div>
@@ -227,6 +247,63 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Set the texture data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The texture data </td></tr>
+    <tr><td class="paramname">width</td><td>The width of the texture </td></tr>
+    <tr><td class="paramname">height</td><td>The height of the texture </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a16a9c30205bb8426a9c6a00ff81169b6" name="a16a9c30205bb8426a9c6a00ff81169b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16a9c30205bb8426a9c6a00ff81169b6">&#9670;&#160;</a></span>initialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Shader::ShaderTexture::initialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the texture has been initialized </p>
+
+</div>
+</div>
+<a id="a72244b2739deb741b0bff335d5d3d5a8" name="a72244b2739deb741b0bff335d5d3d5a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72244b2739deb741b0bff335d5d3d5a8">&#9670;&#160;</a></span>texture</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderTexture::texture</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The texture ID </p>
 
 </div>
 </div>

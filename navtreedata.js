@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "WAIVE-FRONT V2", "index.html", [
+    [ "WAIVE-FRONT", "index.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -60,7 +61,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CinderTheme_8cpp.html",
-"classWaiveFrontPluginUI.html#a78cd0a7189cd531ee5a0441482670a11"
+"classVideoLoader.html#a24e2305c9a9de920651f088b6aff797a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

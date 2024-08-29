@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['parameterchanged_0',['parameterChanged',['../classWaiveFrontPluginUI.html#a40335f68e664b4528fb546c35ef97000',1,'WaiveFrontPluginUI']]],
-  ['print_1',['print',['../namespaceUtil_1_1Logger.html#af87744383fe681fec9cfba258f8302f2',1,'Util::Logger::print(const std::string &amp;ns, const std::string &amp;message, const std::string &amp;color)'],['../namespaceUtil_1_1Logger.html#a3f98403883274cc594534e67951e456a',1,'Util::Logger::print(const std::string &amp;ns, const std::string &amp;message)']]],
-  ['printversion_2',['printVersion',['../classShader_1_1ShaderProgram.html#ab2716a1c9cd75bdcb947098358eb4677',1,'Shader::ShaderProgram']]],
-  ['processmessage_3',['ProcessMessage',['../classOSCServer.html#a8f6f39b0573feb0f1dd6734af63cc6a6',1,'OSCServer']]]
+  ['ondisplay_0',['onDisplay',['../classViewerWidget.html#a2a11a758f6ce4be1c1585fdd5efbde73',1,'ViewerWidget']]],
+  ['onimguidisplay_1',['onImGuiDisplay',['../classWaiveFrontPluginUI.html#a8f44c742da2d446b53f55ba13e2b0894',1,'WaiveFrontPluginUI']]],
+  ['onmotion_2',['onMotion',['../classViewerWidget.html#a4d42aab1d7ed4b8a82efbb1a9c0daf11',1,'ViewerWidget']]],
+  ['openviewerwindow_3',['openViewerWindow',['../classWaiveFrontPluginUI.html#aa69a305c08d436cd50f733766edf2a81',1,'WaiveFrontPluginUI']]],
+  ['oscserver_4',['OSCServer',['../classOSCServer.html#a83220b05115bd6136663fda8e4ad7187',1,'OSCServer']]]
 ];

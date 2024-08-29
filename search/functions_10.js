@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['waivefrontplugin_0',['WaiveFrontPlugin',['../classWaiveFrontPlugin.html#af578d553b20a3fc32035e6e0d001b8b7',1,'WaiveFrontPlugin']]],
-  ['waivefrontpluginui_1',['WaiveFrontPluginUI',['../classWaiveFrontPluginUI.html#a26ce3489f916b1e4a12f92685e269ae0',1,'WaiveFrontPluginUI']]],
-  ['warn_2',['warn',['../namespaceUtil_1_1Logger.html#af58d781d8bba70480a17fee9369bc769',1,'Util::Logger']]]
+  ['videoloader_0',['VideoLoader',['../classVideoLoader.html#afec5f73426de309e84fe8d0a9ef42f9f',1,'VideoLoader']]],
+  ['viewerwidget_1',['ViewerWidget',['../classViewerWidget.html#ae89b7c798c205415a0f3863bd03d6f38',1,'ViewerWidget']]],
+  ['viewerwindow_2',['ViewerWindow',['../classViewerWindow.html#ace4429ea0e2ea853fddb441a7b5548f8',1,'ViewerWindow']]]
 ];

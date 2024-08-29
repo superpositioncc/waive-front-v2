@@ -101,6 +101,9 @@ $(document).ready(function(){initNavTree('classWaiveFrontPlugin.html',''); initR
   <div class="headertitle"><div class="title">WaiveFrontPlugin Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The <a class="el" href="classWaiveFrontPlugin.html" title="The WaiveFrontPlugin class is the main DPF plugin and synchronizes the plugin with the DAW.">WaiveFrontPlugin</a> class is the main DPF plugin and synchronizes the plugin with the DAW.  
+ <a href="classWaiveFrontPlugin.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for WaiveFrontPlugin:</div>
 <div class="dyncontent">
@@ -111,6 +114,7 @@ Inheritance diagram for WaiveFrontPlugin:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af578d553b20a3fc32035e6e0d001b8b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#af578d553b20a3fc32035e6e0d001b8b7">WaiveFrontPlugin</a> ()</td></tr>
+<tr class="memdesc:af578d553b20a3fc32035e6e0d001b8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Waive Front Plugin object.  <br /></td></tr>
 <tr class="separator:af578d553b20a3fc32035e6e0d001b8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -133,17 +137,24 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a01e8f434e0b7f2bc3d0c910e3a41d6e8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#a01e8f434e0b7f2bc3d0c910e3a41d6e8">getVersion</a> () const override</td></tr>
 <tr class="separator:a01e8f434e0b7f2bc3d0c910e3a41d6e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f0890db1ac3a086261186324f4f4940"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#a8f0890db1ac3a086261186324f4f4940">initAudioPort</a> (bool input, uint32_t index, AudioPort &amp;port) override</td></tr>
+<tr class="memdesc:a8f0890db1ac3a086261186324f4f4940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the audio port.  <br /></td></tr>
 <tr class="separator:a8f0890db1ac3a086261186324f4f4940"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a2f359dc340636870095d9f93cf4e25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#a7a2f359dc340636870095d9f93cf4e25">initParameter</a> (uint32_t index, Parameter &amp;parameter) override</td></tr>
+<tr class="memdesc:a7a2f359dc340636870095d9f93cf4e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the parameter.  <br /></td></tr>
 <tr class="separator:a7a2f359dc340636870095d9f93cf4e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4214685259bed3ef5db166ac54d59292"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#a4214685259bed3ef5db166ac54d59292">getParameterValue</a> (uint32_t index) const override</td></tr>
+<tr class="memdesc:a4214685259bed3ef5db166ac54d59292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of a parameter.  <br /></td></tr>
 <tr class="separator:a4214685259bed3ef5db166ac54d59292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05fb320d32ba08ac9c366349bf6798ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#a05fb320d32ba08ac9c366349bf6798ab">setParameterValue</a> (uint32_t index, float value) override</td></tr>
+<tr class="memdesc:a05fb320d32ba08ac9c366349bf6798ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a parameter.  <br /></td></tr>
 <tr class="separator:a05fb320d32ba08ac9c366349bf6798ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7ff050220420c5daae36cda82d3fba8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPlugin.html#ad7ff050220420c5daae36cda82d3fba8">run</a> (const float **inputs, float **outputs, uint32_t frames) override</td></tr>
+<tr class="memdesc:ad7ff050220420c5daae36cda82d3fba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the plugin.  <br /></td></tr>
 <tr class="separator:ad7ff050220420c5daae36cda82d3fba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="classWaiveFrontPlugin.html" title="The WaiveFrontPlugin class is the main DPF plugin and synchronizes the plugin with the DAW.">WaiveFrontPlugin</a> class is the main DPF plugin and synchronizes the plugin with the DAW. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af578d553b20a3fc32035e6e0d001b8b7" name="af578d553b20a3fc32035e6e0d001b8b7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af578d553b20a3fc32035e6e0d001b8b7">&#9670;&#160;</a></span>WaiveFrontPlugin()</h2>
 
@@ -166,6 +177,8 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Construct a new Waive Front Plugin object. </p>
 
 </div>
 </div>
@@ -192,6 +205,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the description of the plugin </p>
 
 </div>
 </div>
@@ -217,6 +231,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the homepage of the plugin </p>
 
 </div>
 </div>
@@ -242,6 +257,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the label of the plugin </p>
 
 </div>
 </div>
@@ -267,6 +283,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the license of the plugin </p>
 
 </div>
 </div>
@@ -292,6 +309,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the maker of the plugin </p>
 
 </div>
 </div>
@@ -319,6 +337,15 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the value of a parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>float The value of the parameter </dd></dl>
+
 </div>
 </div>
 <a id="a01e8f434e0b7f2bc3d0c910e3a41d6e8" name="a01e8f434e0b7f2bc3d0c910e3a41d6e8"></a>
@@ -343,6 +370,7 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the version of the plugin </p>
 
 </div>
 </div>
@@ -386,6 +414,16 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Initialize the audio port. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>Whether the port is an input or output </td></tr>
+    <tr><td class="paramname">index</td><td>The index of the port </td></tr>
+    <tr><td class="paramname">port</td><td>The port to initialize </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a7a2f359dc340636870095d9f93cf4e25" name="a7a2f359dc340636870095d9f93cf4e25"></a>
@@ -421,6 +459,15 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initialize the parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the parameter </td></tr>
+    <tr><td class="paramname">parameter</td><td>The parameter to initialize </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -464,6 +511,16 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Run the plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inputs</td><td>The input audio </td></tr>
+    <tr><td class="paramname">outputs</td><td>The output audio </td></tr>
+    <tr><td class="paramname">frames</td><td>The number of frames </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a05fb320d32ba08ac9c366349bf6798ab" name="a05fb320d32ba08ac9c366349bf6798ab"></a>
@@ -500,6 +557,15 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set the value of a parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the parameter </td></tr>
+    <tr><td class="paramname">value</td><td>The value of the parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -514,6 +580,7 @@ Protected Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The parameters of the plugin </p>
 
 </div>
 </div>

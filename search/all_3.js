@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_0',['data',['../structFrameData.html#aa601b3d908bd564ad759db077700f4f0',1,'FrameData::data()'],['../structVideoFrameDescription.html#a2161417ebfddded7c1ddc1a8f5fb6409',1,'VideoFrameDescription::data()']]],
+  ['data_0',['data',['../structFrameData.html#aa601b3d908bd564ad759db077700f4f0',1,'FrameData::data()'],['../classVideoLoader.html#a7a9ff66f7b3086dd433b2c5cae6af56d',1,'VideoLoader::data()'],['../structVideoFrameDescription.html#a2161417ebfddded7c1ddc1a8f5fb6409',1,'VideoFrameDescription::data()']]],
   ['datacategory_1',['DataCategory',['../classDataCategory.html',1,'']]],
   ['datacategory_2ehpp_2',['DataCategory.hpp',['../DataCategory_8hpp.html',1,'']]],
   ['dataitem_3',['DataItem',['../classDataItem.html',1,'']]],
@@ -8,8 +8,8 @@ var searchData=
   ['datasource_5',['DataSource',['../classDataSource.html',1,'DataSource'],['../classDataSource.html#aac150d2a6124d00a1b5eb4dd00f3064f',1,'DataSource::DataSource()']]],
   ['datasource_2ecpp_6',['DataSource.cpp',['../DataSource_8cpp.html',1,'']]],
   ['datasource_2ehpp_7',['DataSource.hpp',['../DataSource_8hpp.html',1,'']]],
-  ['datasources_8',['DataSources',['../classDataSources.html',1,'']]],
-  ['datasources_9',['dataSources',['../classWaiveFrontPluginUI.html#a49c7bff685c6453d8e1c6b641537727c',1,'WaiveFrontPluginUI']]],
+  ['datasources_8',['dataSources',['../classWaiveFrontPluginUI.html#a49c7bff685c6453d8e1c6b641537727c',1,'WaiveFrontPluginUI::dataSources()'],['../classOSCServer.html#a258cf58201965ba0b4a5f9bc5d2534f3',1,'OSCServer::dataSources()']]],
+  ['datasources_9',['DataSources',['../classDataSources.html',1,'']]],
   ['datasources_2ecpp_10',['DataSources.cpp',['../DataSources_8cpp.html',1,'']]],
   ['datasources_2ehpp_11',['DataSources.hpp',['../DataSources_8hpp.html',1,'']]],
   ['datatag_12',['DataTag',['../classDataTag.html',1,'']]],
@@ -36,5 +36,5 @@ var searchData=
   ['distrho_5fui_5fuse_5fnanovg_33',['DISTRHO_UI_USE_NANOVG',['../DistrhoPluginInfo_8h.html#ad49e79936a2aa5afa089cbc051426ccd',1,'DistrhoPluginInfo.h']]],
   ['distrho_5fui_5fuser_5fresizable_34',['DISTRHO_UI_USER_RESIZABLE',['../DistrhoPluginInfo_8h.html#abadb9d9ba7f479df39b3963ee60b7a4b',1,'DistrhoPluginInfo.h']]],
   ['distrhoplugininfo_2eh_35',['DistrhoPluginInfo.h',['../DistrhoPluginInfo_8h.html',1,'']]],
-  ['draw_36',['draw',['../classShader_1_1ShaderRectangle.html#a9ebf6809a3fbe692ebb24175042cb7df',1,'Shader::ShaderRectangle']]]
+  ['draw_36',['draw',['../classViewerWidget.html#a6a74673fae2548db693e471dc0e32ee5',1,'ViewerWidget::draw()'],['../classShader_1_1ShaderRectangle.html#a9ebf6809a3fbe692ebb24175042cb7df',1,'Shader::ShaderRectangle::draw()']]]
 ];

@@ -95,27 +95,50 @@ $(document).ready(function(){initNavTree('classShader_1_1ShaderProgram.html','')
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classShader_1_1ShaderProgram-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Shader::ShaderProgram Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to compile a GLSL shader program from a vertex and fragment shader.  
+ <a href="classShader_1_1ShaderProgram.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7fccefed816b8de9a2f3f6029a1853c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a7fccefed816b8de9a2f3f6029a1853c7">ShaderProgram</a> (char *vertexSource, char *fragmentSource)</td></tr>
+<tr class="memitem:a7fccefed816b8de9a2f3f6029a1853c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a7fccefed816b8de9a2f3f6029a1853c7">ShaderProgram</a> (char *<a class="el" href="classShader_1_1ShaderProgram.html#a1d69707e9e18cca04500f5e7aea1dccc">vertexSource</a>, char *<a class="el" href="classShader_1_1ShaderProgram.html#ae2e0ece87006313e84db5e39e429a1a6">fragmentSource</a>)</td></tr>
+<tr class="memdesc:a7fccefed816b8de9a2f3f6029a1853c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="namespaceShader.html" title="Simple functions related to GLSL shader management, compilation and usage.">Shader</a> Program object.  <br /></td></tr>
 <tr class="separator:a7fccefed816b8de9a2f3f6029a1853c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2770e53e458dbf9eb3d3c831207554d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a2770e53e458dbf9eb3d3c831207554d4">init</a> ()</td></tr>
+<tr class="memdesc:a2770e53e458dbf9eb3d3c831207554d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the shader program, by compiling the shaders and linking them.  <br /></td></tr>
 <tr class="separator:a2770e53e458dbf9eb3d3c831207554d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c26308dfabdf6342b9286847dcf0b2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a4c26308dfabdf6342b9286847dcf0b2a">isInitialized</a> ()</td></tr>
+<tr class="memdesc:a4c26308dfabdf6342b9286847dcf0b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the shader program has been initialized.  <br /></td></tr>
 <tr class="separator:a4c26308dfabdf6342b9286847dcf0b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2716a1c9cd75bdcb947098358eb4677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#ab2716a1c9cd75bdcb947098358eb4677">printVersion</a> ()</td></tr>
+<tr class="memdesc:ab2716a1c9cd75bdcb947098358eb4677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the OpenGL version.  <br /></td></tr>
 <tr class="separator:ab2716a1c9cd75bdcb947098358eb4677"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0e9691e1b0d6636798285ef0f289a4b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#aa0e9691e1b0d6636798285ef0f289a4b">get</a> ()</td></tr>
+<tr class="memdesc:aa0e9691e1b0d6636798285ef0f289a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the shader program.  <br /></td></tr>
 <tr class="separator:aa0e9691e1b0d6636798285ef0f289a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41e2a5e982d0bbd5e5aa0e8904220c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a41e2a5e982d0bbd5e5aa0e8904220c83">use</a> ()</td></tr>
+<tr class="memdesc:a41e2a5e982d0bbd5e5aa0e8904220c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the shader program.  <br /></td></tr>
 <tr class="separator:a41e2a5e982d0bbd5e5aa0e8904220c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a8184d15cc32801c9862a56cae17e5af1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a8184d15cc32801c9862a56cae17e5af1">initialized</a> = false</td></tr>
+<tr class="separator:a8184d15cc32801c9862a56cae17e5af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d69707e9e18cca04500f5e7aea1dccc"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#a1d69707e9e18cca04500f5e7aea1dccc">vertexSource</a></td></tr>
+<tr class="separator:a1d69707e9e18cca04500f5e7aea1dccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2e0ece87006313e84db5e39e429a1a6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#ae2e0ece87006313e84db5e39e429a1a6">fragmentSource</a></td></tr>
+<tr class="separator:ae2e0ece87006313e84db5e39e429a1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c43973929f206934a6d49974dc9982"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderProgram.html#af9c43973929f206934a6d49974dc9982">shaderProgram</a></td></tr>
+<tr class="separator:af9c43973929f206934a6d49974dc9982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to compile a GLSL shader program from a vertex and fragment shader. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7fccefed816b8de9a2f3f6029a1853c7" name="a7fccefed816b8de9a2f3f6029a1853c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7fccefed816b8de9a2f3f6029a1853c7">&#9670;&#160;</a></span>ShaderProgram()</h2>
 
@@ -150,6 +173,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new <a class="el" href="namespaceShader.html" title="Simple functions related to GLSL shader management, compilation and usage.">Shader</a> Program object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexSource</td><td>The source code of the vertex shader </td></tr>
+    <tr><td class="paramname">fragmentSource</td><td>The source code of the fragment shader </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -176,6 +208,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the shader program. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int The shader program </dd></dl>
+
 </div>
 </div>
 <a id="a2770e53e458dbf9eb3d3c831207554d4" name="a2770e53e458dbf9eb3d3c831207554d4"></a>
@@ -200,6 +235,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initialize the shader program, by compiling the shaders and linking them. </p>
 
 </div>
 </div>
@@ -226,6 +263,11 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Check if the shader program has been initialized. </p>
+<dl class="section return"><dt>Returns</dt><dd>true If the shader program has been initialized </dd>
+<dd>
+false If the shader program has not been initialized </dd></dl>
+
 </div>
 </div>
 <a id="ab2716a1c9cd75bdcb947098358eb4677" name="ab2716a1c9cd75bdcb947098358eb4677"></a>
@@ -251,6 +293,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Print the OpenGL version. </p>
+
 </div>
 </div>
 <a id="a41e2a5e982d0bbd5e5aa0e8904220c83" name="a41e2a5e982d0bbd5e5aa0e8904220c83"></a>
@@ -275,6 +319,101 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Use the shader program. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ae2e0ece87006313e84db5e39e429a1a6" name="ae2e0ece87006313e84db5e39e429a1a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2e0ece87006313e84db5e39e429a1a6">&#9670;&#160;</a></span>fragmentSource</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* Shader::ShaderProgram::fragmentSource</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The source code of the fragment shader </p>
+
+</div>
+</div>
+<a id="a8184d15cc32801c9862a56cae17e5af1" name="a8184d15cc32801c9862a56cae17e5af1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8184d15cc32801c9862a56cae17e5af1">&#9670;&#160;</a></span>initialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Shader::ShaderProgram::initialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the shader program has been initialized </p>
+
+</div>
+</div>
+<a id="af9c43973929f206934a6d49974dc9982" name="af9c43973929f206934a6d49974dc9982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9c43973929f206934a6d49974dc9982">&#9670;&#160;</a></span>shaderProgram</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderProgram::shaderProgram</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The shader program </p>
+
+</div>
+</div>
+<a id="a1d69707e9e18cca04500f5e7aea1dccc" name="a1d69707e9e18cca04500f5e7aea1dccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d69707e9e18cca04500f5e7aea1dccc">&#9670;&#160;</a></span>vertexSource</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* Shader::ShaderProgram::vertexSource</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The source code of the vertex shader </p>
 
 </div>
 </div>

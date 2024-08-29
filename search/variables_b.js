@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['samplename_0',['sampleName',['../structOSCMessage.html#aedf4f8e2ca53196ccd233169e9a5715c',1,'OSCMessage']]],
-  ['sceneid_1',['sceneId',['../classDataItem.html#a39c00dd4b1452922ed749e2a7f783cee',1,'DataItem']]],
-  ['seen_2',['seen',['../structOSCMessage.html#abb37ef755852e773340aabd82b53575a',1,'OSCMessage']]],
-  ['size_3',['size',['../classShader_1_1ShaderUniform.html#a58aca522c56824e8c5c2a5e1b7b7401f',1,'Shader::ShaderUniform::size()'],['../structShader_1_1ShaderUniforms.html#a8d17fc425c6d3244264bd0b8dc56aec0',1,'Shader::ShaderUniforms::size()']]],
-  ['source_4',['source',['../classDataItem.html#a49949933eb2d0850e35fafbe01faac4f',1,'DataItem']]],
-  ['sources_5',['sources',['../classDataSources.html#ac8b3d4cf51b079edf4323a04e28d6cf3',1,'DataSources']]],
-  ['spacemono_5fregular_5fcompressed_5fdata_6',['SpaceMono_Regular_compressed_data',['../SpaceMono__Regular_8cpp.html#a15328e01695eeb2854383f0ffc5b7989',1,'SpaceMono_Regular.cpp']]],
-  ['spacemono_5fregular_5fcompressed_5fsize_7',['SpaceMono_Regular_compressed_size',['../SpaceMono__Regular_8cpp.html#abbb89eab9f51ad0fb5b6a61e78ba1f65',1,'SpaceMono_Regular.cpp']]]
+  ['packet_0',['packet',['../classVideoLoader.html#a3fc72539130668e49753d54f7cb61718',1,'VideoLoader']]],
+  ['paletteframe_1',['paletteFrame',['../classVideoLoader.html#a741480027583bb59e7a13edc919d35de',1,'VideoLoader']]],
+  ['parameters_2',['parameters',['../classViewerWidget.html#a8faefca71e146b859ebd339124a816d8',1,'ViewerWidget::parameters()'],['../classWaiveFrontPlugin.html#a53c0eaf63e0902affa2c6ba845b5d718',1,'WaiveFrontPlugin::parameters()'],['../classWaiveFrontPluginUI.html#adaf230785548eada0b8b78b16c518ef9',1,'WaiveFrontPluginUI::parameters()']]],
+  ['parser_3',['parser',['../classVideoLoader.html#a022cf0bba2def8c3c11a9971cdd2a2ad',1,'VideoLoader']]],
+  ['path_4',['path',['../classDataSource.html#a298dfdca1edff6c46d98124f1b785bbb',1,'DataSource']]],
+  ['prandomizecategory_5',['pRandomizeCategory',['../classWaiveFrontPluginUI.html#a6aa2e0813ab71286eae2c922ef190acd',1,'WaiveFrontPluginUI']]],
+  ['prandomizeitem_6',['pRandomizeItem',['../classWaiveFrontPluginUI.html#a7c708ce46dc80d8c76a31407a1a1b598',1,'WaiveFrontPluginUI']]],
+  ['presentationname_7',['presentationName',['../classDataCategory.html#a33e4a648776959846c6538d1dfdf9c3d',1,'DataCategory']]]
 ];

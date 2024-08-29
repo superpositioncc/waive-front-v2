@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['name_0',['name',['../classDataCategory.html#a16b1974184097663bce8f217a1c42cf4',1,'DataCategory::name()'],['../classDataSource.html#a2b9e6309e0af18b159b42a9485b85de3',1,'DataSource::name()'],['../classDataTag.html#af5ebff5ca6aaa1b602c32602998b4331',1,'DataTag::name()'],['../classShader_1_1ShaderUniform.html#a82336dd9a8fff9f3445deac097c1e062',1,'Shader::ShaderUniform::name()']]],
-  ['note_1',['note',['../structOSCMessage.html#a71bf14ffadac6024e11ee012e7ae21aa',1,'OSCMessage']]]
+  ['lastframetime_0',['lastFrameTime',['../classVideoLoader.html#a24e2305c9a9de920651f088b6aff797a',1,'VideoLoader']]],
+  ['latestmessage_1',['latestMessage',['../classOSCServer.html#ae49a2fa6c95cf8682dc54796eea9dc79',1,'OSCServer']]],
+  ['layersenabled_2',['layersEnabled',['../classViewerWidget.html#a6ca96f7fb05250831293e8430b1d0478',1,'ViewerWidget::layersEnabled()'],['../classWaiveFrontPluginUI.html#a8592864497c7cd922ed0231f3bea1a10',1,'WaiveFrontPluginUI::layersEnabled()']]],
+  ['location_3',['location',['../classShader_1_1ShaderUniform.html#ae4ce9b9e48c7367274df0efe1bb358ec',1,'Shader::ShaderUniform']]]
 ];

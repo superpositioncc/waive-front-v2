@@ -95,10 +95,14 @@ $(document).ready(function(){initNavTree('classShader_1_1ShaderRectangle.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classShader_1_1ShaderRectangle-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Shader::ShaderRectangle Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to draw a rectangle using a shader program.  
+ <a href="classShader_1_1ShaderRectangle.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ShaderRectangle_8h_source.html">ShaderRectangle.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -107,11 +111,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b0f338990654d189d68ac02fbfda5a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#a1b0f338990654d189d68ac02fbfda5a7">ShaderRectangle</a> ()</td></tr>
 <tr class="separator:a1b0f338990654d189d68ac02fbfda5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae32ec38881114f0ddc5be3293b5764f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#ae32ec38881114f0ddc5be3293b5764f7">init</a> ()</td></tr>
+<tr class="memdesc:ae32ec38881114f0ddc5be3293b5764f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the rectangle, by creating the VAO, VBO and EBO.  <br /></td></tr>
 <tr class="separator:ae32ec38881114f0ddc5be3293b5764f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ebf6809a3fbe692ebb24175042cb7df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#a9ebf6809a3fbe692ebb24175042cb7df">draw</a> ()</td></tr>
+<tr class="memdesc:a9ebf6809a3fbe692ebb24175042cb7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw the rectangle.  <br /></td></tr>
 <tr class="separator:a9ebf6809a3fbe692ebb24175042cb7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:adabd29c26537ca3bdb3ecd2d94aa6a03"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#adabd29c26537ca3bdb3ecd2d94aa6a03">VAO</a></td></tr>
+<tr class="separator:adabd29c26537ca3bdb3ecd2d94aa6a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab78de120b28823a8f5c41099dae5b97f"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#ab78de120b28823a8f5c41099dae5b97f">VBO</a></td></tr>
+<tr class="separator:ab78de120b28823a8f5c41099dae5b97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3873f974b94ea143e265cca9188f8490"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#a3873f974b94ea143e265cca9188f8490">EBO</a></td></tr>
+<tr class="separator:a3873f974b94ea143e265cca9188f8490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af67d7855b22e680865b25ba2c23976ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#af67d7855b22e680865b25ba2c23976ad">initialized</a> = false</td></tr>
+<tr class="separator:af67d7855b22e680865b25ba2c23976ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a804a951549d5a23bf05b1dcb3a9dbf7d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#a804a951549d5a23bf05b1dcb3a9dbf7d">vertices</a> [16]</td></tr>
+<tr class="separator:a804a951549d5a23bf05b1dcb3a9dbf7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0dd71759c27363bea462fcd6344374c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShader_1_1ShaderRectangle.html#aa0dd71759c27363bea462fcd6344374c">indices</a> [6]</td></tr>
+<tr class="separator:aa0dd71759c27363bea462fcd6344374c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to draw a rectangle using a shader program. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1b0f338990654d189d68ac02fbfda5a7" name="a1b0f338990654d189d68ac02fbfda5a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b0f338990654d189d68ac02fbfda5a7">&#9670;&#160;</a></span>ShaderRectangle()</h2>
 
@@ -161,6 +184,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Draw the rectangle. </p>
+
 </div>
 </div>
 <a id="ae32ec38881114f0ddc5be3293b5764f7" name="ae32ec38881114f0ddc5be3293b5764f7"></a>
@@ -185,6 +210,155 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initialize the rectangle, by creating the VAO, VBO and EBO. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a3873f974b94ea143e265cca9188f8490" name="a3873f974b94ea143e265cca9188f8490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3873f974b94ea143e265cca9188f8490">&#9670;&#160;</a></span>EBO</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderRectangle::EBO</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0dd71759c27363bea462fcd6344374c" name="aa0dd71759c27363bea462fcd6344374c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0dd71759c27363bea462fcd6344374c">&#9670;&#160;</a></span>indices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderRectangle::indices[6]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        0, 1, 2,</div>
+<div class="line">        2, 3, 0</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p>The indices of the rectangle </p>
+
+</div>
+</div>
+<a id="af67d7855b22e680865b25ba2c23976ad" name="af67d7855b22e680865b25ba2c23976ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af67d7855b22e680865b25ba2c23976ad">&#9670;&#160;</a></span>initialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Shader::ShaderRectangle::initialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the rectangle has been initialized </p>
+
+</div>
+</div>
+<a id="adabd29c26537ca3bdb3ecd2d94aa6a03" name="adabd29c26537ca3bdb3ecd2d94aa6a03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adabd29c26537ca3bdb3ecd2d94aa6a03">&#9670;&#160;</a></span>VAO</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderRectangle::VAO</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab78de120b28823a8f5c41099dae5b97f" name="ab78de120b28823a8f5c41099dae5b97f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab78de120b28823a8f5c41099dae5b97f">&#9670;&#160;</a></span>VBO</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int Shader::ShaderRectangle::VBO</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a804a951549d5a23bf05b1dcb3a9dbf7d" name="a804a951549d5a23bf05b1dcb3a9dbf7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a804a951549d5a23bf05b1dcb3a9dbf7d">&#9670;&#160;</a></span>vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Shader::ShaderRectangle::vertices[16]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                             </div>
+<div class="line">       -1.0f, -1.0f,        0.0f, 0.0f,</div>
+<div class="line">       -1.0f,  1.0f,        0.0f, 1.0f,</div>
+<div class="line">        1.0f,  1.0f,        1.0f, 1.0f,</div>
+<div class="line">        1.0f, -1.0f,        1.0f, 0.0f</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p>The vertices of the rectangle </p>
 
 </div>
 </div>

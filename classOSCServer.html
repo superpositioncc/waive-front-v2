@@ -96,10 +96,14 @@ $(document).ready(function(){initNavTree('classOSCServer.html',''); initResizabl
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classOSCServer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">OSCServer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>OSC server.  
+ <a href="classOSCServer.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for OSCServer:</div>
 <div class="dyncontent">
@@ -109,27 +113,47 @@ Inheritance diagram for OSCServer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a83220b05115bd6136663fda8e4ad7187"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a83220b05115bd6136663fda8e4ad7187">OSCServer</a> (int port, <a class="el" href="classDataSources.html">DataSources</a> *dataSources)</td></tr>
+<tr class="memitem:a83220b05115bd6136663fda8e4ad7187"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a83220b05115bd6136663fda8e4ad7187">OSCServer</a> (int port, <a class="el" href="classDataSources.html">DataSources</a> *<a class="el" href="classOSCServer.html#a258cf58201965ba0b4a5f9bc5d2534f3">dataSources</a>)</td></tr>
+<tr class="memdesc:a83220b05115bd6136663fda8e4ad7187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classOSCServer.html" title="OSC server.">OSCServer</a> object.  <br /></td></tr>
 <tr class="separator:a83220b05115bd6136663fda8e4ad7187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44608c23b90674a651e4b5b4c271fcae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a44608c23b90674a651e4b5b4c271fcae">~OSCServer</a> ()</td></tr>
 <tr class="separator:a44608c23b90674a651e4b5b4c271fcae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab30dc0589374ed1d2dc195b0865a7e21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#ab30dc0589374ed1d2dc195b0865a7e21">init</a> (int port)</td></tr>
+<tr class="memdesc:ab30dc0589374ed1d2dc195b0865a7e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the server.  <br /></td></tr>
 <tr class="separator:ab30dc0589374ed1d2dc195b0865a7e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6772bd15d7d4abe69fbd60dd5beb7a91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a6772bd15d7d4abe69fbd60dd5beb7a91">stop</a> ()</td></tr>
+<tr class="memdesc:a6772bd15d7d4abe69fbd60dd5beb7a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the server.  <br /></td></tr>
 <tr class="separator:a6772bd15d7d4abe69fbd60dd5beb7a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acec4db014154135fb1b92bab361a71e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#acec4db014154135fb1b92bab361a71e0">available</a> ()</td></tr>
+<tr class="memdesc:acec4db014154135fb1b92bab361a71e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a message is available.  <br /></td></tr>
 <tr class="separator:acec4db014154135fb1b92bab361a71e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13ed0e42b95ad4f86bb739c8d38b50da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOSCMessage.html">OSCMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a13ed0e42b95ad4f86bb739c8d38b50da">getMessage</a> ()</td></tr>
+<tr class="memdesc:a13ed0e42b95ad4f86bb739c8d38b50da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the latest message.  <br /></td></tr>
 <tr class="separator:a13ed0e42b95ad4f86bb739c8d38b50da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74d146b122f0dddb73e1ac7f5da443ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a74d146b122f0dddb73e1ac7f5da443ee">changePort</a> (int port)</td></tr>
+<tr class="memdesc:a74d146b122f0dddb73e1ac7f5da443ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the port.  <br /></td></tr>
 <tr class="separator:a74d146b122f0dddb73e1ac7f5da443ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8f6f39b0573feb0f1dd6734af63cc6a6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a8f6f39b0573feb0f1dd6734af63cc6a6">ProcessMessage</a> (const osc::ReceivedMessage &amp;m, const IpEndpointName &amp;remoteEndpoint)</td></tr>
+<tr class="memdesc:a8f6f39b0573feb0f1dd6734af63cc6a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process a message.  <br /></td></tr>
 <tr class="separator:a8f6f39b0573feb0f1dd6734af63cc6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1e85b81dd069c496ac46542530e8a79c"><td class="memItemLeft" align="right" valign="top">UdpListeningReceiveSocket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a1e85b81dd069c496ac46542530e8a79c">socket</a></td></tr>
+<tr class="separator:a1e85b81dd069c496ac46542530e8a79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd77162f6ade21817f23423b65de08ce"><td class="memItemLeft" align="right" valign="top">std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#afd77162f6ade21817f23423b65de08ce">thread</a></td></tr>
+<tr class="separator:afd77162f6ade21817f23423b65de08ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49a2fa6c95cf8682dc54796eea9dc79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOSCMessage.html">OSCMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#ae49a2fa6c95cf8682dc54796eea9dc79">latestMessage</a></td></tr>
+<tr class="separator:ae49a2fa6c95cf8682dc54796eea9dc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a258cf58201965ba0b4a5f9bc5d2534f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDataSources.html">DataSources</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOSCServer.html#a258cf58201965ba0b4a5f9bc5d2534f3">dataSources</a></td></tr>
+<tr class="separator:a258cf58201965ba0b4a5f9bc5d2534f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>OSC server. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a83220b05115bd6136663fda8e4ad7187" name="a83220b05115bd6136663fda8e4ad7187"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a83220b05115bd6136663fda8e4ad7187">&#9670;&#160;</a></span>OSCServer()</h2>
 
@@ -163,6 +187,15 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="classOSCServer.html" title="OSC server.">OSCServer</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>The port to listen on </td></tr>
+    <tr><td class="paramname">dataSources</td><td>The data sources </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -215,6 +248,11 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Whether a message is available. </p>
+<dl class="section return"><dt>Returns</dt><dd>true A message is available </dd>
+<dd>
+false A message is not available </dd></dl>
+
 </div>
 </div>
 <a id="a74d146b122f0dddb73e1ac7f5da443ee" name="a74d146b122f0dddb73e1ac7f5da443ee"></a>
@@ -241,6 +279,14 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Change the port. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>The new port </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a13ed0e42b95ad4f86bb739c8d38b50da" name="a13ed0e42b95ad4f86bb739c8d38b50da"></a>
@@ -265,6 +311,9 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the latest message. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structOSCMessage.html" title="Stores an OSC message.">OSCMessage</a> The latest message </dd></dl>
 
 </div>
 </div>
@@ -291,6 +340,14 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initialize the server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>The port to listen on </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -328,6 +385,15 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Process a message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The message </td></tr>
+    <tr><td class="paramname">remoteEndpoint</td><td>The remote endpoint </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a6772bd15d7d4abe69fbd60dd5beb7a91" name="a6772bd15d7d4abe69fbd60dd5beb7a91"></a>
@@ -352,6 +418,101 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Stop the server. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a258cf58201965ba0b4a5f9bc5d2534f3" name="a258cf58201965ba0b4a5f9bc5d2534f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a258cf58201965ba0b4a5f9bc5d2534f3">&#9670;&#160;</a></span>dataSources</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classDataSources.html">DataSources</a>* OSCServer::dataSources</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The data sources </p>
+
+</div>
+</div>
+<a id="ae49a2fa6c95cf8682dc54796eea9dc79" name="ae49a2fa6c95cf8682dc54796eea9dc79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae49a2fa6c95cf8682dc54796eea9dc79">&#9670;&#160;</a></span>latestMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structOSCMessage.html">OSCMessage</a> OSCServer::latestMessage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The latest message </p>
+
+</div>
+</div>
+<a id="a1e85b81dd069c496ac46542530e8a79c" name="a1e85b81dd069c496ac46542530e8a79c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e85b81dd069c496ac46542530e8a79c">&#9670;&#160;</a></span>socket</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">UdpListeningReceiveSocket* OSCServer::socket</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The socket </p>
+
+</div>
+</div>
+<a id="afd77162f6ade21817f23423b65de08ce" name="afd77162f6ade21817f23423b65de08ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd77162f6ade21817f23423b65de08ce">&#9670;&#160;</a></span>thread</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::thread OSCServer::thread</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The thread </p>
 
 </div>
 </div>

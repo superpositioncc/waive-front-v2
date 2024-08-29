@@ -95,35 +95,105 @@ $(document).ready(function(){initNavTree('classVideoLoader.html',''); initResiza
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classVideoLoader-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">VideoLoader Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class to load a video and extract frames and colors from it.  
+ <a href="classVideoLoader.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afec5f73426de309e84fe8d0a9ef42f9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#afec5f73426de309e84fe8d0a9ef42f9f">VideoLoader</a> ()</td></tr>
+<tr class="memdesc:afec5f73426de309e84fe8d0a9ef42f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classVideoLoader.html" title="Class to load a video and extract frames and colors from it.">VideoLoader</a> object.  <br /></td></tr>
 <tr class="separator:afec5f73426de309e84fe8d0a9ef42f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a616e51fee6f740d4be3b16e72116bac0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a616e51fee6f740d4be3b16e72116bac0">getStatus</a> ()</td></tr>
+<tr class="memdesc:a616e51fee6f740d4be3b16e72116bac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of the video loader.  <br /></td></tr>
 <tr class="separator:a616e51fee6f740d4be3b16e72116bac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a298cc42d38d50d3224c6b1c23440685c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a298cc42d38d50d3224c6b1c23440685c">rewind</a> ()</td></tr>
+<tr class="memdesc:a298cc42d38d50d3224c6b1c23440685c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rewind the video.  <br /></td></tr>
 <tr class="separator:a298cc42d38d50d3224c6b1c23440685c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49824e2ce65ec06adfa58ee78ebf03a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a49824e2ce65ec06adfa58ee78ebf03a3">extractColors</a> (AVFrame *frame)</td></tr>
+<tr class="memitem:a49824e2ce65ec06adfa58ee78ebf03a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a49824e2ce65ec06adfa58ee78ebf03a3">extractColors</a> (AVFrame *<a class="el" href="classVideoLoader.html#a93d0cf7b8c9f248f70b5361f7ea23e6a">frame</a>)</td></tr>
+<tr class="memdesc:a49824e2ce65ec06adfa58ee78ebf03a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract colors from a frame.  <br /></td></tr>
 <tr class="separator:a49824e2ce65ec06adfa58ee78ebf03a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fb938dc2f6bd8fc29ac066eb9a581c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a0fb938dc2f6bd8fc29ac066eb9a581c4">shouldGetNextFrame</a> (int64_t currentTime)</td></tr>
+<tr class="memdesc:a0fb938dc2f6bd8fc29ac066eb9a581c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the next frame should be retrieved.  <br /></td></tr>
 <tr class="separator:a0fb938dc2f6bd8fc29ac066eb9a581c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a008aac06a2a56426839becfcaf57233f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structVideoFrameDescription.html">VideoFrameDescription</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a008aac06a2a56426839becfcaf57233f">getFrame</a> ()</td></tr>
+<tr class="memdesc:a008aac06a2a56426839becfcaf57233f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the next frame from the video.  <br /></td></tr>
 <tr class="separator:a008aac06a2a56426839becfcaf57233f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac22697790dc58440132a831861316343"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ac22697790dc58440132a831861316343">getColors</a> ()</td></tr>
+<tr class="memdesc:ac22697790dc58440132a831861316343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the colors extracted from the video.  <br /></td></tr>
 <tr class="separator:ac22697790dc58440132a831861316343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25597dafd7939ece1c85a4c46adcd866"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a25597dafd7939ece1c85a4c46adcd866">loadVideo</a> (const std::string &amp;videoPath)</td></tr>
+<tr class="memdesc:a25597dafd7939ece1c85a4c46adcd866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a video.  <br /></td></tr>
 <tr class="separator:a25597dafd7939ece1c85a4c46adcd866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a886833afebf87842f73f08dc59d46d68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a886833afebf87842f73f08dc59d46d68">getReadyForNextLoad</a> ()</td></tr>
+<tr class="memdesc:a886833afebf87842f73f08dc59d46d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free resources and get ready for the next load.  <br /></td></tr>
 <tr class="separator:a886833afebf87842f73f08dc59d46d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6323cb9dd490930a0738d35c7da76d51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a6323cb9dd490930a0738d35c7da76d51">getReadyForNextFrame</a> ()</td></tr>
+<tr class="memdesc:a6323cb9dd490930a0738d35c7da76d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free resources and get ready for the next frame.  <br /></td></tr>
 <tr class="separator:a6323cb9dd490930a0738d35c7da76d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a3a2d8d2567f5d17968fb9a806a30258b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a3a2d8d2567f5d17968fb9a806a30258b">convertToRGB</a> (AVFrame *<a class="el" href="classVideoLoader.html#a93d0cf7b8c9f248f70b5361f7ea23e6a">frame</a>, AVFrame **<a class="el" href="classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd">rgb_frame</a>)</td></tr>
+<tr class="memdesc:a3a2d8d2567f5d17968fb9a806a30258b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a frame to RGB.  <br /></td></tr>
+<tr class="separator:a3a2d8d2567f5d17968fb9a806a30258b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad58920d84a98aaf28e3b2feda0a41699"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ad58920d84a98aaf28e3b2feda0a41699">colors</a></td></tr>
+<tr class="separator:ad58920d84a98aaf28e3b2feda0a41699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca832750f3b72ef9dd9c85b0e022c11"><td class="memItemLeft" align="right" valign="top">AVFormatContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#abca832750f3b72ef9dd9c85b0e022c11">format</a></td></tr>
+<tr class="separator:abca832750f3b72ef9dd9c85b0e022c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc089faaee07bb524dbf55c629c72a86"><td class="memItemLeft" align="right" valign="top">AVCodecParameters *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#afc089faaee07bb524dbf55c629c72a86">codecParameters</a></td></tr>
+<tr class="separator:afc089faaee07bb524dbf55c629c72a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb3724d54358e60e29793370af20e6de"><td class="memItemLeft" align="right" valign="top">const AVCodec *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#afb3724d54358e60e29793370af20e6de">codec</a></td></tr>
+<tr class="separator:afb3724d54358e60e29793370af20e6de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13377f92f2c4637fdb36c866df2b463a"><td class="memItemLeft" align="right" valign="top">AVCodecContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a13377f92f2c4637fdb36c866df2b463a">context</a></td></tr>
+<tr class="separator:a13377f92f2c4637fdb36c866df2b463a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022cf0bba2def8c3c11a9971cdd2a2ad"><td class="memItemLeft" align="right" valign="top">AVCodecParserContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a022cf0bba2def8c3c11a9971cdd2a2ad">parser</a></td></tr>
+<tr class="separator:a022cf0bba2def8c3c11a9971cdd2a2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc72539130668e49753d54f7cb61718"><td class="memItemLeft" align="right" valign="top">AVPacket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a3fc72539130668e49753d54f7cb61718">packet</a></td></tr>
+<tr class="separator:a3fc72539130668e49753d54f7cb61718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d0cf7b8c9f248f70b5361f7ea23e6a"><td class="memItemLeft" align="right" valign="top">AVFrame *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a93d0cf7b8c9f248f70b5361f7ea23e6a">frame</a></td></tr>
+<tr class="separator:a93d0cf7b8c9f248f70b5361f7ea23e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d6b7f2b81c8baae209d9ff47af15bd"><td class="memItemLeft" align="right" valign="top">AVFrame *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd">rgb_frame</a></td></tr>
+<tr class="separator:a15d6b7f2b81c8baae209d9ff47af15bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a9ff66f7b3086dd433b2c5cae6af56d"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a7a9ff66f7b3086dd433b2c5cae6af56d">data</a></td></tr>
+<tr class="separator:a7a9ff66f7b3086dd433b2c5cae6af56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9916d86df15d3b97b4bebf37937ad108"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a9916d86df15d3b97b4bebf37937ad108">videoStreamIndex</a></td></tr>
+<tr class="separator:a9916d86df15d3b97b4bebf37937ad108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1ac9737f33756a9caa63e0eada00af0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ad1ac9737f33756a9caa63e0eada00af0">status</a></td></tr>
+<tr class="separator:ad1ac9737f33756a9caa63e0eada00af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24e2305c9a9de920651f088b6aff797a"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a24e2305c9a9de920651f088b6aff797a">lastFrameTime</a> = 0</td></tr>
+<tr class="separator:a24e2305c9a9de920651f088b6aff797a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85122c1cc565c7143aa0af563662fde5"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a85122c1cc565c7143aa0af563662fde5">frameDuration</a> = 0</td></tr>
+<tr class="separator:a85122c1cc565c7143aa0af563662fde5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c71122c345f138fa2c8c6db6f0faba7"><td class="memItemLeft" align="right" valign="top">AVFilterGraph *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a0c71122c345f138fa2c8c6db6f0faba7">filterGraph</a></td></tr>
+<tr class="separator:a0c71122c345f138fa2c8c6db6f0faba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdd5f8df864680931a1e7bd8cda05e06"><td class="memItemLeft" align="right" valign="top">AVFilterContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#acdd5f8df864680931a1e7bd8cda05e06">bufferSrcContext</a></td></tr>
+<tr class="separator:acdd5f8df864680931a1e7bd8cda05e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1314a0fc108ddd25b36e68c9633d10f"><td class="memItemLeft" align="right" valign="top">AVFilterContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#af1314a0fc108ddd25b36e68c9633d10f">bufferSinkContext</a></td></tr>
+<tr class="separator:af1314a0fc108ddd25b36e68c9633d10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6a3b22425e94563c8a1d964900e04ec"><td class="memItemLeft" align="right" valign="top">const AVFilter *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ad6a3b22425e94563c8a1d964900e04ec">bufferSrc</a></td></tr>
+<tr class="separator:ad6a3b22425e94563c8a1d964900e04ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa91bd1db181caaf27507bbf5f4f85422"><td class="memItemLeft" align="right" valign="top">const AVFilter *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#aa91bd1db181caaf27507bbf5f4f85422">bufferSink</a></td></tr>
+<tr class="separator:aa91bd1db181caaf27507bbf5f4f85422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741480027583bb59e7a13edc919d35de"><td class="memItemLeft" align="right" valign="top">AVFrame *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a741480027583bb59e7a13edc919d35de">paletteFrame</a></td></tr>
+<tr class="separator:a741480027583bb59e7a13edc919d35de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4ed04b326faa668e601d72c26ff924a"><td class="memItemLeft" align="right" valign="top">AVFilterInOut *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ac4ed04b326faa668e601d72c26ff924a">outputs</a></td></tr>
+<tr class="separator:ac4ed04b326faa668e601d72c26ff924a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ad33b0d1d120d90f8088862a4c4d2a"><td class="memItemLeft" align="right" valign="top">AVFilterInOut *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a06ad33b0d1d120d90f8088862a4c4d2a">inputs</a></td></tr>
+<tr class="separator:a06ad33b0d1d120d90f8088862a4c4d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to load a video and extract frames and colors from it. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afec5f73426de309e84fe8d0a9ef42f9f" name="afec5f73426de309e84fe8d0a9ef42f9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afec5f73426de309e84fe8d0a9ef42f9f">&#9670;&#160;</a></span>VideoLoader()</h2>
 
@@ -147,9 +217,57 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new <a class="el" href="classVideoLoader.html" title="Class to load a video and extract frames and colors from it.">VideoLoader</a> object. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3a2d8d2567f5d17968fb9a806a30258b" name="a3a2d8d2567f5d17968fb9a806a30258b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a2d8d2567f5d17968fb9a806a30258b">&#9670;&#160;</a></span>convertToRGB()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VideoLoader::convertToRGB </td>
+          <td>(</td>
+          <td class="paramtype">AVFrame *&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">AVFrame **&#160;</td>
+          <td class="paramname"><em>rgb_frame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convert a frame to RGB. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Frame to convert </td></tr>
+    <tr><td class="paramname">rgb_frame</td><td>Converted frame </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if successful, -1 otherwise </dd></dl>
+
+</div>
+</div>
 <a id="a49824e2ce65ec06adfa58ee78ebf03a3" name="a49824e2ce65ec06adfa58ee78ebf03a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a49824e2ce65ec06adfa58ee78ebf03a3">&#9670;&#160;</a></span>extractColors()</h2>
 
@@ -173,6 +291,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Extract colors from a frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Frame to extract colors from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;float&gt; Colors extracted from the frame </dd></dl>
 
 </div>
 </div>
@@ -199,6 +326,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the colors extracted from the video. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;float&gt; Colors extracted from the video </dd></dl>
+
 </div>
 </div>
 <a id="a008aac06a2a56426839becfcaf57233f" name="a008aac06a2a56426839becfcaf57233f"></a>
@@ -223,6 +353,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the next frame from the video. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structVideoFrameDescription.html" title="Stores a video frame description.">VideoFrameDescription</a> Frame description </dd></dl>
 
 </div>
 </div>
@@ -249,6 +382,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Free resources and get ready for the next frame. </p>
+
 </div>
 </div>
 <a id="a886833afebf87842f73f08dc59d46d68" name="a886833afebf87842f73f08dc59d46d68"></a>
@@ -274,6 +409,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Free resources and get ready for the next load. </p>
+
 </div>
 </div>
 <a id="a616e51fee6f740d4be3b16e72116bac0" name="a616e51fee6f740d4be3b16e72116bac0"></a>
@@ -298,6 +435,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the status of the video loader. </p>
+<dl class="section return"><dt>Returns</dt><dd>int Status </dd></dl>
 
 </div>
 </div>
@@ -325,6 +465,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Load a video. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">videoPath</td><td>Path to the video </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if successful, -1 otherwise </dd></dl>
+
 </div>
 </div>
 <a id="a298cc42d38d50d3224c6b1c23440685c" name="a298cc42d38d50d3224c6b1c23440685c"></a>
@@ -349,6 +498,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Rewind the video. </p>
 
 </div>
 </div>
@@ -375,6 +526,519 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Check if the next frame should be retrieved. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentTime</td><td>Current time </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Whether the next frame should be retrieved </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aa91bd1db181caaf27507bbf5f4f85422" name="aa91bd1db181caaf27507bbf5f4f85422"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa91bd1db181caaf27507bbf5f4f85422">&#9670;&#160;</a></span>bufferSink</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const AVFilter * VideoLoader::bufferSink</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Buffer source and sink </p>
+
+</div>
+</div>
+<a id="af1314a0fc108ddd25b36e68c9633d10f" name="af1314a0fc108ddd25b36e68c9633d10f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1314a0fc108ddd25b36e68c9633d10f">&#9670;&#160;</a></span>bufferSinkContext</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFilterContext * VideoLoader::bufferSinkContext</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Buffer source and sink contexts </p>
+
+</div>
+</div>
+<a id="ad6a3b22425e94563c8a1d964900e04ec" name="ad6a3b22425e94563c8a1d964900e04ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a3b22425e94563c8a1d964900e04ec">&#9670;&#160;</a></span>bufferSrc</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const AVFilter* VideoLoader::bufferSrc</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acdd5f8df864680931a1e7bd8cda05e06" name="acdd5f8df864680931a1e7bd8cda05e06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdd5f8df864680931a1e7bd8cda05e06">&#9670;&#160;</a></span>bufferSrcContext</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFilterContext* VideoLoader::bufferSrcContext</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afb3724d54358e60e29793370af20e6de" name="afb3724d54358e60e29793370af20e6de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb3724d54358e60e29793370af20e6de">&#9670;&#160;</a></span>codec</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const AVCodec* VideoLoader::codec</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Codec </p>
+
+</div>
+</div>
+<a id="afc089faaee07bb524dbf55c629c72a86" name="afc089faaee07bb524dbf55c629c72a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc089faaee07bb524dbf55c629c72a86">&#9670;&#160;</a></span>codecParameters</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVCodecParameters* VideoLoader::codecParameters</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Codec parameters </p>
+
+</div>
+</div>
+<a id="ad58920d84a98aaf28e3b2feda0a41699" name="ad58920d84a98aaf28e3b2feda0a41699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad58920d84a98aaf28e3b2feda0a41699">&#9670;&#160;</a></span>colors</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;float&gt; VideoLoader::colors</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Colors extracted from the video </p>
+
+</div>
+</div>
+<a id="a13377f92f2c4637fdb36c866df2b463a" name="a13377f92f2c4637fdb36c866df2b463a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13377f92f2c4637fdb36c866df2b463a">&#9670;&#160;</a></span>context</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVCodecContext* VideoLoader::context</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Codec context </p>
+
+</div>
+</div>
+<a id="a7a9ff66f7b3086dd433b2c5cae6af56d" name="a7a9ff66f7b3086dd433b2c5cae6af56d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9ff66f7b3086dd433b2c5cae6af56d">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* VideoLoader::data</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Data </p>
+
+</div>
+</div>
+<a id="a0c71122c345f138fa2c8c6db6f0faba7" name="a0c71122c345f138fa2c8c6db6f0faba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c71122c345f138fa2c8c6db6f0faba7">&#9670;&#160;</a></span>filterGraph</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFilterGraph* VideoLoader::filterGraph</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Filter graph for the palettegen filter </p>
+
+</div>
+</div>
+<a id="abca832750f3b72ef9dd9c85b0e022c11" name="abca832750f3b72ef9dd9c85b0e022c11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abca832750f3b72ef9dd9c85b0e022c11">&#9670;&#160;</a></span>format</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFormatContext* VideoLoader::format</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Format context </p>
+
+</div>
+</div>
+<a id="a93d0cf7b8c9f248f70b5361f7ea23e6a" name="a93d0cf7b8c9f248f70b5361f7ea23e6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93d0cf7b8c9f248f70b5361f7ea23e6a">&#9670;&#160;</a></span>frame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFrame* VideoLoader::frame</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Frame </p>
+
+</div>
+</div>
+<a id="a85122c1cc565c7143aa0af563662fde5" name="a85122c1cc565c7143aa0af563662fde5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85122c1cc565c7143aa0af563662fde5">&#9670;&#160;</a></span>frameDuration</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t VideoLoader::frameDuration = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Frame duration </p>
+
+</div>
+</div>
+<a id="a06ad33b0d1d120d90f8088862a4c4d2a" name="a06ad33b0d1d120d90f8088862a4c4d2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ad33b0d1d120d90f8088862a4c4d2a">&#9670;&#160;</a></span>inputs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFilterInOut * VideoLoader::inputs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Filter in/out </p>
+
+</div>
+</div>
+<a id="a24e2305c9a9de920651f088b6aff797a" name="a24e2305c9a9de920651f088b6aff797a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24e2305c9a9de920651f088b6aff797a">&#9670;&#160;</a></span>lastFrameTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t VideoLoader::lastFrameTime = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Last frame time </p>
+
+</div>
+</div>
+<a id="ac4ed04b326faa668e601d72c26ff924a" name="ac4ed04b326faa668e601d72c26ff924a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4ed04b326faa668e601d72c26ff924a">&#9670;&#160;</a></span>outputs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFilterInOut* VideoLoader::outputs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3fc72539130668e49753d54f7cb61718" name="a3fc72539130668e49753d54f7cb61718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fc72539130668e49753d54f7cb61718">&#9670;&#160;</a></span>packet</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVPacket* VideoLoader::packet</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Packet </p>
+
+</div>
+</div>
+<a id="a741480027583bb59e7a13edc919d35de" name="a741480027583bb59e7a13edc919d35de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a741480027583bb59e7a13edc919d35de">&#9670;&#160;</a></span>paletteFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFrame* VideoLoader::paletteFrame</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Palette frame </p>
+
+</div>
+</div>
+<a id="a022cf0bba2def8c3c11a9971cdd2a2ad" name="a022cf0bba2def8c3c11a9971cdd2a2ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a022cf0bba2def8c3c11a9971cdd2a2ad">&#9670;&#160;</a></span>parser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVCodecParserContext* VideoLoader::parser</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Parser context </p>
+
+</div>
+</div>
+<a id="a15d6b7f2b81c8baae209d9ff47af15bd" name="a15d6b7f2b81c8baae209d9ff47af15bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d6b7f2b81c8baae209d9ff47af15bd">&#9670;&#160;</a></span>rgb_frame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AVFrame* VideoLoader::rgb_frame</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>RGB frame </p>
+
+</div>
+</div>
+<a id="ad1ac9737f33756a9caa63e0eada00af0" name="ad1ac9737f33756a9caa63e0eada00af0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1ac9737f33756a9caa63e0eada00af0">&#9670;&#160;</a></span>status</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VideoLoader::status</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Status </p>
+
+</div>
+</div>
+<a id="a9916d86df15d3b97b4bebf37937ad108" name="a9916d86df15d3b97b4bebf37937ad108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9916d86df15d3b97b4bebf37937ad108">&#9670;&#160;</a></span>videoStreamIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VideoLoader::videoStreamIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Video stream index </p>
 
 </div>
 </div>

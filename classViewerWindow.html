@@ -95,10 +95,14 @@ $(document).ready(function(){initNavTree('classViewerWindow.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classViewerWindow-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ViewerWindow Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Viewer window is a window that displays the viewer widget, the presentation that the audience sees.  
+ <a href="classViewerWindow.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for ViewerWindow:</div>
 <div class="dyncontent">
@@ -109,11 +113,20 @@ Inheritance diagram for ViewerWindow:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ace4429ea0e2ea853fddb441a7b5548f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWindow.html#ace4429ea0e2ea853fddb441a7b5548f8">ViewerWindow</a> (Application &amp;app, float(&amp;p)[Parameters::NumParameters], std::vector&lt; bool &gt; *layersEnabled)</td></tr>
+<tr class="memdesc:ace4429ea0e2ea853fddb441a7b5548f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Viewer Window object.  <br /></td></tr>
 <tr class="separator:ace4429ea0e2ea853fddb441a7b5548f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c919336dd3b09002dfbeec3c3d8a2e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classViewerWidget.html">ViewerWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWindow.html#a2c919336dd3b09002dfbeec3c3d8a2e8">getViewerWidget</a> ()</td></tr>
+<tr class="memdesc:a2c919336dd3b09002dfbeec3c3d8a2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the viewer widget.  <br /></td></tr>
 <tr class="separator:a2c919336dd3b09002dfbeec3c3d8a2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad6972128cbc55b0d10f7000b0325ff9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classViewerWidget.html">ViewerWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWindow.html#ad6972128cbc55b0d10f7000b0325ff9e">viewerWidget</a></td></tr>
+<tr class="separator:ad6972128cbc55b0d10f7000b0325ff9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Viewer window is a window that displays the viewer widget, the presentation that the audience sees. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ace4429ea0e2ea853fddb441a7b5548f8" name="ace4429ea0e2ea853fddb441a7b5548f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ace4429ea0e2ea853fddb441a7b5548f8">&#9670;&#160;</a></span>ViewerWindow()</h2>
 
@@ -154,6 +167,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new Viewer Window object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">app</td><td>Application </td></tr>
+    <tr><td class="paramname">p</td><td>Parameters </td></tr>
+    <tr><td class="paramname">layersEnabled</td><td>Vector of booleans representing which layers have been enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -179,6 +202,33 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the viewer widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>ViewerWidget* Viewer widget </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad6972128cbc55b0d10f7000b0325ff9e" name="ad6972128cbc55b0d10f7000b0325ff9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6972128cbc55b0d10f7000b0325ff9e">&#9670;&#160;</a></span>viewerWidget</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classViewerWidget.html">ViewerWidget</a>* ViewerWindow::viewerWidget</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Viewer widget </p>
 
 </div>
 </div>

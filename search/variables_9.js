@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['order_0',['order',['../classDataCategory.html#a8d6dbe798d8cd20ccd5fa831235154e9',1,'DataCategory']]],
-  ['oscserver_1',['oscServer',['../classWaiveFrontPluginUI.html#a7505ea682c784f740149fc8e25c6e736',1,'WaiveFrontPluginUI']]]
+  ['name_0',['name',['../classDataCategory.html#a16b1974184097663bce8f217a1c42cf4',1,'DataCategory::name()'],['../classDataSource.html#a2b9e6309e0af18b159b42a9485b85de3',1,'DataSource::name()'],['../classDataTag.html#af5ebff5ca6aaa1b602c32602998b4331',1,'DataTag::name()'],['../classShader_1_1ShaderUniform.html#a82336dd9a8fff9f3445deac097c1e062',1,'Shader::ShaderUniform::name()']]],
+  ['note_1',['note',['../structOSCMessage.html#a71bf14ffadac6024e11ee012e7ae21aa',1,'OSCMessage']]]
 ];
