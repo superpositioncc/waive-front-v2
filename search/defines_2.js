@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['dgl_5fuse_5fopengl3_0',['DGL_USE_OPENGL3',['../DistrhoPluginInfo_8h.html#a01988e3c3664d33fac3b7958715b00fd',1,'DistrhoPluginInfo.h']]],
+  ['dim_1',['DIM',['../Logger_8cpp.html#ac25189db92959bff3c6c2adf4c34b50a',1,'Logger.cpp']]],
+  ['distrho_5fplugin_5fbrand_2',['DISTRHO_PLUGIN_BRAND',['../DistrhoPluginInfo_8h.html#a323bc11fb099f837a6eb90fd1cd76323',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fbrand_5fid_3',['DISTRHO_PLUGIN_BRAND_ID',['../DistrhoPluginInfo_8h.html#a9c9caf7e3376c9235c3529dbc612a964',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fclap_5fid_4',['DISTRHO_PLUGIN_CLAP_ID',['../DistrhoPluginInfo_8h.html#aae12b710ad877c03b2a369e4a5e05140',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fhas_5fui_5',['DISTRHO_PLUGIN_HAS_UI',['../DistrhoPluginInfo_8h.html#acf8a1af679c09637ba0bdc5f4f8e37dd',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fis_5frt_5fsafe_6',['DISTRHO_PLUGIN_IS_RT_SAFE',['../DistrhoPluginInfo_8h.html#a82546dd199fcea338b113f2f6da84ced',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fname_7',['DISTRHO_PLUGIN_NAME',['../DistrhoPluginInfo_8h.html#a888482a9f695c2ca2f433e5f3172dcc4',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fnum_5finputs_8',['DISTRHO_PLUGIN_NUM_INPUTS',['../DistrhoPluginInfo_8h.html#a5f4f3d9a5dc3c23882d158e636319998',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5fnum_5foutputs_9',['DISTRHO_PLUGIN_NUM_OUTPUTS',['../DistrhoPluginInfo_8h.html#a917195804ebcb2bb48c9fad52b20b3ca',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5funique_5fid_10',['DISTRHO_PLUGIN_UNIQUE_ID',['../DistrhoPluginInfo_8h.html#a096d7684289e65485311a427ad8772f3',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fplugin_5furi_11',['DISTRHO_PLUGIN_URI',['../DistrhoPluginInfo_8h.html#a9cc186448134e6a1956474b3878c97a8',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fcustom_5finclude_5fpath_12',['DISTRHO_UI_CUSTOM_INCLUDE_PATH',['../DistrhoPluginInfo_8h.html#af978778ddb34e3663a5c0bd128067e10',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fcustom_5fwidget_5ftype_13',['DISTRHO_UI_CUSTOM_WIDGET_TYPE',['../DistrhoPluginInfo_8h.html#af6377f757b9796bd37f7be4e605ccd4a',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fdefault_5fheight_14',['DISTRHO_UI_DEFAULT_HEIGHT',['../DistrhoPluginInfo_8h.html#a69f68b766833a29671400808221f8f3c',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fdefault_5fwidth_15',['DISTRHO_UI_DEFAULT_WIDTH',['../DistrhoPluginInfo_8h.html#a93240ccad789419d3c26768d00f2e97f',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5ffile_5fbrowser_16',['DISTRHO_UI_FILE_BROWSER',['../DistrhoPluginInfo_8h.html#a056621b8bb498d977efd8cf6da39181c',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fuse_5fcustom_17',['DISTRHO_UI_USE_CUSTOM',['../DistrhoPluginInfo_8h.html#a5bcd1ce31e47a617de4c32fbf85e44ca',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fuse_5fnanovg_18',['DISTRHO_UI_USE_NANOVG',['../DistrhoPluginInfo_8h.html#ad49e79936a2aa5afa089cbc051426ccd',1,'DistrhoPluginInfo.h']]],
+  ['distrho_5fui_5fuser_5fresizable_19',['DISTRHO_UI_USER_RESIZABLE',['../DistrhoPluginInfo_8h.html#abadb9d9ba7f479df39b3963ee60b7a4b',1,'DistrhoPluginInfo.h']]]
+];
