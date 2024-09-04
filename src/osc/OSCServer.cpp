@@ -68,6 +68,7 @@ public:
 		// Create a new thread and run the socket in it
 		thread = std::thread([this]()
 							 { socket->RunUntilSigInt(); });
+		print("OSC", "Listening on port " + std::to_string(port));
 	}
 
 	/**

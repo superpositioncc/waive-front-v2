@@ -77,12 +77,16 @@ public:
             home = getenv("USERPROFILE");
         }
 
+        int notes[3] = {36, 42, 38};
+
         for (int i = 0; i < 3; i++)
         {
             videoLoaders.push_back(new VideoLoader());
             selectedCategories.push_back(nullptr);
             selectedItems.push_back(nullptr);
             layersEnabled.push_back(i == 0);
+            layerNotes.push_back(notes[i]);
+            lastMessages.push_back("");
         }
 
         loadDataSources(std::string(home) + "/Documents/WAIVE");
@@ -384,7 +388,28 @@ protected:
         {
             OSCMessage message = oscServer->getMessage();
 
-            selectCategory(0, message.categories[0]);
+            print("OSC", "Received message: " + message.sampleName);
+
+            int note = message.note;
+            int layer = -1;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (layerNotes[i] == note)
+                {
+                    layer = i;
+                    break;
+                }
+            }
+
+            if (layer != -1)
+            {
+                if (lastMessages[layer] != message.sampleName)
+                {
+                    lastMessages[layer] = message.sampleName;
+                    selectCategory(layer, message.categories[0]);
+                }
+            }
         }
 
         int64_t currentTime = getCurrentTime();
@@ -458,7 +483,7 @@ protected:
         {
             ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
             ImGui::SetNextWindowPos(ImVec2((i + 1) * width / 4, 0));
-            ImGui::Begin(("Layer " + std::to_string(i + 1) + (allowOSC && i == 0 ? " (OSC)" : "")).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+            ImGui::Begin(("Layer " + std::to_string(i + 1)).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
             std::string buttonLabel = layersEnabled[i] ? "Disable Layer " + std::to_string(i + 1) : "Enable Layer " + std::to_string(i + 1);
 
@@ -485,6 +510,13 @@ protected:
 
             if (layersEnabled[i])
             {
+                if (allowOSC)
+                {
+                    ImGui::Text("OSC Note");
+                    ImGui::SetNextItemWidth(width / 4);
+                    ImGui::SliderInt("OSC Note", &layerNotes[i], 0, 127);
+                }
+
                 ImGui::Text("Category");
                 if (ImGui::BeginCombo(("Category " + std::to_string(i + 1)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->presentationName.c_str() : "None"))
                 {
@@ -565,7 +597,9 @@ private:
     std::vector<DataCategory *> selectedCategories; /**< The selected categories */
     std::vector<DataItem *> selectedItems;          /**< The selected items */
 
-    std::vector<bool> layersEnabled; /**< The layers that are enabled */
+    std::vector<bool> layersEnabled;       /**< The layers that are enabled */
+    std::vector<int> layerNotes;           /**< Which note each layer should respond to */
+    std::vector<std::string> lastMessages; /**< The last messages received */
 
     /**
      * @brief Get the current time
