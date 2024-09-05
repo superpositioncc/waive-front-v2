@@ -30,6 +30,7 @@ struct OSCMessage
 {
 	std::string sampleName;					/**< Name of the sample being played by WAIVE */
 	std::vector<DataCategory *> categories; /**< Categories of the message */
+	std::string rawCategories;				/**< Categories of the message as a string */
 	int note;								/**< Note of the message */
 	bool seen;								/**< Whether the message has been seen */
 };

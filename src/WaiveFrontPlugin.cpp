@@ -57,6 +57,12 @@ public:
         parameters[RandomizeItem1] = 0.0f;
         parameters[RandomizeItem2] = 0.0f;
         parameters[RandomizeItem3] = 0.0f;
+        parameters[OSCNote1] = 36;
+        parameters[OSCNote2] = 42;
+        parameters[OSCNote3] = 38;
+        parameters[OSCRetrigger1] = true;
+        parameters[OSCRetrigger2] = true;
+        parameters[OSCRetrigger3] = true;
     }
 
 protected:
@@ -154,6 +160,36 @@ protected:
             break;
         case RandomizeItem3:
             parameter.name = "Randomize Item 3";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case OSCNote1:
+            parameter.name = "OSC Note 1";
+            parameter.hints |= kParameterIsInteger;
+            parameter.ranges.min = 0;
+            parameter.ranges.max = 127;
+            break;
+        case OSCNote2:
+            parameter.name = "OSC Note 2";
+            parameter.hints |= kParameterIsInteger;
+            parameter.ranges.min = 0;
+            parameter.ranges.max = 127;
+            break;
+        case OSCNote3:
+            parameter.name = "OSC Note 3";
+            parameter.hints |= kParameterIsInteger;
+            parameter.ranges.min = 0;
+            parameter.ranges.max = 127;
+            break;
+        case OSCRetrigger1:
+            parameter.name = "OSC Retrigger 1";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case OSCRetrigger2:
+            parameter.name = "OSC Retrigger 2";
+            parameter.hints |= kParameterIsBoolean;
+            break;
+        case OSCRetrigger3:
+            parameter.name = "OSC Retrigger 3";
             parameter.hints |= kParameterIsBoolean;
             break;
         default:

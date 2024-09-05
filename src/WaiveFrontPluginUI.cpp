@@ -86,6 +86,7 @@ public:
             selectedItems.push_back(nullptr);
             layersEnabled.push_back(i == 0);
             layerNotes.push_back(notes[i]);
+            layerRetrigger.push_back(true);
             lastMessages.push_back("");
         }
 
@@ -318,6 +319,24 @@ protected:
         if (parameters[EnableLayer3] != layersEnabled[2])
             layersEnabled[2] = parameters[EnableLayer3];
 
+        if (parameters[OSCNote1] != layerNotes[0])
+            layerNotes[0] = parameters[OSCNote1];
+
+        if (parameters[OSCNote2] != layerNotes[1])
+            layerNotes[1] = parameters[OSCNote2];
+
+        if (parameters[OSCNote3] != layerNotes[2])
+            layerNotes[2] = parameters[OSCNote3];
+
+        if (parameters[OSCRetrigger1] != layerRetrigger[0])
+            layerRetrigger[0] = parameters[OSCRetrigger1];
+
+        if (parameters[OSCRetrigger2] != layerRetrigger[1])
+            layerRetrigger[1] = parameters[OSCRetrigger2];
+
+        if (parameters[OSCRetrigger3] != layerRetrigger[2])
+            layerRetrigger[2] = parameters[OSCRetrigger3];
+
         if (parameters[RandomizeCategory1] != pRandomizeCategory[0] && parameters[RandomizeCategory1])
         {
             pRandomizeCategory[0] = parameters[RandomizeCategory1];
@@ -388,8 +407,6 @@ protected:
         {
             OSCMessage message = oscServer->getMessage();
 
-            print("OSC", "Received message: " + message.sampleName);
-
             int note = message.note;
             int layer = -1;
 
@@ -404,10 +421,16 @@ protected:
 
             if (layer != -1)
             {
-                if (lastMessages[layer] != message.sampleName)
+                if (lastMessages[layer] != message.rawCategories)
                 {
-                    lastMessages[layer] = message.sampleName;
+                    lastMessages[layer] = message.rawCategories;
+
+                    print("OSC", "Received message for layer " + std::to_string(layer + 1));
                     selectCategory(layer, message.categories[0]);
+                }
+                else if (layerRetrigger[layer])
+                {
+                    videoLoaders[layer]->rewind();
                 }
             }
         }
@@ -514,7 +537,47 @@ protected:
                 {
                     ImGui::Text("OSC Note");
                     ImGui::SetNextItemWidth(width / 4);
-                    ImGui::SliderInt("OSC Note", &layerNotes[i], 0, 127);
+
+                    if (ImGui::SliderInt("OSC Note", &layerNotes[i], 0, 127))
+                    {
+                        if (i == 0)
+                        {
+                            parameters[OSCNote1] = layerNotes[i];
+                            setParameterValue(OSCNote1, layerNotes[i]);
+                        }
+                        else if (i == 1)
+                        {
+                            parameters[OSCNote2] = layerNotes[i];
+                            setParameterValue(OSCNote2, layerNotes[i]);
+                        }
+                        else if (i == 2)
+                        {
+                            parameters[OSCNote3] = layerNotes[i];
+                            setParameterValue(OSCNote3, layerNotes[i]);
+                        }
+                    }
+
+                    bool retrigger = layerRetrigger[i];
+                    if (ImGui::Toggle((std::string("OSC Retrigger ") + std::to_string(i + 1)).c_str(), &retrigger))
+                    {
+                        layerRetrigger[i] = retrigger;
+
+                        if (i == 0)
+                        {
+                            parameters[OSCRetrigger1] = layerRetrigger[i];
+                            setParameterValue(OSCRetrigger1, layerRetrigger[i]);
+                        }
+                        else if (i == 1)
+                        {
+                            parameters[OSCRetrigger2] = layerRetrigger[i];
+                            setParameterValue(OSCRetrigger2, layerRetrigger[i]);
+                        }
+                        else if (i == 2)
+                        {
+                            parameters[OSCRetrigger3] = layerRetrigger[i];
+                            setParameterValue(OSCRetrigger3, layerRetrigger[i]);
+                        }
+                    }
                 }
 
                 ImGui::Text("Category");
@@ -597,7 +660,8 @@ private:
     std::vector<DataCategory *> selectedCategories; /**< The selected categories */
     std::vector<DataItem *> selectedItems;          /**< The selected items */
 
-    std::vector<bool> layersEnabled;       /**< The layers that are enabled */
+    std::vector<bool> layersEnabled;       /**< Whether each layer is enabled */
+    std::vector<bool> layerRetrigger;      /**< Whether each layer is retriggered on each note */
     std::vector<int> layerNotes;           /**< Which note each layer should respond to */
     std::vector<std::string> lastMessages; /**< The last messages received */
 

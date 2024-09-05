@@ -66,6 +66,12 @@ enum Parameters
 	RandomizeItem1,
 	RandomizeItem2,
 	RandomizeItem3,
+	OSCNote1,
+	OSCNote2,
+	OSCNote3,
+	OSCRetrigger1,
+	OSCRetrigger2,
+	OSCRetrigger3,
 	NumParameters
 }; /**< The parameters of the VST plugin */
 

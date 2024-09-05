@@ -19,14 +19,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <thread>
-#include "osc/OscReceivedElements.h"
-#include "osc/OscPacketListener.h"
-#include "ip/UdpSocket.h"
+
+#include "tinyosc.h"
 #include "../util/Logger.cpp"
 #include "../data/DataCategory.hpp"
 #include "OSCMessage.hpp"
 #include <sstream>
 #include <string>
+#include <arpa/inet.h>
+#include <sys/select.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <cstring>
 
 using namespace Util::Logger;
 
@@ -34,7 +41,7 @@ using namespace Util::Logger;
  * @brief OSC server
  *
  */
-class OSCServer : public osc::OscPacketListener
+class OSCServer
 {
 public:
 	/**
@@ -61,151 +68,133 @@ public:
 	 */
 	void init(int port)
 	{
-		socket = new UdpListeningReceiveSocket(
-			IpEndpointName(IpEndpointName::ANY_ADDRESS, port),
-			this);
+		fd = socket(AF_INET6, SOCK_DGRAM, 0);
+		fcntl(fd, F_SETFL, O_NONBLOCK); // set the socket to non-blocking
+		struct sockaddr_in6 sin;
+		sin.sin6_family = AF_INET6;
+		sin.sin6_port = htons(port);
+		sin.sin6_addr = in6addr_any;
+		bind(fd, (struct sockaddr *)&sin, sizeof(struct sockaddr_in6));
+		print("OSC", "Now listening on port " + std::to_string(port));
 
-		// Create a new thread and run the socket in it
-		thread = std::thread([this]()
-							 { socket->RunUntilSigInt(); });
-		print("OSC", "Listening on port " + std::to_string(port));
+		thread = std::thread(&OSCServer::run, this);
 	}
 
-	/**
-	 * @brief Stop the server
-	 *
-	 */
+	// /**
+	//  * @brief Stop the server
+	//  *
+	//  */
 	void stop()
 	{
-		socket->AsynchronousBreak();
-
-		// Wait for the thread to finish before deleting the socket
 		thread.join();
 
-		delete socket;
+		close(fd);
 	}
 
-	/**
-	 * @brief Whether a message is available
-	 *
-	 * @return true A message is available
-	 * @return false A message is not available
-	 */
+	// /**
+	//  * @brief Whether a message is available
+	//  *
+	//  * @return true A message is available
+	//  * @return false A message is not available
+	//  */
 	bool available()
 	{
 		return !latestMessage.seen;
 	}
 
-	/**
-	 * @brief Get the latest message
-	 *
-	 * @return OSCMessage The latest message
-	 */
+	// /**
+	//  * @brief Get the latest message
+	//  *
+	//  * @return OSCMessage The latest message
+	//  */
 	OSCMessage getMessage()
 	{
 		latestMessage.seen = true;
 		return latestMessage;
 	}
 
+private:
 	/**
-	 * @brief Change the port
+	 * @brief Endlessly run the server (should be run in a separate thread)
 	 *
-	 * @param port The new port
 	 */
-	void changePort(int port)
+	void run()
 	{
-		socket->AsynchronousBreak();
-		thread.join();
-		delete socket;
-
-		socket = new UdpListeningReceiveSocket(
-			IpEndpointName(IpEndpointName::ANY_ADDRESS, port),
-			this);
-
-		thread = std::thread([this]()
-							 { socket->RunUntilSigInt(); });
-	}
-
-protected:
-	/**
-	 * @brief Process a message
-	 *
-	 * @param m The message
-	 * @param remoteEndpoint The remote endpoint
-	 */
-	virtual void ProcessMessage(const osc::ReceivedMessage &m,
-								const IpEndpointName &remoteEndpoint)
-	{
-		(void)remoteEndpoint; // suppress unused parameter warning
-
-		try
+		while (true)
 		{
-			if (std::strcmp(m.AddressPattern(), "/WAIVE_Sampler/Sample") == 0)
+			fd_set readSet;
+			FD_ZERO(&readSet);
+			FD_SET(fd, &readSet);
+			struct timeval timeout = {1, 0}; // select times out after 1 second
+			if (select(fd + 1, &readSet, NULL, NULL, &timeout) > 0)
 			{
-				osc::ReceivedMessage::const_iterator arg = m.ArgumentsBegin();
-
-				const char *a1 = (arg++)->AsString();
-				const char *a2 = (arg++)->AsString();
-				int a3 = (arg++)->AsInt32();
-
-				if (arg != m.ArgumentsEnd())
-					throw osc::ExcessArgumentException();
-
-				latestMessage.seen = true;
-				latestMessage.sampleName = std::string(a1);
-				latestMessage.note = a3;
-
-				latestMessage.categories.clear();
-
-				std::string tags = std::string(a2);
-				std::istringstream iss(tags);
-				std::string tag;
-
-				while (std::getline(iss, tag, '|'))
+				struct sockaddr sa; // can be safely cast to sockaddr_in
+				socklen_t sa_len = sizeof(struct sockaddr_in);
+				int len = 0;
+				while ((len = (int)recvfrom(fd, buffer, sizeof(buffer), 0, &sa, &sa_len)) > 0)
 				{
-					DataCategory *category = nullptr;
-
-					for (DataCategory *c : dataSources->categories)
+					if (!tosc_isBundle(buffer))
 					{
-						bool hasTrigger = false;
+						tosc_message osc;
+						tosc_parseMessage(&osc, buffer, len);
 
-						for (std::string &trigger : c->triggers)
+						std::string address = tosc_getAddress(&osc);
+						std::string format = tosc_getFormat(&osc);
+
+						if (address == "/WAIVE_Sampler/Sample" && format == "ssi")
 						{
-							if (tag == trigger)
+							latestMessage.sampleName = tosc_getNextString(&osc);
+							latestMessage.rawCategories = tosc_getNextString(&osc);
+
+							std::istringstream iss(latestMessage.rawCategories);
+							std::string tag;
+
+							while (std::getline(iss, tag, '|'))
 							{
-								hasTrigger = true;
-								break;
+								DataCategory *category = nullptr;
+
+								for (DataCategory *c : dataSources->categories)
+								{
+									bool hasTrigger = false;
+
+									for (std::string &trigger : c->triggers)
+									{
+										if (tag == trigger)
+										{
+											hasTrigger = true;
+											break;
+										}
+									}
+
+									if (hasTrigger)
+									{
+										category = c;
+										break;
+									}
+								}
+
+								if (category != nullptr)
+								{
+									latestMessage.categories.push_back(category);
+								}
+							}
+
+							latestMessage.note = tosc_getNextInt32(&osc);
+
+							if (latestMessage.categories.size() > 0)
+							{
+								latestMessage.seen = false;
 							}
 						}
-
-						if (hasTrigger)
-						{
-							category = c;
-							break;
-						}
 					}
-
-					if (category != nullptr)
-					{
-						latestMessage.categories.push_back(category);
-					}
-				}
-
-				if (latestMessage.categories.size() > 0)
-				{
-					latestMessage.seen = false;
 				}
 			}
 		}
-		catch (osc::Exception &e)
-		{
-			error("OSC", "Error while parsing message: " + std::string(m.AddressPattern()) + ": " + e.what());
-		}
 	}
 
-private:
-	UdpListeningReceiveSocket *socket; /**< The socket */
-	std::thread thread;				   /**< The thread */
+	int fd;				/**< The socket */
+	char buffer[2048];	/**< The buffer that will contain incoming messages */
+	std::thread thread; /**< The thread to run the server in */
 
 	OSCMessage latestMessage; /**< The latest message */
 	DataSources *dataSources; /**< The data sources */

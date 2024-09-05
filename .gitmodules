@@ -4,9 +4,9 @@
 [submodule "dpf-widgets"]
 	path = dpf-widgets
 	url = https://github.com/superpositioncc/DPF-Widgets.git
-[submodule "oscpack"]
-	path = oscpack
-	url = https://github.com/superpositioncc/oscpack
 [submodule "doxygen-awesome-css"]
 	path = doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "tinyosc"]
+	path = tinyosc
+	url = https://github.com/mhroth/tinyosc.git
