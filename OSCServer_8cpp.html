@@ -99,14 +99,20 @@ $(document).ready(function(){initNavTree('OSCServer_8cpp.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;thread&gt;</code><br />
-<code>#include &quot;osc/OscReceivedElements.h&quot;</code><br />
-<code>#include &quot;osc/OscPacketListener.h&quot;</code><br />
-<code>#include &quot;ip/UdpSocket.h&quot;</code><br />
+<code>#include &quot;tinyosc.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="Logger_8cpp.html">../util/Logger.cpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="DataCategory_8hpp_source.html">../data/DataCategory.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="OSCMessage_8hpp_source.html">OSCMessage.hpp</a>&quot;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &lt;sys/select.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &lt;signal.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>

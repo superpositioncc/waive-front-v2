@@ -11,6 +11,5 @@ var searchData=
   ['prandomizeitem_8',['pRandomizeItem',['../classWaiveFrontPluginUI.html#a7c708ce46dc80d8c76a31407a1a1b598',1,'WaiveFrontPluginUI']]],
   ['presentationname_9',['presentationName',['../classDataCategory.html#a33e4a648776959846c6538d1dfdf9c3d',1,'DataCategory']]],
   ['print_10',['print',['../namespaceUtil_1_1Logger.html#af87744383fe681fec9cfba258f8302f2',1,'Util::Logger::print(const std::string &amp;ns, const std::string &amp;message, const std::string &amp;color)'],['../namespaceUtil_1_1Logger.html#a3f98403883274cc594534e67951e456a',1,'Util::Logger::print(const std::string &amp;ns, const std::string &amp;message)']]],
-  ['printversion_11',['printVersion',['../classShader_1_1ShaderProgram.html#ab2716a1c9cd75bdcb947098358eb4677',1,'Shader::ShaderProgram']]],
-  ['processmessage_12',['ProcessMessage',['../classOSCServer.html#a8f6f39b0573feb0f1dd6734af63cc6a6',1,'OSCServer']]]
+  ['printversion_11',['printVersion',['../classShader_1_1ShaderProgram.html#ab2716a1c9cd75bdcb947098358eb4677',1,'Shader::ShaderProgram']]]
 ];

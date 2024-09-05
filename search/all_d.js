@@ -7,8 +7,15 @@ var searchData=
   ['order_4',['order',['../classDataCategory.html#a8d6dbe798d8cd20ccd5fa831235154e9',1,'DataCategory']]],
   ['oscmessage_5',['OSCMessage',['../structOSCMessage.html',1,'']]],
   ['oscmessage_2ehpp_6',['OSCMessage.hpp',['../OSCMessage_8hpp.html',1,'']]],
-  ['oscserver_7',['OSCServer',['../classOSCServer.html',1,'OSCServer'],['../classOSCServer.html#a83220b05115bd6136663fda8e4ad7187',1,'OSCServer::OSCServer()']]],
-  ['oscserver_8',['oscServer',['../classWaiveFrontPluginUI.html#a7505ea682c784f740149fc8e25c6e736',1,'WaiveFrontPluginUI']]],
-  ['oscserver_2ecpp_9',['OSCServer.cpp',['../OSCServer_8cpp.html',1,'']]],
-  ['outputs_10',['outputs',['../classVideoLoader.html#ac4ed04b326faa668e601d72c26ff924a',1,'VideoLoader']]]
+  ['oscnote1_7',['OSCNote1',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aad3f0a6c19174e540e6f0108259032b5',1,'DistrhoPluginInfo.h']]],
+  ['oscnote2_8',['OSCNote2',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a21236b504fa158a9feada85ab221244b',1,'DistrhoPluginInfo.h']]],
+  ['oscnote3_9',['OSCNote3',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a1d4d4da6904dfffe96ab2925d0208f50',1,'DistrhoPluginInfo.h']]],
+  ['oscretrigger1_10',['OSCRetrigger1',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93af288562682204deb15438b416183441c',1,'DistrhoPluginInfo.h']]],
+  ['oscretrigger2_11',['OSCRetrigger2',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aeacb5da394ba0ad71b445369e3853cd9',1,'DistrhoPluginInfo.h']]],
+  ['oscretrigger3_12',['OSCRetrigger3',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a1b1cf339802af95b4c31b54f0b04e9de',1,'DistrhoPluginInfo.h']]],
+  ['oscserver_13',['OSCServer',['../classOSCServer.html#a83220b05115bd6136663fda8e4ad7187',1,'OSCServer']]],
+  ['oscserver_14',['oscServer',['../classWaiveFrontPluginUI.html#a7505ea682c784f740149fc8e25c6e736',1,'WaiveFrontPluginUI']]],
+  ['oscserver_15',['OSCServer',['../classOSCServer.html',1,'']]],
+  ['oscserver_2ecpp_16',['OSCServer.cpp',['../OSCServer_8cpp.html',1,'']]],
+  ['outputs_17',['outputs',['../classVideoLoader.html#ac4ed04b326faa668e601d72c26ff924a',1,'VideoLoader']]]
 ];

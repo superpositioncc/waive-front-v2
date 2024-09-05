@@ -19,8 +19,7 @@ var searchData=
   ['viewerwidget_16',['viewerWidget',['../classViewerWindow.html#ad6972128cbc55b0d10f7000b0325ff9e',1,'ViewerWindow']]],
   ['viewerwidget_17',['ViewerWidget',['../classViewerWidget.html',1,'']]],
   ['viewerwidget_2ecpp_18',['ViewerWidget.cpp',['../ViewerWidget_8cpp.html',1,'']]],
-  ['viewerwindow_19',['ViewerWindow',['../classViewerWindow.html',1,'']]],
+  ['viewerwindow_19',['ViewerWindow',['../classViewerWindow.html',1,'ViewerWindow'],['../classViewerWindow.html#ace4429ea0e2ea853fddb441a7b5548f8',1,'ViewerWindow::ViewerWindow()']]],
   ['viewerwindow_20',['viewerWindow',['../classWaiveFrontPluginUI.html#a1c28be353ac2c71f8604b0ee232a3b72',1,'WaiveFrontPluginUI']]],
-  ['viewerwindow_21',['ViewerWindow',['../classViewerWindow.html#ace4429ea0e2ea853fddb441a7b5548f8',1,'ViewerWindow']]],
-  ['viewerwindow_2ecpp_22',['ViewerWindow.cpp',['../ViewerWindow_8cpp.html',1,'']]]
+  ['viewerwindow_2ecpp_21',['ViewerWindow.cpp',['../ViewerWindow_8cpp.html',1,'']]]
 ];

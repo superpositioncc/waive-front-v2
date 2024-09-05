@@ -36,6 +36,12 @@ var DistrhoPluginInfo_8h =
       [ "RandomizeItem1", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a6c2ddd8aedef7a5fe8f5ab9a3a1d79e5", null ],
       [ "RandomizeItem2", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aa332eadc01e1289f14f4344b59c9b3a3", null ],
       [ "RandomizeItem3", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93afe479109e8e4f8710d4c5f8cb914a418", null ],
+      [ "OSCNote1", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aad3f0a6c19174e540e6f0108259032b5", null ],
+      [ "OSCNote2", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a21236b504fa158a9feada85ab221244b", null ],
+      [ "OSCNote3", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a1d4d4da6904dfffe96ab2925d0208f50", null ],
+      [ "OSCRetrigger1", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93af288562682204deb15438b416183441c", null ],
+      [ "OSCRetrigger2", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aeacb5da394ba0ad71b445369e3853cd9", null ],
+      [ "OSCRetrigger3", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a1b1cf339802af95b4c31b54f0b04e9de", null ],
       [ "NumParameters", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93abdfa57352f7170d47736747f7020cc21", null ]
     ] ]
 ];

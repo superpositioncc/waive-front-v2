@@ -7,9 +7,7 @@ var hierarchy =
     [ "DataTag", "classDataTag.html", null ],
     [ "FrameData", "structFrameData.html", null ],
     [ "OSCMessage", "structOSCMessage.html", null ],
-    [ "osc::OscPacketListener", null, [
-      [ "OSCServer", "classOSCServer.html", null ]
-    ] ],
+    [ "OSCServer", "classOSCServer.html", null ],
     [ "Plugin", null, [
       [ "WaiveFrontPlugin", "classWaiveFrontPlugin.html", null ]
     ] ],

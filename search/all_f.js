@@ -9,11 +9,12 @@ var searchData=
   ['randomizeitem1_6',['RandomizeItem1',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a6c2ddd8aedef7a5fe8f5ab9a3a1d79e5',1,'DistrhoPluginInfo.h']]],
   ['randomizeitem2_7',['RandomizeItem2',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93aa332eadc01e1289f14f4344b59c9b3a3',1,'DistrhoPluginInfo.h']]],
   ['randomizeitem3_8',['RandomizeItem3',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93afe479109e8e4f8710d4c5f8cb914a418',1,'DistrhoPluginInfo.h']]],
-  ['rectangle_9',['rectangle',['../classViewerWidget.html#accfdb0d94208b733cb04211475f39e33',1,'ViewerWidget']]],
-  ['red_10',['RED',['../Logger_8cpp.html#a8d23feea868a983c8c2b661e1e16972f',1,'Logger.cpp']]],
-  ['regular_11',['regular',['../classWaiveFrontPluginUI.html#a6c760ac1fe61540928c90e865367a7a6',1,'WaiveFrontPluginUI']]],
-  ['reset_12',['RESET',['../Logger_8cpp.html#ab702106cf3b3e96750b6845ded4e0299',1,'Logger.cpp']]],
-  ['rewind_13',['rewind',['../classVideoLoader.html#a298cc42d38d50d3224c6b1c23440685c',1,'VideoLoader']]],
-  ['rgb_5fframe_14',['rgb_frame',['../classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd',1,'VideoLoader']]],
-  ['run_15',['run',['../classWaiveFrontPlugin.html#ad7ff050220420c5daae36cda82d3fba8',1,'WaiveFrontPlugin']]]
+  ['rawcategories_9',['rawCategories',['../structOSCMessage.html#af61fa108a399c057955060aa00c32381',1,'OSCMessage']]],
+  ['rectangle_10',['rectangle',['../classViewerWidget.html#accfdb0d94208b733cb04211475f39e33',1,'ViewerWidget']]],
+  ['red_11',['RED',['../Logger_8cpp.html#a8d23feea868a983c8c2b661e1e16972f',1,'Logger.cpp']]],
+  ['regular_12',['regular',['../classWaiveFrontPluginUI.html#a6c760ac1fe61540928c90e865367a7a6',1,'WaiveFrontPluginUI']]],
+  ['reset_13',['RESET',['../Logger_8cpp.html#ab702106cf3b3e96750b6845ded4e0299',1,'Logger.cpp']]],
+  ['rewind_14',['rewind',['../classVideoLoader.html#a298cc42d38d50d3224c6b1c23440685c',1,'VideoLoader']]],
+  ['rgb_5fframe_15',['rgb_frame',['../classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd',1,'VideoLoader']]],
+  ['run_16',['run',['../classOSCServer.html#acb3afdaed0c03047e597abc2262aa97c',1,'OSCServer::run()'],['../classWaiveFrontPlugin.html#ad7ff050220420c5daae36cda82d3fba8',1,'WaiveFrontPlugin::run()']]]
 ];

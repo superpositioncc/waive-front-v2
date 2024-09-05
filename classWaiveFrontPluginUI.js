@@ -16,6 +16,7 @@ var classWaiveFrontPluginUI =
     [ "initialized", "classWaiveFrontPluginUI.html#acdc522187f806ff453cde0113ff1d0a0", null ],
     [ "lastMessages", "classWaiveFrontPluginUI.html#a895d666e13c74fb71701f04c02cbc0b6", null ],
     [ "layerNotes", "classWaiveFrontPluginUI.html#aaf2ef5f25694179a7203962a6f419abe", null ],
+    [ "layerRetrigger", "classWaiveFrontPluginUI.html#acae1cebc8e6e96667cf60d241577f8a7", null ],
     [ "layersEnabled", "classWaiveFrontPluginUI.html#a8592864497c7cd922ed0231f3bea1a10", null ],
     [ "oscServer", "classWaiveFrontPluginUI.html#a7505ea682c784f740149fc8e25c6e736", null ],
     [ "parameters", "classWaiveFrontPluginUI.html#adaf230785548eada0b8b78b16c518ef9", null ],
