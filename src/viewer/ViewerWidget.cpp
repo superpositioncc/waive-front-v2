@@ -110,7 +110,7 @@ public:
 
 		delete[] frameData[i]->data;
 
-		uint8_t* data = new UINT8[width * height * 3];
+		uint8_t* data = new uint8_t[width * height * 3];
 		memcpy(data, frame, width * height * 3);
 
 		frameData[i]->data = data;
