@@ -18,8 +18,6 @@ var DistrhoPluginInfo_8h =
     [ "DISTRHO_UI_USE_CUSTOM", "DistrhoPluginInfo_8h.html#a5bcd1ce31e47a617de4c32fbf85e44ca", null ],
     [ "DISTRHO_UI_USE_NANOVG", "DistrhoPluginInfo_8h.html#ad49e79936a2aa5afa089cbc051426ccd", null ],
     [ "DISTRHO_UI_USER_RESIZABLE", "DistrhoPluginInfo_8h.html#abadb9d9ba7f479df39b3963ee60b7a4b", null ],
-    [ "GLEW_STATIC", "DistrhoPluginInfo_8h.html#abcde84ea0ef5f934384e4620f092c85a", null ],
-    [ "IMGUI_IMPL_OPENGL_ES3", "DistrhoPluginInfo_8h.html#aa563efb666a9f8f61e9566a873e65ff8", null ],
     [ "Parameters", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93", [
       [ "BlurSize", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93ab51a00c6851b31af999b2ed197b2e980", null ],
       [ "FocusDistance", "DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93a103ae31566b749bbdf63165928736639", null ],
