@@ -32,5 +32,7 @@ var classVideoLoader =
     [ "parser", "classVideoLoader.html#a022cf0bba2def8c3c11a9971cdd2a2ad", null ],
     [ "rgb_frame", "classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd", null ],
     [ "status", "classVideoLoader.html#ad1ac9737f33756a9caa63e0eada00af0", null ],
+    [ "used", "classVideoLoader.html#ae104238bdc0047cb26d501d6df2bcfdc", null ],
+    [ "usedFrame", "classVideoLoader.html#a9abf8370a225c2f60f96a216dc5bde0e", null ],
     [ "videoStreamIndex", "classVideoLoader.html#a9916d86df15d3b97b4bebf37937ad108", null ]
 ];

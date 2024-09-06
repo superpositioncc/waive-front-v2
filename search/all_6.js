@@ -16,5 +16,6 @@ var searchData=
   ['getstatus_13',['getStatus',['../classVideoLoader.html#a616e51fee6f740d4be3b16e72116bac0',1,'VideoLoader']]],
   ['getversion_14',['getVersion',['../classWaiveFrontPlugin.html#a01e8f434e0b7f2bc3d0c910e3a41d6e8',1,'WaiveFrontPlugin']]],
   ['getviewerwidget_15',['getViewerWidget',['../classViewerWindow.html#a2c919336dd3b09002dfbeec3c3d8a2e8',1,'ViewerWindow']]],
-  ['green_16',['GREEN',['../Logger_8cpp.html#acfbc006ea433ad708fdee3e82996e721',1,'Logger.cpp']]]
+  ['glew_5fstatic_16',['GLEW_STATIC',['../DistrhoPluginInfo_8h.html#abcde84ea0ef5f934384e4620f092c85a',1,'DistrhoPluginInfo.h']]],
+  ['green_17',['GREEN',['../Logger_8cpp.html#acfbc006ea433ad708fdee3e82996e721',1,'Logger.cpp']]]
 ];

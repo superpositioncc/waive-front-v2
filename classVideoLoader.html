@@ -17,8 +17,6 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -148,6 +146,10 @@ Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ad58920d84a98aaf28e3b2feda0a41699"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ad58920d84a98aaf28e3b2feda0a41699">colors</a></td></tr>
 <tr class="separator:ad58920d84a98aaf28e3b2feda0a41699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae104238bdc0047cb26d501d6df2bcfdc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#ae104238bdc0047cb26d501d6df2bcfdc">used</a> = false</td></tr>
+<tr class="separator:ae104238bdc0047cb26d501d6df2bcfdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9abf8370a225c2f60f96a216dc5bde0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#a9abf8370a225c2f60f96a216dc5bde0e">usedFrame</a> = false</td></tr>
+<tr class="separator:a9abf8370a225c2f60f96a216dc5bde0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca832750f3b72ef9dd9c85b0e022c11"><td class="memItemLeft" align="right" valign="top">AVFormatContext *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#abca832750f3b72ef9dd9c85b0e022c11">format</a></td></tr>
 <tr class="separator:abca832750f3b72ef9dd9c85b0e022c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc089faaee07bb524dbf55c629c72a86"><td class="memItemLeft" align="right" valign="top">AVCodecParameters *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVideoLoader.html#afc089faaee07bb524dbf55c629c72a86">codecParameters</a></td></tr>
@@ -1016,6 +1018,52 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Status </p>
+
+</div>
+</div>
+<a id="ae104238bdc0047cb26d501d6df2bcfdc" name="ae104238bdc0047cb26d501d6df2bcfdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae104238bdc0047cb26d501d6df2bcfdc">&#9670;&#160;</a></span>used</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool VideoLoader::used = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the video loader has been used </p>
+
+</div>
+</div>
+<a id="a9abf8370a225c2f60f96a216dc5bde0e" name="a9abf8370a225c2f60f96a216dc5bde0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9abf8370a225c2f60f96a216dc5bde0e">&#9670;&#160;</a></span>usedFrame</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool VideoLoader::usedFrame = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the frame has been used </p>
 
 </div>
 </div>
