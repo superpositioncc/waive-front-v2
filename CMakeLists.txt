@@ -76,7 +76,7 @@ if (NOT PUGL_UPSTREAM)
 endif()
 
 download_and_extract(pugl-upstream https://github.com/DISTRHO/pugl/archive/e33b2f6b0cea6d6263990aa9abe6a69fdfba5973.zip ${CMAKE_BINARY_DIR}/dpf/dgl/src)
-download_and_extract(dpf-widgets https://github.com/superpositioncc/DPF-Widgets/archive/9f5ffc74b623b8f9853e4089814b012243a0c5b9.zip ${CMAKE_BINARY_DIR})
+download_and_extract(dpf-widgets https://github.com/superpositioncc/DPF-Widgets/archive/880ce983b170a71c9fe400435b9b8185ca4fc8ed.zip ${CMAKE_BINARY_DIR})
 
 if (WINDOWS)
     download_and_extract(glew https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip ${CMAKE_BINARY_DIR})
@@ -127,7 +127,11 @@ else()
     set(TARGETS jack vst2 vst3 au)
 endif()
 
-add_definitions(-DDGL_USE_OPENGL3)
+if (MACOS)
+    add_definitions(-DDGL_USE_OPENGL3)
+else()
+	add_definitions(-DIMGUI_IMPL_OPENGL_ES3 -DGLEW_STATIC -D_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING -D_WINSOCKAPI_)
+endif()
 
 dpf_add_plugin(${NAME}
     TARGETS ${TARGETS}
@@ -174,5 +178,5 @@ target_link_libraries(${NAME} PUBLIC ${AVDEVICE_LIBRARY})
 
 if (WINDOWS)
     target_link_libraries(${NAME} PUBLIC ${GLEW_LIBRARIES})
-    # target_link_libraries(${NAME} PUBLIC Ws2_32 winmm)
+    target_link_libraries(${NAME} PUBLIC Ws2_32)
 endif()

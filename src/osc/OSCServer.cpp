@@ -19,21 +19,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <thread>
-
 #include "tinyosc.h"
 #include "../util/Logger.cpp"
 #include "../data/DataCategory.hpp"
 #include "OSCMessage.hpp"
 #include <sstream>
 #include <string>
+
+#ifdef __APPLE__
 #include <arpa/inet.h>
 #include <sys/select.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <cstring>
+#else
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+#endif
+
+
 
 using namespace Util::Logger;
 
@@ -68,14 +76,32 @@ public:
 	 */
 	void init(int port)
 	{
+#ifdef __APPLE__
 		fd = socket(AF_INET6, SOCK_DGRAM, 0);
-		fcntl(fd, F_SETFL, O_NONBLOCK); // set the socket to non-blocking
+		fcntl(fd, F_SETFL, O_NONBLOCK);
 		struct sockaddr_in6 sin;
 		sin.sin6_family = AF_INET6;
 		sin.sin6_port = htons(port);
 		sin.sin6_addr = in6addr_any;
 		bind(fd, (struct sockaddr *)&sin, sizeof(struct sockaddr_in6));
 		print("OSC", "Now listening on port " + std::to_string(port));
+#else
+		WSADATA wsaData;
+		WSAStartup(MAKEWORD(2, 2), &wsaData);
+
+		fd = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+		struct sockaddr_in6 sin;
+		sin.sin6_family = AF_INET6;
+		sin.sin6_port = htons(port);
+		sin.sin6_addr = in6addr_any;
+
+		bind(fd, (struct sockaddr*)&sin, sizeof(struct sockaddr_in6));
+
+		u_long mode = 1;
+		ioctlsocket(fd, FIONBIO, &mode);
+
+		print("OSC", "Now listening on port " + std::to_string(port));
+#endif
 
 		thread = std::thread(&OSCServer::run, this);
 	}
@@ -86,9 +112,17 @@ public:
 	//  */
 	void stop()
 	{
+#ifdef __APPLE__
 		thread.join();
-
 		close(fd);
+#else
+		if (thread.joinable())
+		{
+			thread.join();
+		}
+		closesocket(fd);
+		WSACleanup();
+#endif
 	}
 
 	// /**
@@ -192,7 +226,12 @@ private:
 		}
 	}
 
+#ifdef __APPLE__
 	int fd;				/**< The socket */
+#else
+	SOCKET fd;			/**< The socket */
+#endif
+
 	char buffer[2048];	/**< The buffer that will contain incoming messages */
 	std::thread thread; /**< The thread to run the server in */
 

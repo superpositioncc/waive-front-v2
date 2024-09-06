@@ -19,6 +19,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef WAIVE_FRONT_PLUGIN_UI_CPP
 #define WAIVE_FRONT_PLUGIN_UI_CPP
 
+#ifndef __APPLE__
+#include <Windows.h>
+#include <GL/glew.h>
+#endif
+
 #include "DistrhoUI.hpp"
 #include "viewer/ViewerWindow.cpp"
 #include "assets/themes/CinderTheme.cpp"

@@ -1,6 +1,9 @@
 docs
 out
 Makefile
+.vscode
+.vs
+CppProperties.json
 
 .vscode/*
 !.vscode/settings.json

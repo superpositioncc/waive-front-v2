@@ -35,6 +35,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../shader/ShaderUniforms.h"
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 START_NAMESPACE_DISTRHO
 
@@ -107,7 +108,12 @@ public:
 		if (!isInitialized())
 			return;
 
-		frameData[i]->data = frame;
+		delete[] frameData[i]->data;
+
+		uint8_t* data = new UINT8[width * height * 3];
+		memcpy(data, frame, width * height * 3);
+
+		frameData[i]->data = data;
 		frameData[i]->width = width;
 		frameData[i]->height = height;
 		frameData[i]->waiting = true;

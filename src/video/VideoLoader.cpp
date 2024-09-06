@@ -35,7 +35,10 @@ extern "C"
 using namespace Util::Logger;
 #include <string>
 #include <vector>
+
+#ifdef __APPLE__
 #include <unistd.h>
+#endif
 
 /**
  * @brief Class to load a video and extract frames and colors from it
