@@ -45,6 +45,8 @@ class VideoLoader
 {
 private:
 	std::vector<float> colors; /**< Colors extracted from the video */
+	bool used = false;		   /**< Whether the video loader has been used */
+	bool usedFrame = false;	   /**< Whether the frame has been used */
 
 	/**
 	 * @brief Convert a frame to RGB
@@ -244,11 +246,17 @@ public:
 	 */
 	VideoFrameDescription getFrame()
 	{
-		getReadyForNextFrame();
+		if (usedFrame)
+		{
+			getReadyForNextFrame();
+		}
+
+		usedFrame = true;
 		int data_size = 0;
 		bool got_frame = false;
 
 		VideoFrameDescription videoFrameDescription;
+		videoFrameDescription.ready = false;
 
 		while (true)
 		{
@@ -325,7 +333,10 @@ public:
 			}
 
 			if (got_frame)
+			{
+				videoFrameDescription.ready = true;
 				break;
+			}
 		}
 
 		return videoFrameDescription;
@@ -349,7 +360,12 @@ public:
 	 */
 	int loadVideo(const std::string &videoPath)
 	{
-		getReadyForNextLoad();
+		if (used)
+		{
+			getReadyForNextLoad();
+		}
+
+		used = true;
 		format = avformat_alloc_context();
 		if (avformat_open_input(&format, videoPath.c_str(), nullptr, nullptr) < 0)
 		{

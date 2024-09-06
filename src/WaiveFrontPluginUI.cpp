@@ -26,6 +26,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "DearImGui.hpp"
 #include "video/VideoLoader.cpp"
 #include "video/VideoFrameDescription.h"
+
+#ifdef __APPLE__
+#include <filesystem>
+#else
+#include <experimental/filesystem>
+#endif
+
 #include <iostream>
 #include <chrono>
 #include "assets/fonts/SpaceMono_Regular.cpp"
@@ -36,6 +43,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "osc/OSCServer.cpp"
 
 using namespace Util::Logger;
+
+#ifdef __APPLE__
+namespace fs = std::__fs::filesystem;
+#else
+namespace fs = std::experimental::filesystem;
+#endif
 
 START_NAMESPACE_DISTRHO
 
@@ -139,22 +152,23 @@ protected:
 
         while ((entry = readdir(dir)) != NULL)
         {
-            if (entry->d_type == DT_DIR)
+            std::string name = std::string(entry->d_name);
+
+            if (name != "." && name != "..")
             {
-                std::string name = std::string(entry->d_name);
+                std::string path = std::string(directory) + "/" + name;
+                fs::path p(path);
 
-                if (name != "." && name != "..")
-                {
-                    std::string path = std::string(directory) + "/" + name;
+                if (!fs::is_directory(p))
+                    continue;
 
-                    DataSource *dataSource = new DataSource(path);
-                    dataSource->load(&dataSources);
+                DataSource *dataSource = new DataSource(path);
+                dataSource->load(&dataSources);
 
-                    if (dataSource->isValid())
-                        dataSources.sources.push_back(dataSource);
-                    else
-                        delete dataSource;
-                }
+                if (dataSource->isValid())
+                    dataSources.sources.push_back(dataSource);
+                else
+                    delete dataSource;
             }
         }
 
@@ -450,8 +464,10 @@ protected:
             {
                 VideoFrameDescription vfd = videoLoader->getFrame();
 
-                if (vfd.data != nullptr)
+                if (vfd.data != nullptr && vfd.ready)
+                {
                     viewerWindow->getViewerWidget()->setFrame(i, vfd.data, vfd.width, vfd.height, videoLoader->getColors());
+                }
             }
         }
 
@@ -622,19 +638,22 @@ protected:
 
                 std::vector<float> colors = videoLoaders[i]->getColors();
 
-                ImGui::Columns(colors.size() / 3, nullptr, false);
-
-                for (int j = 0; j < colors.size(); j += 3)
+                if (colors.size() > 0)
                 {
-                    float r = colors[j];
-                    float g = colors[j + 1];
-                    float b = colors[j + 2];
+                    ImGui::Columns(colors.size() / 3, nullptr, false);
 
-                    ImGui::ColorButton(("Color " + std::to_string(j / 3)).c_str(), ImVec4(r, g, b, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(width / 4 / 5, width / 4 / 5));
-                    ImGui::NextColumn();
+                    for (int j = 0; j < colors.size(); j += 3)
+                    {
+                        float r = colors[j];
+                        float g = colors[j + 1];
+                        float b = colors[j + 2];
+
+                        ImGui::ColorButton(("Color " + std::to_string(j / 3)).c_str(), ImVec4(r, g, b, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(width / 4 / 5, width / 4 / 5));
+                        ImGui::NextColumn();
+                    }
+
+                    ImGui::Columns(1);
                 }
-
-                ImGui::Columns(1);
             }
 
             ImGui::End();

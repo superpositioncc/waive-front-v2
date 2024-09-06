@@ -18,7 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "OpenGL.hpp"
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl3ext.h>
+#else
+#include <GL/glew.h>
+#endif
 
 /**
  * @brief Simple functions related to GLSL shader management, compilation and usage

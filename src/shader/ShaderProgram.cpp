@@ -19,7 +19,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include "ShaderSource.cpp"
-#include "OpenGL.hpp"
+
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl3ext.h>
+#else
+#include <GL/glew.h>
+#endif
+
 #include "../util/Logger.cpp"
 using namespace Util::Logger;
 
@@ -57,6 +64,10 @@ namespace Shader
 				return;
 
 			initialized = true;
+
+#ifndef __APPLE__
+			glewInit();
+#endif
 
 			printVersion();
 

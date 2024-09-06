@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "DistrhoPlugin.hpp"
-#include "dpf/distrho/extra/String.hpp"
 
 START_NAMESPACE_DISTRHO
 
@@ -196,7 +195,8 @@ protected:
             break;
         }
 
-        parameter.symbol = String(parameter.name).replace(' ', '_').toLower();
+        parameter.symbol = parameter.name + "";
+        parameter.symbol.replace(' ', '_').toLower();
     }
 
     /**

@@ -20,7 +20,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define VIEWER_WIDGET_CPP
 
 #include "DistrhoUI.hpp"
-#include "OpenGL.hpp"
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <OpenGL/gl3ext.h>
+#else
+#include <GL/glew.h>
+#endif
+
 #include "util/Color.cpp"
 #include "FrameData.h"
 #include "../shader/ShaderRectangle.h"

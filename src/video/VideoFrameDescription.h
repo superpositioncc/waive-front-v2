@@ -27,4 +27,5 @@ struct VideoFrameDescription
 	unsigned char *data; /**< Data of the frame */
 	int width;			 /**< Width of the frame */
 	int height;			 /**< Height of the frame */
+	bool ready;			 /**< Whether the frame is ready */
 };

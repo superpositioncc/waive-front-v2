@@ -46,7 +46,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define DISTRHO_UI_USE_NANOVG 0
 #define DISTRHO_UI_FILE_BROWSER 1
 
-#define DGL_USE_OPENGL3 1
+#ifndef __APPLE__
+#define GLEW_STATIC
+#define IMGUI_IMPL_OPENGL_ES3 1
+#endif
 
 enum Parameters
 {
