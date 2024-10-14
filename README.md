@@ -11,7 +11,7 @@
 <em>Interactive, fully automatable visual generation software based on European digital cultural heritage archives.</em>
 </p>
 
-# Quick Start (for non coders)
+# Quick Start (for non-coders)
 
 ## 1. Install the WAIVE-FRONT dataset
 
@@ -31,17 +31,36 @@ Users/
 
 ## 2. Install FFmpeg
 
+`ffmpeg` is an open-source library that WAIVE-FRONT depends upon to read and display video files. Before you can use WAIVE-FRONT, you need to install `ffmpeg`, specifically version 7.0.1. Follow the instructions for your operating system below.
+
 ### macOS
 
-Next, make sure you have `ffmpeg` version 7.0.1 installed. On macOS, the easiest way to do this is using `homebrew`.
+On macOS, the easiest way to install FFmpeg is using `homebrew`.
 
-**How to install Homebrew**
+1. Open the Terminal app
 
-+Install homebrew
+   + Click on the magnifying glass icon in the top right corner of your screen
+   + Type "Terminal" and press Enter to open it
 
-+Install ffmpeg 7.0.1
+2. Install Homebrew (if you haven't already)
+   + Copy and paste this command into Terminal:  
+      `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
-+Explain using Terminal and ‘weird’ password behavior (cursor not responding)
+   + Press Enter and follow any on-screen instructions  
+      *Note: if you're asked to type your password, you won't be able to see the characters you are typing. Just type your password and press Enter.*
+
+   + Type this command and press Enter:  
+      `brew update`
+
+3. Install ffmpeg 7.0.1 (if you haven't already)
+   + Type this command and press Enter:  
+      `brew install ffmpeg@7.0.1`
+   + Wait for the installation to complete. This may take a few minutes. You'll see text scrolling in the Terminal window.
+   + Once it's done, type this command and press Enter:  
+      `ffmpeg -version`  
+      You should see information about ffmpeg, including the version number 7.0.1
+
+That's it, you can continue on to step 3.
 
 ### Windows
 
@@ -53,25 +72,25 @@ Follow the instructions [here](https://www.geeksforgeeks.org/how-to-install-ffmp
 
 ## 3. Install WAIVE-FRONT
 
-Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page, or build it yourself from the instructions below. Choose which plugin format you prefer and place it in your plugins path of your DAW.
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page. Choose which plugin format you prefer and place it in the plugins path of your DAW. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
 
 Common (system-wide) plugin paths:
 
 |         | VST2                                 | VST3                                 | Audio Units                         |
 | ------- | ------------------------------------ | ------------------------------------ | ----------------------------------- |
-| macOS   | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/Components` |
+| macOS   | `/Library/Audio/Plug-ins/VST3`        | `/Library/Audio/Plug-ins/VST3`        | `/Library/Audio/Plug-ins/Components` |
 | Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | _n/a_                               |
 | Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | _n/a_                               |
 
-+Explain how to access /Library in macOS
+In your DAW, rescan plugins if it does not automatically. That's it, you're ready to start VJ'ing!
 
-In your DAW, rescan plugins if it does not automatically.
+### Communication with WAIVE
 
-# OSC control
+If you use both [WAIVE](https://github.com/ThunderboomRecords/WAIVE) and WAIVE-FRONT at the same time on the same computer, they should communicate out of the box if your project is playing in your DAW.
 
-WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, you can use [WAIVE](https://github.com/ThunderboomRecords/WAIVE) to control the visuals.
+WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, you can use   to control the visuals. 
 
-# Build instructions
+# Build instructions (for coders)
 
 _Note: as of yet, Linux builds have been untested and therefore disabled in CMakeLists.txt. It should be straightforward to adjust the build steps to work on Linux. Please feel free to contribute with a pull request!_
 
