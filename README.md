@@ -13,9 +13,15 @@
 
 # Quick Start (for non-coders)
 
-## 1. Install the WAIVE-FRONT dataset
+Follow these instructions to get started.
 
-First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into your Documents folder. You should be left with this structure:
+### 1. Install the WAIVE-FRONT dataset
+<details>
+<summary>
+<i>Click to open instructions</i>
+</summary>
+
+First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into a folder called WAIVE in your Documents folder. You should be left with this structure:
 
 ```
 Users/
@@ -27,13 +33,22 @@ Users/
 │  │  │  ├─ ...
 ```
 
-⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them.**
+⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them. If you run into any problems, this is the first thing you should check.**
+</details>
 
-## 2. Install FFmpeg
+### 2. Install FFmpeg
+
+<details>
+<summary>
+<i>Click to open instructions</i>
+</summary>
 
 `ffmpeg` is an open-source library that WAIVE-FRONT depends upon to read and display video files. Before you can use WAIVE-FRONT, you need to install `ffmpeg`, specifically version 7.0.1. Follow the instructions for your operating system below.
 
-### macOS
+<details>
+<summary>
+<i>Click here if you are on MacOS</i>
+</summary>
 
 On macOS, the easiest way to install FFmpeg is using `homebrew`.
 
@@ -61,16 +76,29 @@ On macOS, the easiest way to install FFmpeg is using `homebrew`.
       You should see information about ffmpeg, including the version number 7.0.1
 
 That's it, you can continue on to step 3.
+</details>
 
-### Windows
-
+<details>
+<summary>
+<i>Click here if you are on Windows</i>
+</summary>
 Download the required ffmpeg dlls from [here](https://drive.google.com/file/d/1rDx3mzgxlll8r4aVG2g8qDa2BbFhSlgC/view?usp=share_link). Place the DLL files in the same folder as your DAW's exe file. This will usually be in your Program Files or ProgramData directory. For example, if Ableton Live was installed in `C:\ProgramData\Ableton\[Live Version]\Program`, place the DLL files right next to Ableton's exe file there. \*Note: Due to FFMPEG licensing restrictions, we cannot make this process easier at this point.
+</details>
 
-### Linux
-
+<details>
+<summary>
+<i>Click here if you are on Linux</i>
+</summary>
 Follow the instructions [here](https://www.geeksforgeeks.org/how-to-install-ffmpeg-in-linux/).
+</details>
+</details>
 
-## 3. Install WAIVE-FRONT
+### 3. Install WAIVE-FRONT
+
+<details>
+<summary>
+<i>Click to open instructions</i>
+</summary>
 
 Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page. Choose which plugin format you prefer and place it in the plugins path of your DAW. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
 
@@ -82,15 +110,25 @@ Common (system-wide) plugin paths:
 | Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | _n/a_                               |
 | Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | _n/a_                               |
 
-In your DAW, rescan plugins if it does not automatically. That's it, you're ready to start VJ'ing!
+In your DAW, rescan plugins if it does not automatically.
 
 ### Communication with WAIVE
 
 If you use both [WAIVE](https://github.com/ThunderboomRecords/WAIVE) and WAIVE-FRONT at the same time on the same computer, they should communicate out of the box if your project is playing in your DAW.
 
-WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, you can use   to control the visuals. 
+WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, you can use   to control the visuals.
+</details>
+
+&nbsp;
+
+🎉 That's it, you're ready to start VJ'ing!
 
 # Build instructions (for coders)
+
+<details>
+<summary>
+<i>If you're interested in developing with us, click here to open build instructions</i>
+</summary>
 
 _Note: as of yet, Linux builds have been untested and therefore disabled in CMakeLists.txt. It should be straightforward to adjust the build steps to work on Linux. Please feel free to contribute with a pull request!_
 
@@ -117,11 +155,11 @@ The following steps have been written with MacOS users in mind. For Windows, the
 6. Your binaries will be in the `build/bin` directory.
 7. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
 
-# Development
+## Development
 
 Want to add new features or improve on existing ones? Squash some bugs? Pull requests are very welcome! Documentation for the code is available [here](https://superpositioncc.github.io/waive-front-v2/).
 
-# Shipping on MacOS
+## Shipping on MacOS
 
 Building a fully functional and production-ready version on MacOS requires a paid Apple Developer plan.
 
@@ -135,3 +173,4 @@ Building a fully functional and production-ready version on MacOS requires a pai
 8. Run `xcrun notarytool submit WAIVE-FRONT-V2.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait` to send the app to Apple for notarization.
 9. If all went well, `spctl -vvv --assess --type exec WAIVE-FRONT-V2.app` should return `accepted`.
 10. Your zip file is ready to ship.
+</details>
