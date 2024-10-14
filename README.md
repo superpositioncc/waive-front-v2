@@ -11,10 +11,11 @@
 <em>Interactive, fully automatable visual generation software based on European digital cultural heritage archives.</em>
 </p>
 
-# Usage
+# Quick Start (for non coders)
 
-1. First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into your Documents folder. You should be left with this structure:
+## 1. Install the WAIVE-FRONT dataset
 
+First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into your Documents folder. You should be left with this structure:
 
 ```
 Users/
@@ -28,19 +29,43 @@ Users/
 
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them.**
 
-2. **(Linux / MacOS)** Next, make sure you have `ffmpeg` version 7.0.1 installed. On MacOS, the easiest way to do this is using `homebrew`.
-3. **(Windows)** Download the required ffmpeg dlls from [here](https://drive.google.com/file/d/1rDx3mzgxlll8r4aVG2g8qDa2BbFhSlgC/view?usp=share_link). Place the DLL files in the same folder as your DAW's exe file. This will usually be in your Program Files or ProgramData directory. For example, if Ableton Live was installed in `C:\ProgramData\Ableton\[Live Version]\Program`, place the DLL files right next to Ableton's exe file there. *Note: Due to FFMPEG licensing restrictions, we cannot make this process easier at this point.*
-4. Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page, or build it yourself from the instructions below. Choose which plugin format you prefer and place it in your plugins path of your DAW. 
+## 2. Install FFmpeg
+
+### macOS
+
+Next, make sure you have `ffmpeg` version 7.0.1 installed. On macOS, the easiest way to do this is using `homebrew`.
+
+**How to install Homebrew**
+
++Install homebrew
+
++Install ffmpeg 7.0.1
+
++Explain using Terminal and ‘weird’ password behavior (cursor not responding)
+
+### Windows
+
+Download the required ffmpeg dlls from [here](https://drive.google.com/file/d/1rDx3mzgxlll8r4aVG2g8qDa2BbFhSlgC/view?usp=share_link). Place the DLL files in the same folder as your DAW's exe file. This will usually be in your Program Files or ProgramData directory. For example, if Ableton Live was installed in `C:\ProgramData\Ableton\[Live Version]\Program`, place the DLL files right next to Ableton's exe file there. \*Note: Due to FFMPEG licensing restrictions, we cannot make this process easier at this point.
+
+### Linux
+
+Follow the instructions [here](https://www.geeksforgeeks.org/how-to-install-ffmpeg-in-linux/).
+
+## 3. Install WAIVE-FRONT
+
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page, or build it yourself from the instructions below. Choose which plugin format you prefer and place it in your plugins path of your DAW.
 
 Common (system-wide) plugin paths:
-      
-|         | VST2                                 | VST3                                 | Audio Units                                 |
-| ------- | ------------------------------------ | ------------------------------------ | ------------------------------------ |
-| macOS   | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/Components`        |
-| Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | *n/a*                      |
-| Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | *n/a* |
-      
-In your DAW, rescan plugins if it does not automatically. 
+
+|         | VST2                                 | VST3                                 | Audio Units                         |
+| ------- | ------------------------------------ | ------------------------------------ | ----------------------------------- |
+| macOS   | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/VST3`        | `Library/Audio/Plug-ins/Components` |
+| Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | _n/a_                               |
+| Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | _n/a_                               |
+
++Explain how to access /Library in macOS
+
+In your DAW, rescan plugins if it does not automatically.
 
 # OSC control
 
@@ -48,31 +73,30 @@ WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC 
 
 # Build instructions
 
-*Note: as of yet, Linux builds have been untested and therefore disabled in CMakeLists.txt. It should be straightforward to adjust the build steps to work on Linux. Please feel free to contribute with a pull request!*
+_Note: as of yet, Linux builds have been untested and therefore disabled in CMakeLists.txt. It should be straightforward to adjust the build steps to work on Linux. Please feel free to contribute with a pull request!_
 
 The following steps have been written with MacOS users in mind. For Windows, the easiest way to build is to load the project into Visual Studio and run CMake from there -- it should work out of the box.
 
 1. **(MacOS)** Make sure you have `ffmpeg` version 7.0.1 installed. On MacOS, the easiest way to do this is using `homebrew`.
 2. Clone the Git repository.
-	```bash
-	git clone --recursive https://github.com/superpositioncc/waive-front-v2
-	cd waive-front-v2
-	```
+   ```bash
+   git clone --recursive https://github.com/superpositioncc/waive-front-v2
+   cd waive-front-v2
+   ```
 3. Create the `build` directory and step into it.
-	```bash
-	mkdir build && cd build
-	```
+   ```bash
+   mkdir build && cd build
+   ```
 4. Run CMake script. Required dependencies will automatically be downloaded according to your operating system.
-	```bash
-	cmake ..
-	```
+   ```bash
+   cmake ..
+   ```
 5. Run the generated Makefile.
-	```bash
-	make
-	```
+   ```bash
+   make
+   ```
 6. Your binaries will be in the `build/bin` directory.
 7. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
-
 
 # Development
 
