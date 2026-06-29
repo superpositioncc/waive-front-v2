@@ -62,16 +62,6 @@ public:
 		return viewerWidget;
 	}
 
-	/**
-	 * @brief When set, closing this window quits the whole application (used in standalone mode).
-	 *
-	 * @param value Whether closing should quit the application
-	 */
-	void setQuitOnClose(bool value)
-	{
-		quitOnClose = value;
-	}
-
 protected:
 	/**
 	 * @brief Keep the OpenGL drawable in sync with the window size on resize.
@@ -82,22 +72,8 @@ protected:
 		waiveUpdateGLDrawable(getNativeWindowHandle());
 	}
 
-	/**
-	 * @brief Handle a request to close the window.
-	 *
-	 * @return true to allow the window to close
-	 */
-	bool onClose() override
-	{
-		if (quitOnClose)
-			getApp().quit();
-
-		return true;
-	}
-
 private:
 	ViewerWidget *viewerWidget; /**< Viewer widget */
-	bool quitOnClose = false;   /**< Whether closing the window quits the application */
 
 	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ViewerWindow)
 };

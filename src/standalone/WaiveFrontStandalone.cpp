@@ -48,9 +48,25 @@ public:
         controller.init();
 
         viewerWindow = new ViewerWindow(app, controller.parameters, controller.getLayersEnabled());
+    }
 
-        // In standalone mode, closing either window quits the whole application.
-        viewerWindow->setQuitOnClose(true);
+    /**
+     * @brief Whether either window has been closed.
+     *
+     * onClose() is never dispatched on macOS, so closing-quits-the-app is implemented by polling
+     * window visibility from an app idle callback instead. Closing any window hides it (isVisible
+     * becomes false); we only act once both windows have been seen visible, to avoid quitting during
+     * start-up before they are shown.
+     */
+    bool anyWindowClosed()
+    {
+        const bool controlVisible = isVisible();
+        const bool viewerVisible = viewerWindow != nullptr && viewerWindow->isVisible();
+
+        if (controlVisible && viewerVisible)
+            seenBothVisible = true;
+
+        return seenBothVisible && (!controlVisible || !viewerVisible);
     }
 
 protected:
@@ -61,17 +77,6 @@ protected:
     {
         ImGuiStandaloneWindow::onReshape(width, height);
         waiveUpdateGLDrawable(getNativeWindowHandle());
-    }
-
-    /**
-     * @brief Closing the control window quits the application.
-     *
-     * @return true to allow the window to close
-     */
-    bool onClose() override
-    {
-        getApp().quit();
-        return true;
     }
 
     /**
@@ -99,8 +104,29 @@ private:
     WaiveFrontController controller;      /**< The shared control-panel logic */
     ViewerWindow *viewerWindow = nullptr; /**< The viewer window */
     bool initialized = false;             /**< Whether the UI has been initialized */
+    bool seenBothVisible = false;         /**< Whether both windows have been shown yet */
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaiveFrontStandalone)
+};
+
+/**
+ * @brief Quits the application as soon as either window is closed.
+ */
+class QuitOnWindowClose : public IdleCallback
+{
+public:
+    QuitOnWindowClose(Application &app, WaiveFrontStandalone &window)
+        : app(app), window(window) {}
+
+    void idleCallback() override
+    {
+        if (window.anyWindowClosed())
+            app.quit();
+    }
+
+private:
+    Application &app;
+    WaiveFrontStandalone &window;
 };
 
 // -----------------------------------------------------------------------------------------------------------
@@ -113,6 +139,9 @@ int main()
 
     WaiveFrontStandalone window(app);
     window.show();
+
+    QuitOnWindowClose quitWatcher(app, window);
+    app.addIdleCallback(&quitWatcher);
 
     app.exec();
 
