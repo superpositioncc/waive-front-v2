@@ -141,19 +141,6 @@ protected:
 		draw();
 	}
 
-	/**
-	 * @brief Handle a window resize event
-	 *
-	 * @param event The window resize event
-	 * @return true
-	 * @return false
-	 */
-	bool onMotion(const MotionEvent &event) override
-	{
-		setSize(getWindow().getWidth(), getWindow().getHeight());
-		return true;
-	}
-
 private:
 	float (&parameters)[Parameters::NumParameters]; /**< The parameters of the shader */
 	std::vector<bool> *layersEnabled;				/**< Vector of booleans representing which layers have been enabled */

@@ -1,0 +1,46 @@
+/*
+WAIVE-FRONT
+Copyright (C) 2024  Bram Bogaerts, Superposition
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#ifdef __APPLE__
+
+#import <Cocoa/Cocoa.h>
+#include "MacGL.h"
+
+extern "C" void waiveUpdateGLDrawable(uintptr_t wrapperViewHandle)
+{
+    NSView *wrapper = (__bridge NSView *)(void *)wrapperViewHandle;
+    if (wrapper == nil)
+        return;
+
+    @autoreleasepool
+    {
+        // pugl puts its NSOpenGLView as a child of the wrapper view. Its frame lags the window on
+        // resize when rendering is driven manually, so force it to fill the (already resized)
+        // wrapper bounds and update its context, keeping the GL backing in sync with the window.
+        for (NSView *sub in [wrapper subviews])
+        {
+            if ([sub isKindOfClass:[NSOpenGLView class]])
+            {
+                [sub setFrame:[wrapper bounds]];
+                [[(NSOpenGLView *)sub openGLContext] update];
+            }
+        }
+    }
+}
+
+#endif

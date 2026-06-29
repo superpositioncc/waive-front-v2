@@ -37,6 +37,10 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     message(FATAL_ERROR "Building for Linux has not been tested yet, but should be straightforward. Check out CMakeLists.txt and make adjustments as needed, and feel free to contribute with a pull request.")
 endif()
 
+# Self-contained distribution build: bundle a minimal FFmpeg so end users do not need to
+# install it. Off by default (the open-source build links the system/Homebrew FFmpeg).
+option(BUNDLE_FFMPEG "Build/bundle a minimal FFmpeg so the app is self-contained" OFF)
+
 # ----------------------------- #
 # --- Download dependencies --- #
 # ----------------------------- #
@@ -81,8 +85,16 @@ download_and_extract(dpf-widgets https://github.com/superpositioncc/DPF-Widgets/
 if (WINDOWS)
     download_and_extract(glew https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip ${CMAKE_BINARY_DIR})
     download_and_extract(dirent https://github.com/tronkko/dirent/archive/47480bb729db38120a5c0b6f1e201abf0982f6a8.zip ${CMAKE_BINARY_DIR})
-    download_and_extract(ffmpeg https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip ${CMAKE_BINARY_DIR})
-elseif (MACOS)
+
+    # Bundled builds use the LGPL prebuilt (no GPL x264/x265) and ship the DLLs next to the app;
+    # the open-source build uses the GPL prebuilt as before.
+    if (BUNDLE_FFMPEG)
+        set(FFMPEG_WIN_VARIANT lgpl-shared)
+    else()
+        set(FFMPEG_WIN_VARIANT gpl-shared)
+    endif()
+    download_and_extract(ffmpeg https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-${FFMPEG_WIN_VARIANT}.zip ${CMAKE_BINARY_DIR})
+elseif (MACOS AND NOT BUNDLE_FFMPEG)
     find_library(AVCODEC_LIBRARY avcodec)
 
     if (NOT AVCODEC_LIBRARY)
@@ -100,7 +112,7 @@ endif()
 # --- Set up the project itself --- #
 # --------------------------------- #
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WINDOWS)
@@ -112,12 +124,22 @@ if (WINDOWS)
     find_package(GLEW REQUIRED)
 endif()
 
-find_library(AVCODEC_LIBRARY avcodec)
-find_library(AVFILTER_LIBRARY avfilter)
-find_library(AVFORMAT_LIBRARY avformat)
-find_library(AVDEVICE_LIBRARY avdevice)
-find_library(AVUTIL_LIBRARY avutil)
-find_library(SWSCALE_LIBRARY swscale)
+# Resolve FFmpeg: a minimal static build from source when bundling on Apple/Unix, otherwise the
+# system (macOS) / downloaded (Windows) shared libraries. Both paths set FFMPEG_LIBRARIES.
+if (BUNDLE_FFMPEG AND NOT WINDOWS)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BundleFFmpeg.cmake)
+else()
+    find_library(AVCODEC_LIBRARY avcodec)
+    find_library(AVFILTER_LIBRARY avfilter)
+    find_library(AVFORMAT_LIBRARY avformat)
+    find_library(AVDEVICE_LIBRARY avdevice)
+    find_library(AVUTIL_LIBRARY avutil)
+    find_library(SWSCALE_LIBRARY swscale)
+
+    set(FFMPEG_LIBRARIES
+        ${AVCODEC_LIBRARY} ${AVFILTER_LIBRARY} ${AVFORMAT_LIBRARY}
+        ${SWSCALE_LIBRARY} ${AVUTIL_LIBRARY} ${AVDEVICE_LIBRARY})
+endif()
 
 add_subdirectory(${CMAKE_BINARY_DIR}/dpf)
 
@@ -133,6 +155,11 @@ else()
 	add_definitions(-DIMGUI_IMPL_OPENGL_ES3 -DGLEW_STATIC -D_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING -D_WINSOCKAPI_)
 endif()
 
+# macOS-only native helper that keeps the OpenGL drawable in sync with the window on resize.
+if (APPLE)
+    set(WAIVE_MACOS_SOURCES src/util/MacGL.mm)
+endif()
+
 dpf_add_plugin(${NAME}
     TARGETS ${TARGETS}
     FILES_DSP
@@ -143,6 +170,7 @@ dpf_add_plugin(${NAME}
         src/data/DataSources.cpp
         src/data/DataSource.cpp
         ${CMAKE_BINARY_DIR}/tinyosc/tinyosc.c
+        ${WAIVE_MACOS_SOURCES}
 )
 
 # ----------------------------- #
@@ -155,7 +183,10 @@ target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/tinyosc)
 target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/json/include)
 
 if (MACOS)
-    find_path(FFMPEG_INCLUDE_DIR libavcodec/avcodec.h)
+    # FFMPEG_INCLUDE_DIR is set by BundleFFmpeg.cmake when bundling.
+    if (NOT BUNDLE_FFMPEG)
+        find_path(FFMPEG_INCLUDE_DIR libavcodec/avcodec.h)
+    endif()
     target_include_directories(${NAME} PUBLIC ${FFMPEG_INCLUDE_DIR})
 elseif(WINDOWS)
     target_include_directories(${NAME} PUBLIC ${GLEW_INCLUDE_DIRS})
@@ -169,14 +200,64 @@ endif()
 # ----- Link dependencies ----- #
 # ----------------------------- #
 
-target_link_libraries(${NAME} PUBLIC ${AVCODEC_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVFILTER_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVFORMAT_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${SWSCALE_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVUTIL_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVDEVICE_LIBRARY})
+target_link_libraries(${NAME} PUBLIC ${FFMPEG_LIBRARIES})
+
+if (BUNDLE_FFMPEG AND NOT WINDOWS)
+    add_dependencies(${NAME} ${FFMPEG_TARGET})
+endif()
 
 if (WINDOWS)
     target_link_libraries(${NAME} PUBLIC ${GLEW_LIBRARIES})
     target_link_libraries(${NAME} PUBLIC Ws2_32)
+endif()
+
+# ------------------------------------- #
+# --- Standalone (no-audio) version --- #
+# ------------------------------------- #
+# A plain DGL application that reuses the same control panel and viewer as the plugin, but without
+# any plugin/audio wrapper. The dgl-opengl target is created by dpf_add_plugin above.
+
+set(STANDALONE_NAME WAIVE-FRONT-STANDALONE)
+
+add_executable(${STANDALONE_NAME}
+    src/standalone/WaiveFrontStandalone.cpp
+    ${CMAKE_BINARY_DIR}/dpf-widgets/opengl/DearImGui.cpp
+    src/data/DataSources.cpp
+    src/data/DataSource.cpp
+    ${CMAKE_BINARY_DIR}/tinyosc/tinyosc.c
+    ${WAIVE_MACOS_SOURCES}
+)
+
+target_include_directories(${STANDALONE_NAME} PUBLIC src)
+target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/dpf/distrho)
+target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/dpf/dgl)
+target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/dpf-widgets/opengl)
+target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/tinyosc)
+target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/json/include)
+
+if (MACOS)
+    target_include_directories(${STANDALONE_NAME} PUBLIC ${FFMPEG_INCLUDE_DIR})
+elseif(WINDOWS)
+    target_include_directories(${STANDALONE_NAME} PUBLIC ${GLEW_INCLUDE_DIRS})
+    target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/dirent/include)
+    target_include_directories(${STANDALONE_NAME} PUBLIC ${CMAKE_BINARY_DIR}/ffmpeg/include)
+endif()
+
+target_link_libraries(${STANDALONE_NAME} PUBLIC dgl-opengl dgl-opengl-definitions dgl-system-libs)
+target_link_libraries(${STANDALONE_NAME} PUBLIC ${FFMPEG_LIBRARIES})
+
+if (BUNDLE_FFMPEG AND NOT WINDOWS)
+    add_dependencies(${STANDALONE_NAME} ${FFMPEG_TARGET})
+endif()
+
+if (WINDOWS)
+    target_link_libraries(${STANDALONE_NAME} PUBLIC ${GLEW_LIBRARIES})
+    target_link_libraries(${STANDALONE_NAME} PUBLIC Ws2_32)
+
+    # Self-contained Windows build: copy the bundled FFmpeg DLLs next to the executable.
+    if (BUNDLE_FFMPEG)
+        add_custom_command(TARGET ${STANDALONE_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_BINARY_DIR}/ffmpeg/bin $<TARGET_FILE_DIR:${STANDALONE_NAME}>)
+    endif()
 endif()

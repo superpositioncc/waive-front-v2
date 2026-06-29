@@ -134,6 +134,7 @@ dkms.conf
 
 obj
 build
+build-*
 bin
 
 CMakeLists.txt.user
