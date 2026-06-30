@@ -163,14 +163,36 @@ Want to add new features or improve on existing ones? Squash some bugs? Pull req
 
 Building a fully functional and production-ready version on MacOS requires a paid Apple Developer plan.
 
+First, obtain your Team ID and an app-specific password from the Apple Developer website. Create a Developer ID Application certificate and install it on your system using XCode. Then run `security find-identity -p basic -v` and note the hash of the Developer ID Application certificate.
+
+### Standalone app (`WAIVE-FRONT-STANDALONE.app`)
+
+The standalone build packages and signs itself. Configure with your signing identity and build:
+
+```
+cmake -B build -S . -DBUNDLE_FFMPEG=ON -DMACOS_CODESIGN_IDENTITY=<hash_of_certificate>
+cmake --build build --target WAIVE-FRONT-STANDALONE
+```
+
+This produces `build/WAIVE-FRONT-STANDALONE.app` with the icon (`assets/Icon.icns`), the correct `Info.plist` (`assets/Info-Standalone.plist` — **not** `assets/Info.plist`, which is the plugin's and points at a different executable) and the entitlements (`assets/entitlements.plist`) already applied. Do not copy `assets/Info.plist` into this bundle — overwriting the signed plist with one that names a different executable causes notarization to fail with `invalid Info.plist (plist or signature have been modified)`.
+
+Then notarize:
+
+1. Run `ditto -c -k --keepParent WAIVE-FRONT-STANDALONE.app WAIVE-FRONT-STANDALONE.zip` to create the archive (use `ditto`, not `zip`, to preserve the bundle).
+2. Run `xcrun notarytool submit WAIVE-FRONT-STANDALONE.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait`.
+3. Run `xcrun stapler staple WAIVE-FRONT-STANDALONE.app` and re-zip, or ship the notarized `.app`.
+4. `spctl -vvv --assess --type exec WAIVE-FRONT-STANDALONE.app` should return `accepted`.
+
+### Plugin (`WAIVE-FRONT-V2.app` / VST3 / AU)
+
+For the plugin's standalone (JACK) app bundle, sign and notarize manually:
+
 1. Copy `Icon.icns` from the `assets` folder into the App Bundle's `Contents/Resources` folder. Create the folder if it does not exist.
 2. Copy `Info.plist` from the `assets` folder into the App Bundle's `Contents` folder, overwriting the one that is already there.
-3. Obtain your Team ID and an app-specific password from the Apple Developer website. Create a Developer ID Application certificate and install on your system, using XCode.
-4. Run `security find-identity -p basic -v` and note the hash of the Developer ID Application certificate.
-5. Navigate to the folder that contains the app.
-6. Run `codesign --deep --force --options=runtime --entitlements <path_to_entitlements.plist> --sign <hash_of_certificate> --timestamp WAIVE-FRONT-V2.app` to sign the app bundle. Replace `entitlements.plist` can be found in the `assets` folder.
-7. Run `zip -r WAIVE-FRONT-V2.zip WAIVE-FRONT-V2.app` to create a zip archive.
-8. Run `xcrun notarytool submit WAIVE-FRONT-V2.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait` to send the app to Apple for notarization.
-9. If all went well, `spctl -vvv --assess --type exec WAIVE-FRONT-V2.app` should return `accepted`.
-10. Your zip file is ready to ship.
+3. Navigate to the folder that contains the app.
+4. Run `codesign --deep --force --options=runtime --entitlements <path_to_entitlements.plist> --sign <hash_of_certificate> --timestamp WAIVE-FRONT-V2.app` to sign the app bundle. `entitlements.plist` can be found in the `assets` folder.
+5. Run `zip -r WAIVE-FRONT-V2.zip WAIVE-FRONT-V2.app` to create a zip archive.
+6. Run `xcrun notarytool submit WAIVE-FRONT-V2.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait` to send the app to Apple for notarization.
+7. If all went well, `spctl -vvv --assess --type exec WAIVE-FRONT-V2.app` should return `accepted`.
+8. Your zip file is ready to ship.
 </details>

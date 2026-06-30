@@ -161,6 +161,10 @@ public:
         }
 
         oscServer = new OSCServer(8000, &dataSources);
+
+        // Automatic mode is on by default, so seed its engine here (the toggle only re-seeds on a
+        // rising edge, which won't happen when it starts enabled).
+        beginAutomatic();
     }
 
     /**
@@ -360,47 +364,47 @@ public:
         if (ImGui::Toggle((std::string("Automatic mode is ") + std::string(automatic ? "on" : "off")).c_str(), &automatic) && automatic)
             beginAutomatic();
 
-        ImGui::Text("Blur Size");
-        ImGui::SetNextItemWidth(width / 4);
+        ImGui::SeparatorText("Blur Size");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         ImGui::BeginDisabled(automatic);
-        if (ImGui::SliderFloat("Blur Size", &parameters[BlurSize], 0.0f, 1.0f))
+        if (ImGui::SliderFloat("##blur", &parameters[BlurSize], 0.0f, 1.0f))
             editParameter(BlurSize, parameters[BlurSize]);
         ImGui::EndDisabled();
         if (automatic)
-            drawAutoSliders("blur", AP_Blur, width);
+            drawAutoSliders("blur", AP_Blur);
 
-        ImGui::Text("Focus Distance");
-        ImGui::SetNextItemWidth(width / 4);
+        ImGui::SeparatorText("Focus Distance");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         ImGui::BeginDisabled(automatic);
-        if (ImGui::SliderFloat("Focus Distance", &parameters[FocusDistance], 0.0f, 1.0f))
+        if (ImGui::SliderFloat("##focus", &parameters[FocusDistance], 0.0f, 1.0f))
             editParameter(FocusDistance, parameters[FocusDistance]);
         ImGui::EndDisabled();
         if (automatic)
-            drawAutoSliders("focus", AP_Focus, width);
+            drawAutoSliders("focus", AP_Focus);
 
-        ImGui::Text("Space");
-        ImGui::SetNextItemWidth(width / 4);
+        ImGui::SeparatorText("Space");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         ImGui::BeginDisabled(automatic);
-        if (ImGui::SliderFloat("Space", &parameters[Space], 0.0f, 0.2f))
+        if (ImGui::SliderFloat("##space", &parameters[Space], 0.0f, 0.2f))
             editParameter(Space, parameters[Space]);
         ImGui::EndDisabled();
         if (automatic)
-            drawAutoSliders("space", AP_Space, width);
+            drawAutoSliders("space", AP_Space);
 
-        ImGui::Text("Zoom");
-        ImGui::SetNextItemWidth(width / 4);
+        ImGui::SeparatorText("Zoom");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         ImGui::BeginDisabled(automatic);
-        if (ImGui::SliderFloat("Zoom", &parameters[Zoom], 0.0f, 1.0f))
+        if (ImGui::SliderFloat("##zoom", &parameters[Zoom], 0.0f, 1.0f))
             editParameter(Zoom, parameters[Zoom]);
         ImGui::EndDisabled();
         if (automatic)
-            drawAutoSliders("zoom", AP_Zoom, width);
+            drawAutoSliders("zoom", AP_Zoom);
 
-        ImGui::Text("Background Color");
-        ImGui::SetNextItemWidth(width / 4);
+        ImGui::SeparatorText("Background Color");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         ImGui::BeginDisabled(automatic);
         float hsv[3] = {parameters[BackgroundHue], parameters[BackgroundSaturation], parameters[BackgroundValue]};
-        if (ImGui::ColorPicker3("Background Color", hsv, ImGuiColorEditFlags_DisplayHSV | ImGuiColorEditFlags_InputHSV))
+        if (ImGui::ColorPicker3("##background", hsv, ImGuiColorEditFlags_DisplayHSV | ImGuiColorEditFlags_InputHSV))
         {
             editParameter(BackgroundHue, hsv[0]);
             editParameter(BackgroundSaturation, hsv[1]);
@@ -412,8 +416,9 @@ public:
         }
         ImGui::EndDisabled();
         if (automatic)
-            drawAutoSliders("background", AP_Background, width);
+            drawAutoSliders("background", AP_Background);
 
+        ImGui::SeparatorText("OSC");
         ImGui::BeginDisabled(automatic);
         ImGui::Toggle((std::string("OSC is ") + std::string(allowOSC ? "enabled" : "disabled")).c_str(), &allowOSC);
         ImGui::EndDisabled();
@@ -455,10 +460,10 @@ public:
             {
                 if (allowOSC)
                 {
-                    ImGui::Text("OSC Note");
-                    ImGui::SetNextItemWidth(width / 4);
+                    ImGui::SeparatorText("OSC Note");
+                    ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
 
-                    if (ImGui::SliderInt("OSC Note", &layerNotes[i], 0, 127))
+                    if (ImGui::SliderInt(("##oscnote" + std::to_string(i)).c_str(), &layerNotes[i], 0, 127))
                     {
                         if (i == 0)
                         {
@@ -500,8 +505,9 @@ public:
                     }
                 }
 
-                ImGui::Text("Category");
-                if (ImGui::BeginCombo(("Category " + std::to_string(i + 1)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->presentationName.c_str() : "None"))
+                ImGui::SeparatorText("Category");
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo(("##category" + std::to_string(i)).c_str(), selectedCategories[i] != nullptr ? selectedCategories[i]->presentationName.c_str() : "None"))
                 {
                     for (DataCategory *category : dataSources.categories)
                     {
@@ -519,8 +525,9 @@ public:
                     randomizeCategory(i);
                 }
 
-                ImGui::Text("Item");
-                if (ImGui::BeginCombo(("Item " + std::to_string(i + 1)).c_str(), selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None"))
+                ImGui::SeparatorText("Item");
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo(("##item" + std::to_string(i)).c_str(), selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None"))
                 {
                     for (DataItem *item : selectedCategories[i]->items)
                     {
@@ -571,7 +578,7 @@ private:
     bool pRandomizeCategory[3] = {false, false, false}; /**< Whether to randomize the category on the next frame */
     bool pRandomizeItem[3] = {false, false, false};     /**< Whether to randomize the item on the next frame */
     bool allowOSC = true;                               /**< Whether to allow OSC control */
-    bool automatic = false;                             /**< Whether automatic "demo" mode is active */
+    bool automatic = true;                              /**< Whether automatic "demo" mode is active */
 
     /** The visual parameters that automatic mode drives, each with its own speed/chaos. */
     enum AutoParam
@@ -584,27 +591,44 @@ private:
         AP_Count
     };
 
-    float autoSpeed[AP_Count] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f}; /**< Per-parameter: how fast values change */
-    float autoChaos[AP_Count] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f}; /**< Per-parameter: 1 = full range, 0 = settled */
+    float autoSpeed[AP_Count] = {0.75f, 0.75f, 0.75f, 0.75f, 0.75f}; /**< Per-parameter: how fast values change */
+    float autoChaos[AP_Count] = {0.35f, 0.35f, 0.35f, 0.35f, 0.35f}; /**< Per-parameter: 1 = full range, 0 = settled */
+
+    /** The drivers a parameter can be modulated by; each parameter switches between them over time. */
+    enum AutoDriver
+    {
+        DRIVER_LFO,   /**< Slow sine oscillation */
+        DRIVER_PULSE, /**< Rhythmic pulse with exponential falloff */
+        DRIVER_NOISE, /**< Smoothed random drift */
+        DRIVER_COUNT
+    };
+
+    /** Per-parameter modulation state: which driver is active and each driver's own phase. */
+    struct DriverState
+    {
+        double clock = 0.0;      /**< Speed-scaled time this parameter runs on */
+        int driver = DRIVER_LFO; /**< Currently active driver */
+        double nextSwitch = 0.0; /**< When to switch to a different driver */
+        double lfoPeriod = 12.0; /**< LFO period (seconds) */
+        double lastBeat = 0.0;   /**< Pulse: time of the last beat */
+        double nextBeat = 0.0;   /**< Pulse: time of the next beat */
+        float noiseFrom = 0.5f;  /**< Noise: start value of the current segment */
+        float noiseTo = 0.5f;    /**< Noise: target value of the current segment */
+        double noiseStart = 0.0; /**< Noise: when the current segment started */
+        double noiseDur = 1.0;   /**< Noise: duration of the current segment */
+    };
 
     /**
      * @brief Timing and phase state for the automatic "demo" mode engine.
      */
     struct AutoState
     {
-        double lastReal = 0.0;           /**< Real (wall-clock) time at the previous frame, seconds */
-        double clock[AP_Count] = {0, 0, 0, 0, 0}; /**< Per-parameter speed-scaled time */
-        double structClock = 0.0;        /**< Steady (unscaled) clock driving structural changes */
-        double lastBeat = 0.0;           /**< Time of the last rhythmic blur pulse (blur clock) */
-        double nextBeat = 0.0;           /**< Time of the next rhythmic blur pulse (blur clock) */
-        double beatInterval = 0.5;       /**< Current pulse interval */
+        double lastReal = 0.0;                    /**< Real (wall-clock) time at the previous frame */
+        double structClock = 0.0;                 /**< Steady clock driving structural changes */
+        DriverState driver[AP_Count];             /**< Per-parameter driver/modulation state */
         double nextItemChange[3] = {0, 0, 0};     /**< When to randomize each layer's item */
         double nextCategoryChange[3] = {0, 0, 0}; /**< When to randomize each layer's category */
-        double nextLayerToggle = 0.0;    /**< When to toggle a random layer */
-        float noiseFrom = 0.5f;          /**< Start value of the current noise segment */
-        float noiseTo = 0.5f;            /**< Target value of the current noise segment */
-        double noiseStart = 0.0;         /**< When the current noise segment started (focus clock) */
-        double noiseDur = 1.0;           /**< Duration of the current noise segment */
+        double nextLayerToggle = 0.0;             /**< When to toggle a random layer */
     } autoState; /**< The automatic mode engine state */
 
     std::vector<VideoLoader *> videoLoaders;        /**< The video loaders */
@@ -663,26 +687,72 @@ private:
         return 0.5f + (v01 - 0.5f) * chaos;
     }
 
-    /** @brief A sine LFO mapped to [lo, hi], pulled toward the range centre by the chaos amount. */
-    float lfo(double t, double period, float lo, float hi, float chaos, float phase = 0.0f)
+    /** @brief Map a normalized [0, 1] value into [lo, hi], scaling toward lo as chaos drops to 0. */
+    float mapTowardZero(float v01, float lo, float hi, float chaos)
     {
-        return lo + (hi - lo) * chaosCenter(lfo01(t, period, phase), chaos);
+        return lo + (hi - lo) * v01 * chaos;
     }
 
-    /** @brief Smoothed value noise in [0, 1] that drifts between random targets over time. */
-    float valueNoise(double t)
+    /** @brief Map a normalized [0, 1] value into [lo, hi], pulling toward the centre as chaos drops. */
+    float mapTowardCentre(float v01, float lo, float hi, float chaos)
     {
-        if (t >= autoState.noiseStart + autoState.noiseDur)
-        {
-            autoState.noiseFrom = autoState.noiseTo;
-            autoState.noiseTo = randf();
-            autoState.noiseStart = t;
-            autoState.noiseDur = randf(0.5f, 2.0f);
-        }
+        return lo + (hi - lo) * chaosCenter(v01, chaos);
+    }
 
-        float x = clampf((float)((t - autoState.noiseStart) / autoState.noiseDur), 0.0f, 1.0f);
-        float smooth = x * x * (3.0f - 2.0f * x); // smoothstep
-        return autoState.noiseFrom + (autoState.noiseTo - autoState.noiseFrom) * smooth;
+    /** @brief Evaluate a parameter's active driver in [0, 1], advancing that driver's phase. */
+    float driverValue(DriverState &s)
+    {
+        const double t = s.clock;
+
+        switch (s.driver)
+        {
+        case DRIVER_PULSE:
+        {
+            if (t >= s.nextBeat)
+            {
+                s.lastBeat = t;
+                s.nextBeat = t + randf(0.35f, 0.9f);
+            }
+            return clampf((float)std::exp(-6.0 * (t - s.lastBeat)), 0.0f, 1.0f);
+        }
+        case DRIVER_NOISE:
+        {
+            if (t >= s.noiseStart + s.noiseDur)
+            {
+                s.noiseFrom = s.noiseTo;
+                s.noiseTo = randf();
+                s.noiseStart = t;
+                s.noiseDur = randf(0.5f, 2.0f);
+            }
+            float x = clampf((float)((t - s.noiseStart) / s.noiseDur), 0.0f, 1.0f);
+            return s.noiseFrom + (s.noiseTo - s.noiseFrom) * (x * x * (3.0f - 2.0f * x)); // smoothstep
+        }
+        case DRIVER_LFO:
+        default:
+            return lfo01(t, s.lfoPeriod);
+        }
+    }
+
+    /** @brief Every now and then, switch a parameter to a different driver and reseed its phase. */
+    void maybeSwitchDriver(DriverState &s)
+    {
+        if (s.clock < s.nextSwitch)
+            return;
+
+        int next = std::rand() % DRIVER_COUNT;
+        if (next == s.driver)
+            next = (next + 1) % DRIVER_COUNT;
+        s.driver = next;
+
+        // Reseed every driver's phase at the current clock so the new one starts cleanly.
+        s.lfoPeriod = randf(8.0f, 26.0f);
+        s.lastBeat = s.clock;
+        s.nextBeat = s.clock;
+        s.noiseFrom = s.noiseTo;
+        s.noiseTo = randf();
+        s.noiseStart = s.clock;
+        s.noiseDur = randf(0.5f, 2.0f);
+        s.nextSwitch = s.clock + randf(6.0f, 18.0f);
     }
 
     /**
@@ -693,12 +763,25 @@ private:
         autoState.lastReal = nowSeconds();
         autoState.structClock = 0.0;
 
-        for (int g = 0; g < AP_Count; g++)
-            autoState.clock[g] = 0.0;
+        // Start the parameters on a spread of drivers/periods for immediate variety; they each
+        // switch driver on their own schedule from here.
+        const int startDriver[AP_Count] = {DRIVER_PULSE, DRIVER_LFO, DRIVER_NOISE, DRIVER_LFO, DRIVER_LFO};
+        const double startPeriod[AP_Count] = {12.0, 14.0, 11.0, 18.0, 23.0};
 
-        autoState.lastBeat = 0.0;
-        autoState.beatInterval = randf(0.35f, 0.9f);
-        autoState.nextBeat = 0.0;
+        for (int g = 0; g < AP_Count; g++)
+        {
+            DriverState &s = autoState.driver[g];
+            s.clock = 0.0;
+            s.driver = startDriver[g];
+            s.lfoPeriod = startPeriod[g];
+            s.lastBeat = 0.0;
+            s.nextBeat = 0.0;
+            s.noiseFrom = randf();
+            s.noiseTo = randf();
+            s.noiseStart = 0.0;
+            s.noiseDur = randf(0.5f, 2.0f);
+            s.nextSwitch = randf(6.0f, 18.0f);
+        }
 
         for (int i = 0; i < 3; i++)
         {
@@ -707,11 +790,6 @@ private:
         }
 
         autoState.nextLayerToggle = randf(4.0f, 10.0f);
-
-        autoState.noiseFrom = randf();
-        autoState.noiseTo = randf();
-        autoState.noiseStart = 0.0;
-        autoState.noiseDur = randf(0.5f, 2.0f);
     }
 
     /**
@@ -721,45 +799,33 @@ private:
     void updateAutomatic()
     {
         // Advance each parameter's own speed-scaled clock (so per-parameter "Speed" stretches or
-        // compresses time independently and can be changed smoothly while running), plus a steady
-        // clock for the structural changes.
+        // compresses time independently) and occasionally switch its driver, plus a steady clock
+        // for the structural changes.
         const double real = nowSeconds();
         const double dt = real - autoState.lastReal;
         autoState.lastReal = real;
 
         for (int g = 0; g < AP_Count; g++)
-            autoState.clock[g] += dt * autoSpeed[g];
+        {
+            autoState.driver[g].clock += dt * autoSpeed[g];
+            maybeSwitchDriver(autoState.driver[g]);
+        }
         autoState.structClock += dt;
 
-        const double tBlur = autoState.clock[AP_Blur];
-        const double tFocus = autoState.clock[AP_Focus];
-        const double tSpace = autoState.clock[AP_Space];
-        const double tZoom = autoState.clock[AP_Zoom];
-        const double tBg = autoState.clock[AP_Background];
         const double ts = autoState.structClock;
 
-        // --- Slow LFOs (lfo() pulls values toward the range centre by that parameter's chaos) ---
-        parameters[Space] = lfo(tSpace, 11.0, 0.02f, 0.18f, autoChaos[AP_Space]);
-        parameters[FocusDistance] = clampf(lfo(tFocus, 14.0, 0.1f, 0.9f, autoChaos[AP_Focus]) + 0.15f * autoChaos[AP_Focus] * (valueNoise(tFocus) - 0.5f), 0.0f, 1.0f);
-        parameters[Zoom] = lfo(tZoom, 18.0, 0.0f, 0.7f, autoChaos[AP_Zoom]);
+        // Each parameter is modulated by its currently-active driver (lfo / pulse / noise), mapped
+        // into the parameter's range. Chaos pulls focus/space toward the centre, and blur, zoom and
+        // background down toward zero (no blur, no zoom, black/unsaturated).
+        parameters[BlurSize] = mapTowardZero(driverValue(autoState.driver[AP_Blur]), 0.0f, 0.65f, autoChaos[AP_Blur]);
+        parameters[FocusDistance] = mapTowardCentre(driverValue(autoState.driver[AP_Focus]), 0.1f, 0.9f, autoChaos[AP_Focus]);
+        parameters[Space] = mapTowardCentre(driverValue(autoState.driver[AP_Space]), 0.02f, 0.18f, autoChaos[AP_Space]);
+        parameters[Zoom] = mapTowardZero(driverValue(autoState.driver[AP_Zoom]), 0.0f, 0.7f, autoChaos[AP_Zoom]);
 
-        parameters[BackgroundHue] = (float)std::fmod(tBg * 0.03, 1.0);
-        // Saturation and value use the full 0-1 range; chaos scales them down toward
-        // unsaturated / black rather than pulling toward the range centre.
-        parameters[BackgroundSaturation] = lfo01(tBg, 23.0) * autoChaos[AP_Background];
-        parameters[BackgroundValue] = lfo01(tBg, 29.0) * autoChaos[AP_Background];
-
-        // --- Rhythmic blur pulse with falloff envelope (runs on the blur clock) ---------------
-        if (tBlur >= autoState.nextBeat)
-        {
-            autoState.lastBeat = tBlur;
-            autoState.beatInterval = randf(0.35f, 0.9f);
-            autoState.nextBeat = tBlur + autoState.beatInterval;
-        }
-
-        float env = std::exp(-6.0 * (tBlur - autoState.lastBeat));
-        // Chaos scales the blur pulse down toward 0 rather than pulling it toward the centre.
-        parameters[BlurSize] = clampf(0.05f + 0.6f * env, 0.0f, 1.0f) * autoChaos[AP_Blur];
+        const float bg = driverValue(autoState.driver[AP_Background]);
+        parameters[BackgroundHue] = (float)std::fmod(autoState.driver[AP_Background].clock * 0.03, 1.0);
+        parameters[BackgroundSaturation] = mapTowardZero(bg, 0.0f, 1.0f, autoChaos[AP_Background]);
+        parameters[BackgroundValue] = mapTowardZero(bg, 0.0f, 1.0f, autoChaos[AP_Background]);
 
         // --- Structural variety: items, categories, layers (steady clock) --------------------
         for (int i = 0; i < 3; i++)
@@ -808,12 +874,21 @@ private:
     }
 
     /** @brief Draw the per-parameter "Speed" and "Chaos" sliders for automatic mode. */
-    void drawAutoSliders(const char *id, int group, float width)
+    void drawAutoSliders(const char *id, int group)
     {
-        ImGui::SetNextItemWidth(width / 4);
-        ImGui::SliderFloat((std::string("Speed##") + id).c_str(), &autoSpeed[group], 0.1f, 4.0f);
-        ImGui::SetNextItemWidth(width / 4);
-        ImGui::SliderFloat((std::string("Chaos##") + id).c_str(), &autoChaos[group], 0.0f, 1.0f);
+        // Indented and dimmed so they read as sub-controls of the parameter above them. Labels go
+        // above the sliders and the slider's own label is hidden with "##", so nothing overflows.
+        ImGui::Indent();
+
+        ImGui::TextDisabled("Speed");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+        ImGui::SliderFloat((std::string("##speed_") + id).c_str(), &autoSpeed[group], 0.1f, 4.0f);
+
+        ImGui::TextDisabled("Chaos");
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+        ImGui::SliderFloat((std::string("##chaos_") + id).c_str(), &autoChaos[group], 0.0f, 1.0f);
+
+        ImGui::Unindent();
     }
 
     /** @brief Set a layer's enabled state, updating both the state vector and the parameter. */

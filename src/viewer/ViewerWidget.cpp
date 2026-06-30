@@ -28,6 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #endif
 
 #include "util/Color.cpp"
+#include "../util/MacGL.h"
 #include "FrameData.h"
 #include "../shader/ShaderRectangle.h"
 #include "../shader/ShaderProgram.cpp"
@@ -95,6 +96,16 @@ public:
 	}
 
 	/**
+	 * @brief Enable hiding the mouse cursor while it is over the viewer (used in standalone mode).
+	 *
+	 * @param value Whether to hide the cursor over the viewer
+	 */
+	void setCursorHideEnabled(bool value)
+	{
+		cursorHideEnabled = value;
+	}
+
+	/**
 	 * @brief Set the frame data
 	 *
 	 * @param i The index of the layer to set the frame data for
@@ -141,7 +152,20 @@ protected:
 		draw();
 	}
 
+	/**
+	 * @brief Hide the cursor while the mouse moves over the viewer.
+	 */
+	bool onMotion(const MotionEvent &) override
+	{
+		if (cursorHideEnabled)
+			waiveSetCursorHidden(true);
+
+		return false;
+	}
+
 private:
+	bool cursorHideEnabled = false; /**< Whether to hide the cursor over the viewer */
+
 	float (&parameters)[Parameters::NumParameters]; /**< The parameters of the shader */
 	std::vector<bool> *layersEnabled;				/**< Vector of booleans representing which layers have been enabled */
 

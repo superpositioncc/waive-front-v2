@@ -38,7 +38,7 @@ public:
     {
         setTitle("WAIVE-FRONT");
         setResizable(true);
-        setSize(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT);
+        setSize(1920, 1080);
 
         // The ImGui context is created and made current by the ImGuiStandaloneWindow base class, so
         // fonts must be added here (in the constructor), not during onImGuiDisplay().
@@ -48,6 +48,9 @@ public:
         controller.init();
 
         viewerWindow = new ViewerWindow(app, controller.parameters, controller.getLayersEnabled());
+
+        // Hide the cursor while it is over the (audience-facing) viewer.
+        viewerWindow->setCursorHideEnabled(true);
     }
 
     /**
@@ -77,6 +80,15 @@ protected:
     {
         ImGuiStandaloneWindow::onReshape(width, height);
         waiveUpdateGLDrawable(getNativeWindowHandle());
+    }
+
+    /**
+     * @brief Show the cursor again while the mouse moves over the control window.
+     */
+    bool onMotion(const Widget::MotionEvent &ev) override
+    {
+        waiveSetCursorHidden(false);
+        return ImGuiStandaloneWindow::onMotion(ev);
     }
 
     /**

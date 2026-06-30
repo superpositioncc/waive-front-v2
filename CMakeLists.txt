@@ -41,6 +41,10 @@ endif()
 # install it. Off by default (the open-source build links the system/Homebrew FFmpeg).
 option(BUNDLE_FFMPEG "Build/bundle a minimal FFmpeg so the app is self-contained" OFF)
 
+# Optional macOS code-signing identity (Developer ID Application certificate hash). When set, the
+# standalone .app is signed as part of the build. Find it with: security find-identity -p basic -v
+set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS Developer ID identity for signing the standalone app")
+
 # ----------------------------- #
 # --- Download dependencies --- #
 # ----------------------------- #
@@ -260,4 +264,18 @@ if (WINDOWS)
             COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_BINARY_DIR}/ffmpeg/bin $<TARGET_FILE_DIR:${STANDALONE_NAME}>)
     endif()
+endif()
+
+if (APPLE)
+    # Build the standalone as a real .app bundle and finish it per README "Shipping on MacOS"
+    # (icon, Info.plist, optional code signing) with info logging on each step.
+    set_target_properties(${STANDALONE_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
+
+    add_custom_command(TARGET ${STANDALONE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+            -DAPP_BUNDLE=$<TARGET_BUNDLE_DIR:${STANDALONE_NAME}>
+            -DASSETS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/assets
+            -DCODESIGN_IDENTITY=${MACOS_CODESIGN_IDENTITY}
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/PackageMacOSApp.cmake
+        VERBATIM)
 endif()

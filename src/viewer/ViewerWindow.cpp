@@ -45,11 +45,11 @@ public:
 		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
 		setTitle("Viewer");
-		setSize(1280, 720);
+		setSize(1920, 1080);
 		setResizable(true);
 		show();
 
-		setOffsetY(getOffsetY() - 720 / 2);
+		setOffsetY(getOffsetY() - 1080 / 2);
 	}
 
 	/**
@@ -60,6 +60,16 @@ public:
 	ViewerWidget *getViewerWidget()
 	{
 		return viewerWidget;
+	}
+
+	/**
+	 * @brief Enable hiding the mouse cursor while it is over the viewer.
+	 *
+	 * @param value Whether to hide the cursor over the viewer
+	 */
+	void setCursorHideEnabled(bool value)
+	{
+		viewerWidget->setCursorHideEnabled(value);
 	}
 
 protected:

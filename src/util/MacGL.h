@@ -35,9 +35,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 extern "C" void waiveUpdateGLDrawable(uintptr_t wrapperViewHandle);
 
+/**
+ * @brief Hide or show the mouse cursor (application-wide). Calls are balanced internally, so it is
+ *        safe to call repeatedly with the same value.
+ *
+ * @param hidden Whether the cursor should be hidden.
+ */
+extern "C" void waiveSetCursorHidden(bool hidden);
+
 #else
 
 static inline void waiveUpdateGLDrawable(uintptr_t) {}
+static inline void waiveSetCursorHidden(bool) {}
 
 #endif
 

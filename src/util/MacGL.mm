@@ -43,4 +43,19 @@ extern "C" void waiveUpdateGLDrawable(uintptr_t wrapperViewHandle)
     }
 }
 
+extern "C" void waiveSetCursorHidden(bool hidden)
+{
+    // NSCursor hide/unhide is a balanced stack; only toggle on real state changes.
+    static bool isHidden = false;
+    if (hidden == isHidden)
+        return;
+
+    isHidden = hidden;
+
+    if (hidden)
+        [NSCursor hide];
+    else
+        [NSCursor unhide];
+}
+
 #endif
