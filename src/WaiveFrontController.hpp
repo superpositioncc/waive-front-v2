@@ -143,7 +143,19 @@ public:
             lastMessages.push_back("");
         }
 
-        loadDataSources(std::string(home) + "/Documents/WAIVE");
+        std::string dataPath;
+        const char* bundled = waiveGetBundledDataPath();
+        if (bundled && bundled[0] != '\0' && waiveDataLooksValid(bundled))
+        {
+            dataPath = bundled;
+            print("DATA", "Using bundled data at: " + dataPath);
+        }
+        else if (home != nullptr)
+        {
+            dataPath = std::string(home) + "/Documents/WAIVE";
+        }
+
+        loadDataSources(dataPath);
 
         for (int i = 0; i < 3; i++)
         {
@@ -904,6 +916,11 @@ private:
     /**
      * @brief Load the data sources from a directory
      */
+    static bool waiveDataLooksValid(const std::string &path)
+    {
+        return fs::is_directory(path) && fs::exists(path + "/categories.json");
+    }
+
     void loadDataSources(std::string directory)
     {
         DIR *dir = opendir(directory.c_str());

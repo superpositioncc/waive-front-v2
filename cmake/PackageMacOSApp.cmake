@@ -17,7 +17,14 @@ file(COPY "${ASSETS_DIR}/Icon.icns" DESTINATION "${APP_BUNDLE}/Contents/Resource
 message(STATUS "[WAIVE-FRONT]   - installing Info.plist into Contents")
 configure_file("${ASSETS_DIR}/Info-Standalone.plist" "${APP_BUNDLE}/Contents/Info.plist" COPYONLY)
 
-# 3. Code signing (only when an identity is provided)
+# 3. Bundled WAIVE data -> Contents/Resources/WAIVE (optional; set by -DBUNDLE_DATA_PATH=...)
+if(WAIVE_DATA_PATH AND NOT WAIVE_DATA_PATH STREQUAL "")
+    message(STATUS "[WAIVE-FRONT]   - bundling WAIVE data from: ${WAIVE_DATA_PATH}")
+    file(COPY "${WAIVE_DATA_PATH}" DESTINATION "${APP_BUNDLE}/Contents/Resources")
+    message(STATUS "[WAIVE-FRONT]     -> ${APP_BUNDLE}/Contents/Resources/WAIVE")
+endif()
+
+# 5. Code signing (only when an identity is provided)
 if(CODESIGN_IDENTITY)
     message(STATUS "[WAIVE-FRONT]   - code signing with identity: ${CODESIGN_IDENTITY}")
     execute_process(

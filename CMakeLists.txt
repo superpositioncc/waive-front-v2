@@ -45,6 +45,12 @@ option(BUNDLE_FFMPEG "Build/bundle a minimal FFmpeg so the app is self-contained
 # standalone .app is signed as part of the build. Find it with: security find-identity -p basic -v
 set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS Developer ID identity for signing the standalone app")
 
+# Optional path to a WAIVE data folder to bundle into the app. When set:
+#   macOS  -> Contents/Resources/WAIVE inside the .app bundle
+#   Windows -> WAIVE/ next to WAIVE-FRONT-STANDALONE.exe
+# At runtime the app checks the bundled location first and falls back to ~/Documents/WAIVE.
+set(BUNDLE_DATA_PATH "" CACHE PATH "Path to the WAIVE data folder to bundle into the standalone app")
+
 # ----------------------------- #
 # --- Download dependencies --- #
 # ----------------------------- #
@@ -264,6 +270,14 @@ if (WINDOWS)
             COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_BINARY_DIR}/ffmpeg/bin $<TARGET_FILE_DIR:${STANDALONE_NAME}>)
     endif()
+
+    # Bundled WAIVE data: copy the specified folder next to the exe as "WAIVE/".
+    if (BUNDLE_DATA_PATH AND NOT BUNDLE_DATA_PATH STREQUAL "")
+        add_custom_command(TARGET ${STANDALONE_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${BUNDLE_DATA_PATH}" "$<TARGET_FILE_DIR:${STANDALONE_NAME}>/WAIVE"
+            COMMENT "[WAIVE-FRONT] Bundling WAIVE data -> WAIVE/ next to exe")
+    endif()
 endif()
 
 if (APPLE)
@@ -276,6 +290,7 @@ if (APPLE)
             -DAPP_BUNDLE=$<TARGET_BUNDLE_DIR:${STANDALONE_NAME}>
             -DASSETS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/assets
             -DCODESIGN_IDENTITY=${MACOS_CODESIGN_IDENTITY}
+            -DWAIVE_DATA_PATH=${BUNDLE_DATA_PATH}
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/PackageMacOSApp.cmake
         VERBATIM)
 endif()

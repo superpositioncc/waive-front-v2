@@ -163,6 +163,18 @@ protected:
 		return false;
 	}
 
+#ifdef _WIN32
+	/**
+	 * @brief Toggle fullscreen on F key (Windows only).
+	 */
+	bool onKeyboard(const KeyboardEvent &ev) override
+	{
+		if (ev.press && ev.key == 'f')
+			waiveToggleFullscreen(getWindow().getNativeWindowHandle());
+		return false;
+	}
+#endif
+
 private:
 	bool cursorHideEnabled = false; /**< Whether to hide the cursor over the viewer */
 

@@ -486,15 +486,6 @@ public:
 			return -1;
 		}
 
-		enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_RGB32, AV_PIX_FMT_NONE};
-		int ret = av_opt_set_int_list(bufferSinkContext, "pix_fmts", pix_fmts, AV_PIX_FMT_NONE, AV_OPT_SEARCH_CHILDREN);
-
-		if (ret < 0)
-		{
-			error("VIDEO", "Could not set pixel formats");
-			return -1;
-		}
-
 		outputs->name = av_strdup("in");
 		outputs->filter_ctx = bufferSrcContext;
 		outputs->pad_idx = 0;

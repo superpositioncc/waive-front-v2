@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
 #include "MacGL.h"
+#include <string>
 
 extern "C" void waiveUpdateGLDrawable(uintptr_t wrapperViewHandle)
 {
@@ -56,6 +57,19 @@ extern "C" void waiveSetCursorHidden(bool hidden)
         [NSCursor hide];
     else
         [NSCursor unhide];
+}
+
+extern "C" const char* waiveGetBundledDataPath()
+{
+    @autoreleasepool
+    {
+        NSString *resources = [[NSBundle mainBundle] resourcePath];
+        if (resources == nil)
+            return "";
+        static std::string s;
+        s = std::string([resources UTF8String]) + "/WAIVE";
+        return s.c_str();
+    }
 }
 
 #endif
