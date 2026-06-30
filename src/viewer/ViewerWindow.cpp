@@ -72,6 +72,16 @@ public:
 		viewerWidget->setCursorHideEnabled(value);
 	}
 
+	/**
+	 * @brief Set a callback invoked on Cmd+Q in the viewer (used by the standalone to quit the app).
+	 *
+	 * @param callback The callback to invoke
+	 */
+	void setQuitCallback(std::function<void()> callback)
+	{
+		viewerWidget->setQuitCallback(callback);
+	}
+
 protected:
 	/**
 	 * @brief Keep the OpenGL drawable in sync with the window size on resize.

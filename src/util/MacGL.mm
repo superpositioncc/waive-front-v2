@@ -72,4 +72,43 @@ extern "C" const char* waiveGetBundledDataPath()
     }
 }
 
+extern "C" void waiveToggleFullscreen(uintptr_t wrapperViewHandle)
+{
+    NSView *view = (__bridge NSView *)(void *)wrapperViewHandle;
+    if (view == nil)
+        return;
+
+    NSWindow *window = [view window];
+    if (window == nil)
+        return;
+
+    static bool fullscreen = false;
+    static NSRect savedFrame;
+    static NSUInteger savedStyle;
+
+    @autoreleasepool
+    {
+        if (!fullscreen)
+        {
+            savedFrame = [window frame];
+            savedStyle = [window styleMask];
+
+            // Borderless full-screen frame (avoids native macOS fullscreen / a visible title bar).
+            [NSApp setPresentationOptions:(NSApplicationPresentationHideDock | NSApplicationPresentationHideMenuBar)];
+            [window setStyleMask:NSWindowStyleMaskBorderless];
+            [window setFrame:[[window screen] frame] display:YES];
+            [window makeKeyAndOrderFront:nil];
+            [window makeFirstResponder:view];
+            fullscreen = true;
+        }
+        else
+        {
+            [NSApp setPresentationOptions:NSApplicationPresentationDefault];
+            [window setStyleMask:savedStyle];
+            [window setFrame:savedFrame display:YES];
+            fullscreen = false;
+        }
+    }
+}
+
 #endif

@@ -49,6 +49,16 @@ extern "C" void waiveSetCursorHidden(bool hidden);
  */
 extern "C" const char* waiveGetBundledDataPath();
 
+/**
+ * @brief Toggle borderless fullscreen for the window owning the given pugl wrapper view.
+ *
+ * Uses a borderless full-screen frame (not native macOS fullscreen) so the title bar is gone and
+ * the hidden cursor never sits over chrome.
+ *
+ * @param wrapperViewHandle The native window handle (pugl wrapper NSView), from getNativeWindowHandle().
+ */
+extern "C" void waiveToggleFullscreen(uintptr_t wrapperViewHandle);
+
 #elif defined(_WIN32)
 
 #include <windows.h>
@@ -112,6 +122,7 @@ static inline const char* waiveGetBundledDataPath()
 static inline void waiveUpdateGLDrawable(uintptr_t) {}
 static inline void waiveSetCursorHidden(bool) {}
 static inline const char* waiveGetBundledDataPath() { return ""; }
+static inline void waiveToggleFullscreen(uintptr_t) {}
 
 #endif
 

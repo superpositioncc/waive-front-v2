@@ -37,6 +37,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <functional>
 
 START_NAMESPACE_DISTRHO
 
@@ -105,6 +106,12 @@ public:
 		cursorHideEnabled = value;
 	}
 
+	/** @brief Set a callback invoked on Cmd+Q (used by the standalone to quit the app). */
+	void setQuitCallback(std::function<void()> callback)
+	{
+		onQuit = callback;
+	}
+
 	/**
 	 * @brief Set the frame data
 	 *
@@ -163,20 +170,29 @@ protected:
 		return false;
 	}
 
-#ifdef _WIN32
 	/**
-	 * @brief Toggle fullscreen on F key (Windows only).
+	 * @brief Keyboard shortcuts: F toggles fullscreen; Cmd/Super+Q quits (standalone only).
 	 */
 	bool onKeyboard(const KeyboardEvent &ev) override
 	{
 		if (ev.press && ev.key == 'f')
+		{
 			waiveToggleFullscreen(getWindow().getNativeWindowHandle());
+			return true;
+		}
+
+		if (ev.press && ev.key == 'q' && (ev.mod & kModifierSuper) && onQuit)
+		{
+			onQuit();
+			return true;
+		}
+
 		return false;
 	}
-#endif
 
 private:
-	bool cursorHideEnabled = false; /**< Whether to hide the cursor over the viewer */
+	bool cursorHideEnabled = false;   /**< Whether to hide the cursor over the viewer */
+	std::function<void()> onQuit;     /**< Invoked on Cmd+Q, if set (standalone only) */
 
 	float (&parameters)[Parameters::NumParameters]; /**< The parameters of the shader */
 	std::vector<bool> *layersEnabled;				/**< Vector of booleans representing which layers have been enabled */

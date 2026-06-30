@@ -170,11 +170,15 @@ First, obtain your Team ID and an app-specific password from the Apple Developer
 The standalone build packages and signs itself. Configure with your signing identity and build:
 
 ```
-cmake -B build -S . -DBUNDLE_FFMPEG=ON -DMACOS_CODESIGN_IDENTITY=<hash_of_certificate>
+cmake -B build -S . -DBUNDLE_FFMPEG=ON \
+  -DBUNDLE_DATA_PATH="$HOME/Documents/WAIVE" \
+  -DMACOS_CODESIGN_IDENTITY=<hash_of_certificate>
 cmake --build build --target WAIVE-FRONT-STANDALONE
 ```
 
 This produces `build/WAIVE-FRONT-STANDALONE.app` with the icon (`assets/Icon.icns`), the correct `Info.plist` (`assets/Info-Standalone.plist` — **not** `assets/Info.plist`, which is the plugin's and points at a different executable) and the entitlements (`assets/entitlements.plist`) already applied. Do not copy `assets/Info.plist` into this bundle — overwriting the signed plist with one that names a different executable causes notarization to fail with `invalid Info.plist (plist or signature have been modified)`.
+
+`-DBUNDLE_DATA_PATH=<path>` is optional: it copies a WAIVE data folder into `Contents/Resources/WAIVE` (before signing, so it is sealed) so the app ships with its media. At runtime the app uses the bundled data when present and falls back to `~/Documents/WAIVE` otherwise. Omit the flag (and the signing identity) for a quick unsigned dev build. Note the real data set is large (~1.6 GB), which makes the bundle and the notarization upload large.
 
 Then notarize:
 
@@ -182,6 +186,8 @@ Then notarize:
 2. Run `xcrun notarytool submit WAIVE-FRONT-STANDALONE.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait`.
 3. Run `xcrun stapler staple WAIVE-FRONT-STANDALONE.app` and re-zip, or ship the notarized `.app`.
 4. `spctl -vvv --assess --type exec WAIVE-FRONT-STANDALONE.app` should return `accepted`.
+
+Shortcuts: press **F** in the Viewer window to toggle fullscreen, and **Cmd+Q** (macOS) to quit from either window.
 
 ### Plugin (`WAIVE-FRONT-V2.app` / VST3 / AU)
 

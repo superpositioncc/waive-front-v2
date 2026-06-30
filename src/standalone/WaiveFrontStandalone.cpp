@@ -51,6 +51,10 @@ public:
 
         // Hide the cursor while it is over the (audience-facing) viewer.
         viewerWindow->setCursorHideEnabled(true);
+
+        // Cmd+Q in the viewer quits the whole app.
+        viewerWindow->setQuitCallback([this]()
+                                      { getApp().quit(); });
     }
 
     /**
@@ -89,6 +93,20 @@ protected:
     {
         waiveSetCursorHidden(false);
         return ImGuiStandaloneWindow::onMotion(ev);
+    }
+
+    /**
+     * @brief Cmd+Q in the control window quits the app.
+     */
+    bool onKeyboard(const Widget::KeyboardEvent &ev) override
+    {
+        if (ev.press && ev.key == 'q' && (ev.mod & kModifierSuper))
+        {
+            getApp().quit();
+            return true;
+        }
+
+        return ImGuiStandaloneWindow::onKeyboard(ev);
     }
 
     /**

@@ -54,6 +54,11 @@ Build directories (`build`, `build-*`) are gitignored. Use a fresh dir per confi
   installed. **Off by default** (open-source build links system/Homebrew FFmpeg on macOS).
 - `-DMACOS_CODESIGN_IDENTITY=<hash>` — macOS only; when set, the standalone `.app` is code-signed
   during the build. Empty = skip signing (still builds the `.app`).
+- `-DBUNDLE_DATA_PATH=<path>` — bundle a WAIVE data folder into the standalone so it ships with its
+  media. macOS → copied into `Contents/Resources/WAIVE` (before signing, so it's sealed);
+  Windows → copied to `WAIVE/` next to the exe. At runtime the app uses the bundled data if present
+  and valid, else falls back to `~/Documents/WAIVE` (`%USERPROFILE%\Documents\WAIVE`). The folder can
+  be large (the real data set is ~1.6 GB), which makes the bundle and notarization upload large.
 
 ## Building — macOS
 
@@ -63,12 +68,15 @@ cmake -B build -S .
 cmake --build build --target WAIVE-FRONT-STANDALONE -j$(sysctl -n hw.ncpu)
 ```
 
-Self-contained + signed (for shipping):
+Self-contained + data-bundled + signed (full shipping build):
 ```bash
 cmake -B build-bundled -S . -DBUNDLE_FFMPEG=ON \
+  -DBUNDLE_DATA_PATH="$HOME/Documents/WAIVE" \
   -DMACOS_CODESIGN_IDENTITY=8C3E9AB199FC9F68039D3931BE49D66E0F362C1B
 cmake --build build-bundled --target WAIVE-FRONT-STANDALONE -j10
 ```
+(Omit `BUNDLE_DATA_PATH`/`MACOS_CODESIGN_IDENTITY` for a fast dev build — copying + deep-signing the
+~1.6 GB data takes a few minutes each build.)
 
 - On macOS the standalone is always built as a real **`.app` bundle** (`MACOSX_BUNDLE`). A post-build
   step (`cmake/PackageMacOSApp.cmake`) installs the icon (`assets/Icon.icns`), the correct
@@ -119,18 +127,29 @@ focus/space toward the range centre, and blur/zoom/background toward 0. It also 
 categories/items and toggles layers on a steady clock. Seeded by `beginAutomatic()` (called in
 `init()` since it starts enabled).
 
-## macOS native helpers (`MacGL.mm`)
+## Native helpers (`src/util/MacGL.h` / `MacGL.mm`)
 
-DGL/pugl quirks the standalone hits because it drives rendering manually (one window repaints
-another), which bypasses AppKit's display pass:
-- `waiveUpdateGLDrawable()` — on window resize, force the `NSOpenGLView` to fill the wrapper and call
-  `[NSOpenGLContext update]`; otherwise the GL drawable stays frozen at its initial size (cropped
-  render). Called from both windows' `onReshape`.
-- `waiveSetCursorHidden()` — `[NSCursor hide]`/`unhide` (balanced). The viewer hides the cursor on
-  mouse motion over it; the control window shows it again on motion over itself.
-- Closing either standalone window quits the app via an app-level idle watcher
-  (`QuitOnWindowClose`) — note **`Window::onClose()` is never dispatched on macOS** in DGL, so don't
-  rely on it.
+`MacGL.h` has three implementations: a real one for **macOS** (`MacGL.mm`), inline **Windows** stubs
+(`#elif defined(_WIN32)`), and no-op stubs for anything else. The same function names are used cross-
+platform so the shared code doesn't need `#ifdef`s. Functions:
+- `waiveUpdateGLDrawable()` — macOS only does work: on window resize, force the `NSOpenGLView` to
+  fill the wrapper and call `[NSOpenGLContext update]`; otherwise the GL drawable stays frozen at its
+  initial size (cropped render) because the standalone drives rendering manually (one window repaints
+  another), bypassing AppKit's display pass. Called from both windows' `onReshape`.
+- `waiveSetCursorHidden()` — `[NSCursor hide]`/`unhide` on macOS, `ShowCursor` on Windows (balanced).
+  The viewer hides the cursor on motion over it; the control window shows it again on motion over itself.
+- `waiveToggleFullscreen()` — borderless full-screen toggle (not native macOS fullscreen, to avoid a
+  title bar under the hidden cursor); Windows uses a borderless `SetWindowPos` equivalent.
+- `waiveGetBundledDataPath()` — returns the bundled WAIVE data folder: `Contents/Resources/WAIVE`
+  (macOS, via `NSBundle`) or `<exe dir>/WAIVE` (Windows).
+
+Closing either standalone window quits the app via an app-level idle watcher (`QuitOnWindowClose`) —
+note **`Window::onClose()` is never dispatched on macOS** in DGL, so don't rely on it.
+
+## Keyboard shortcuts (standalone)
+
+- **F** — toggle fullscreen on the **Viewer** window (macOS + Windows).
+- **Cmd/Super+Q** — quit the app, from either the Viewer or the control window.
 
 ## Shipping (macOS notarization)
 
