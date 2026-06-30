@@ -31,11 +31,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "video/VideoLoader.cpp"
 #include "video/VideoFrameDescription.h"
 
-#ifdef __APPLE__
 #include <filesystem>
-#else
-#include <experimental/filesystem>
-#endif
 
 #include <iostream>
 #include <chrono>
@@ -56,11 +52,7 @@ using namespace Util::Logger;
 #define M_PI 3.14159265358979323846
 #endif
 
-#ifdef __APPLE__
 namespace fs = std::filesystem;
-#else
-namespace fs = std::experimental::filesystem;
-#endif
 
 START_NAMESPACE_DISTRHO
 
