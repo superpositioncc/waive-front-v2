@@ -28,6 +28,7 @@ extern "C"
 #include "libavfilter/buffersrc.h"
 #include "libavfilter/buffersink.h"
 #include "libavutil/opt.h"
+#include "libavutil/pixdesc.h"
 }
 
 #include "VideoFrameDescription.h"
@@ -168,6 +169,10 @@ public:
 	{
 		avcodec_flush_buffers(context);
 		av_seek_frame(format, videoStreamIndex, 0, AVSEEK_FLAG_BACKWARD);
+
+		// The parser still holds the end of the last packet, which would corrupt the first one
+		av_parser_close(parser);
+		parser = av_parser_init(codec->id);
 	}
 
 	/**
@@ -475,23 +480,30 @@ public:
 			error("VIDEO", "Could not create filter");
 			return -1;
 		}
-		if (avfilter_graph_create_filter(&bufferSinkContext, bufferSink, "out", nullptr, nullptr, filterGraph) < 0)
-		{
-			error("VIDEO", "Could not create filter");
-			return -1;
-		}
+		// The sink's options have to be set before it is initialised
+		bufferSinkContext = avfilter_graph_alloc_filter(filterGraph, bufferSink, "out");
 		if (!bufferSrcContext || !bufferSinkContext)
 		{
 			error("VIDEO", "Could not create filter");
 			return -1;
 		}
 
+#if LIBAVFILTER_VERSION_MAJOR >= 11
+		int ret = av_opt_set(bufferSinkContext, "pixel_formats", av_get_pix_fmt_name(AV_PIX_FMT_RGB32), AV_OPT_SEARCH_CHILDREN);
+#else
 		enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_RGB32, AV_PIX_FMT_NONE};
 		int ret = av_opt_set_int_list(bufferSinkContext, "pix_fmts", pix_fmts, AV_PIX_FMT_NONE, AV_OPT_SEARCH_CHILDREN);
+#endif
 
 		if (ret < 0)
 		{
 			error("VIDEO", "Could not set pixel formats");
+			return -1;
+		}
+
+		if (avfilter_init_str(bufferSinkContext, nullptr) < 0)
+		{
+			error("VIDEO", "Could not initialise filter");
 			return -1;
 		}
 

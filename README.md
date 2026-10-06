@@ -36,64 +36,7 @@ Users/
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them. If you run into any problems, this is the first thing you should check.**
 </details>
 
-### 2. Install FFmpeg
-
-<details>
-<summary>
-<i>Click to open instructions</i>
-</summary>
-
-`ffmpeg` is an open-source library that WAIVE-FRONT depends upon to read and display video files. Before you can use WAIVE-FRONT, you need to install `ffmpeg`, specifically version 7.0.1. Follow the instructions for your operating system below.
-
-<details>
-<summary>
-<i>Click here if you are on MacOS</i>
-</summary>
-
-On macOS, the easiest way to install FFmpeg is using `homebrew`.
-
-1. Open the Terminal app
-
-   + Click on the magnifying glass icon in the top right corner of your screen
-   + Type "Terminal" and press Enter to open it
-
-2. Install Homebrew (if you haven't already)
-   + Copy and paste this command into Terminal:  
-      `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-
-   + Press Enter and follow any on-screen instructions  
-      *Note: if you're asked to type your password, you won't be able to see the characters you are typing. Just type your password and press Enter.*
-
-   + Type this command and press Enter:  
-      `brew update`
-
-3. Install ffmpeg 7.0.1 (if you haven't already)
-   + Type this command and press Enter:  
-      `brew install ffmpeg@7.0.1`
-   + Wait for the installation to complete. This may take a few minutes. You'll see text scrolling in the Terminal window.
-   + Once it's done, type this command and press Enter:  
-      `ffmpeg -version`  
-      You should see information about ffmpeg, including the version number 7.0.1
-
-That's it, you can continue on to step 3.
-</details>
-
-<details>
-<summary>
-<i>Click here if you are on Windows</i>
-</summary>
-Download the required ffmpeg dlls from [here](https://drive.google.com/file/d/1rDx3mzgxlll8r4aVG2g8qDa2BbFhSlgC/view?usp=share_link). Place the DLL files in the same folder as your DAW's exe file. This will usually be in your Program Files or ProgramData directory. For example, if Ableton Live was installed in `C:\ProgramData\Ableton\[Live Version]\Program`, place the DLL files right next to Ableton's exe file there. \*Note: Due to FFMPEG licensing restrictions, we cannot make this process easier at this point.
-</details>
-
-<details>
-<summary>
-<i>Click here if you are on Linux</i>
-</summary>
-Follow the instructions [here](https://www.geeksforgeeks.org/how-to-install-ffmpeg-in-linux/).
-</details>
-</details>
-
-### 3. Install WAIVE-FRONT
+### 2. Install WAIVE-FRONT
 
 <details>
 <summary>
@@ -134,26 +77,33 @@ _Note: as of yet, Linux builds have been untested and therefore disabled in CMak
 
 The following steps have been written with MacOS users in mind. For Windows, the easiest way to build is to load the project into Visual Studio and run CMake from there -- it should work out of the box.
 
-1. **(MacOS)** Make sure you have `ffmpeg` version 7.0.1 installed. On MacOS, the easiest way to do this is using `homebrew`.
-2. Clone the Git repository.
+WAIVE-FRONT links FFmpeg statically, so the builds run without installing anything. You don't need to install FFmpeg yourself either:
+
+- **macOS:** CMake builds a small FFmpeg 8.1 from source (`scripts/build-ffmpeg.sh`, about a minute). You only need the Xcode command line tools. For a universal build, pass `-DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"` and install `nasm` (`brew install nasm`); without it the Intel part decodes more slowly.
+- **Windows:** without further options CMake downloads a shared FFmpeg and copies its DLLs next to the binaries. That is fine for development, but large. The release builds use a static FFmpeg made with `scripts/build-ffmpeg.sh` in MSYS2 and passed with `-DWAIVE_FFMPEG_ROOT=<prefix>`; see `.github/workflows/build.yml`.
+- To link against the FFmpeg on your system instead (e.g. from Homebrew), pass `-DWAIVE_SYSTEM_FFMPEG=ON`. The binaries then only run where the same FFmpeg is installed.
+
+1. Clone the Git repository.
    ```bash
    git clone --recursive https://github.com/superpositioncc/waive-front-v2
    cd waive-front-v2
    ```
-3. Create the `build` directory and step into it.
+2. Create the `build` directory and step into it.
    ```bash
    mkdir build && cd build
    ```
-4. Run CMake script. Required dependencies will automatically be downloaded according to your operating system.
+3. Run CMake script. Required dependencies will automatically be downloaded according to your operating system.
    ```bash
    cmake ..
    ```
-5. Run the generated Makefile.
+4. Run the generated Makefile.
    ```bash
    make
    ```
-6. Your binaries will be in the `build/bin` directory.
-7. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
+5. Your binaries will be in the `build/bin` directory.
+6. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
+
+Every push and pull request is built for macOS (universal) and Windows by `.github/workflows/build.yml`. The builds can be downloaded from the run's artifacts.
 
 ## Development
 

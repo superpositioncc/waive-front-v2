@@ -32,11 +32,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "video/VideoLoader.cpp"
 #include "video/VideoFrameDescription.h"
 
-#ifdef __APPLE__
 #include <filesystem>
-#else
-#include <experimental/filesystem>
-#endif
 
 #include <iostream>
 #include <chrono>
@@ -49,11 +45,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace Util::Logger;
 
-#ifdef __APPLE__
-namespace fs = std::__fs::filesystem;
-#else
-namespace fs = std::experimental::filesystem;
-#endif
+namespace fs = std::filesystem;
 
 START_NAMESPACE_DISTRHO
 
@@ -110,12 +102,11 @@ public:
 
         loadDataSources(std::string(home) + "/Documents/WAIVE");
 
-        for (int i = 0; i < 3; i++)
-        {
-            int randomIndex = std::rand() % dataSources.categories.size();
+        if (dataSources.categories.empty())
+            warn("DATA", "No footage found. Install the WAIVE dataset in Documents/WAIVE.");
 
-            selectCategory(i, dataSources.categories[randomIndex]);
-        }
+        for (int i = 0; i < 3; i++)
+            randomizeCategory(i);
 
         oscServer = new OSCServer(8000, &dataSources);
     }
@@ -298,6 +289,9 @@ protected:
      */
     void randomizeCategory(int i)
     {
+        if (dataSources.categories.empty())
+            return;
+
         int randomIndex = std::rand() % dataSources.categories.size();
         selectCategory(i, dataSources.categories[randomIndex]);
     }
@@ -309,6 +303,9 @@ protected:
      */
     void randomizeItem(int i)
     {
+        if (selectedCategories[i] == nullptr || selectedCategories[i]->items.empty())
+            return;
+
         int randomIndex = std::rand() % selectedCategories[i]->items.size();
         selectItem(i, selectedCategories[i]->items[randomIndex]);
     }
@@ -623,11 +620,14 @@ protected:
                 ImGui::Text("Item");
                 if (ImGui::BeginCombo(("Item " + std::to_string(i + 1)).c_str(), selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None"))
                 {
-                    for (DataItem *item : selectedCategories[i]->items)
+                    if (selectedCategories[i] != nullptr)
                     {
-                        if (ImGui::Selectable(item->title.c_str()))
+                        for (DataItem *item : selectedCategories[i]->items)
                         {
-                            selectItem(i, item);
+                            if (ImGui::Selectable(item->title.c_str()))
+                            {
+                                selectItem(i, item);
+                            }
                         }
                     }
 
