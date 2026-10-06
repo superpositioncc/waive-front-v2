@@ -2,8 +2,6 @@ name: Build
 
 on:
   push:
-    branches:
-      - main
   pull_request:
   workflow_dispatch:
 
@@ -37,14 +35,43 @@ jobs:
           done
           exit $status
 
+      - name: Import signing certificate
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+        if: env.MACOS_CERTIFICATE != ''
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/signing.keychain-db"
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          echo "$MACOS_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$MACOS_CERTIFICATE_PASSWORD" -f pkcs12 -T /usr/bin/codesign -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/certificate.p12"
+          IDENTITY="$(security find-identity -v -p codesigning "$KEYCHAIN" | grep 'Developer ID Application' | head -1 | awk '{print $2}')"
+          if [ -z "$IDENTITY" ]; then
+            echo "::error::No Developer ID Application certificate in MACOS_CERTIFICATE"
+            exit 1
+          fi
+          echo "MACOS_SIGN_IDENTITY=$IDENTITY" >> "$GITHUB_ENV"
+
+      - name: Package (signed and notarised when the secrets are set)
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          scripts/package-macos.sh build/bin WAIVE-FRONT-V2-macOS
+          # ditto keeps permissions and the stapled tickets; the artifact upload alone would not
+          ditto -c -k --sequesterRsrc --keepParent WAIVE-FRONT-V2-macOS WAIVE-FRONT-V2-macOS.zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: WAIVE-FRONT-V2-macOS
-          path: |
-            build/bin/WAIVE-FRONT-V2
-            build/bin/WAIVE-FRONT-V2.vst3
-            build/bin/WAIVE-FRONT-V2.vst
-            build/bin/WAIVE-FRONT-V2.component
+          path: WAIVE-FRONT-V2-macOS.zip
 
   windows:
     runs-on: windows-2022
