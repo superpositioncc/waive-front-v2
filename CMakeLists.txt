@@ -107,6 +107,20 @@ if (WINDOWS)
     find_package(GLEW REQUIRED)
 endif()
 
+# MSVC has no GL/glext.h, which DPF's OpenGL code needs. Use the Khronos headers.
+if (WINDOWS)
+    set(GL_HEADERS ${CMAKE_BINARY_DIR}/gl-headers)
+
+    if (NOT EXISTS ${GL_HEADERS}/GL/glext.h)
+        file(DOWNLOAD https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/1cdd228e34966dd6b95bd203e9f84faba0f371a1/api/GL/glext.h
+            ${GL_HEADERS}/GL/glext.h EXPECTED_HASH SHA256=d7b6f15b1bb209e08bd6ada36983f8bb40429e66c24083aa2474d55205d97047)
+        file(DOWNLOAD https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/db3425b8246136faccb5e2782b5694960bd6edf1/api/KHR/khrplatform.h
+            ${GL_HEADERS}/KHR/khrplatform.h EXPECTED_HASH SHA256=7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83)
+    endif()
+
+    include_directories(${GL_HEADERS})
+endif()
+
 # DPF links the standalone app against SDL2 when pkg-config finds it, e.g. from
 # Homebrew, and the app then only runs where SDL2 is installed. On macOS and
 # Windows the built-in audio fallback (RtAudio) is enough, so hide pkg-config packages.

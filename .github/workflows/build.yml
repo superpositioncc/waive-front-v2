@@ -28,7 +28,7 @@ jobs:
           status=0
           for f in build/bin/WAIVE-FRONT-V2 build/bin/*.vst3/Contents/MacOS/* build/bin/*.vst/Contents/MacOS/* build/bin/*.component/Contents/MacOS/*; do
             lipo -archs "$f"
-            if otool -L "$f" | tail -n +2 | grep -v -e '/System/' -e '/usr/lib/'; then
+            if otool -L "$f" | grep $'^\t' | grep -v -e '/System/' -e '/usr/lib/'; then
               echo "::error::$f links against a library that users will not have"
               status=1
             fi
