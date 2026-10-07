@@ -28,6 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #endif
 
 #include "DistrhoUI.hpp"
+#include "DistrhoPluginUtils.hpp"
+#include <cstring>
 #include "viewer/ViewerWindow.cpp"
 #include "assets/themes/CinderTheme.cpp"
 #include "Application.hpp"
@@ -78,9 +80,11 @@ public:
         // The default size is the minimum; the window can grow, keeping its aspect ratio
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
 
-        // From the base size: DPF already applies the Retina scale factor to it
+        // From the base size: DPF already applies the Retina scale factor to it.
+        // Not in an Audio Unit: DPF's AU wrapper divides a new size by a scale factor
+        // that does not match the screen, so the view ends up half the size of the UI.
         const double density = Util::Screen::densityFactor();
-        if (density > 1.0)
+        if (density > 1.0 && std::strcmp(getPluginFormatName(), "AudioUnit") != 0)
             setSize(DISTRHO_UI_DEFAULT_WIDTH * density, DISTRHO_UI_DEFAULT_HEIGHT * density);
 
         openViewerWindow();
@@ -343,8 +347,12 @@ protected:
         {
             initialized = true;
 
-            Window &window = getWindow();
-            window.setOffsetY(window.getOffsetY() + 720 / 2 + 100);
+            // Below the viewer. Only for the standalone app: in a DAW the host places the window
+            if (getApp().isStandalone())
+            {
+                Window &window = getWindow();
+                window.setOffsetY(window.getOffsetY() + 720 / 2 + 100);
+            }
 
             cinderTheme(ImGui::GetStyle());
         }
