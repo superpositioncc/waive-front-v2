@@ -42,7 +42,9 @@ public:
 	 * @param owner Native handle of a window that owns the viewer and keeps it in front, or 0
 	 */
 	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled, uintptr_t owner = 0)
-		: Window(app),
+		// Created resizable: on macOS the drawing surface only follows the window
+		// when the window is resizable from the start; setResizable() later is too late
+		: Window(app, 0, 640, 360, 0.0, true),
 		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
 		const double scale = getScaleFactor() * Util::Screen::densityFactor();
