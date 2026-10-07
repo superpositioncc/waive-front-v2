@@ -69,6 +69,8 @@ Common (system-wide) plugin paths:
 
 In your DAW, rescan plugins if it does not automatically.
 
+To show the visuals fullscreen, for instance on a projector: drag the Viewer window to that screen, then double-click it or press `F`. Press `Esc` or double-click again to leave fullscreen.
+
 ### Communication with WAIVE
 
 If you use both [WAIVE](https://github.com/ThunderboomRecords/WAIVE) and WAIVE-FRONT at the same time on the same computer, they should communicate out of the box if your project is playing in your DAW.

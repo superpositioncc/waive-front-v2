@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define VIEWER_WIDGET_CPP
 
 #include "../util/Shortcuts.cpp"
+#include "../util/Fullscreen.cpp"
+#include <chrono>
 #include "DistrhoUI.hpp"
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -134,7 +136,42 @@ protected:
 	 */
 	bool onKeyboard(const KeyboardEvent &event) override
 	{
-		return quitOnCommandQ(getApp(), event);
+		if (quitOnCommandQ(getApp(), event))
+			return true;
+
+		if (!event.press || (event.mod & (kModifierSuper | kModifierControl | kModifierAlt)))
+			return false;
+
+		// F switches fullscreen on and off, Esc leaves it
+		const uintptr_t handle = getWindow().getNativeWindowHandle();
+		if (event.key == 'f' || event.key == 'F' || (event.key == kKeyEscape && fullscreen.isActive(handle)))
+		{
+			fullscreen.toggle(handle);
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @brief Switch fullscreen on and off with a double-click
+	 *
+	 * @param event The mouse event
+	 * @return true if the event was a double-click
+	 */
+	bool onMouse(const MouseEvent &event) override
+	{
+		if (!event.press || event.button != 1)
+			return false;
+
+		const auto now = std::chrono::steady_clock::now();
+		const bool isDoubleClick = now - lastClick < std::chrono::milliseconds(400);
+		lastClick = isDoubleClick ? std::chrono::steady_clock::time_point() : now;
+
+		if (isDoubleClick)
+			fullscreen.toggle(getWindow().getNativeWindowHandle());
+
+		return isDoubleClick;
 	}
 
 	/**
@@ -154,6 +191,9 @@ protected:
 	}
 
 private:
+	Util::Fullscreen fullscreen;						 /**< Fullscreen for the viewer's window */
+	std::chrono::steady_clock::time_point lastClick; /**< When the mouse was last pressed, for double-clicks */
+
 	float (&parameters)[Parameters::NumParameters]; /**< The parameters of the shader */
 	std::vector<bool> *layersEnabled;				/**< Vector of booleans representing which layers have been enabled */
 
