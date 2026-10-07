@@ -41,8 +41,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define DISTRHO_UI_USE_CUSTOM 1
 #define DISTRHO_UI_CUSTOM_INCLUDE_PATH "DearImGui.hpp"
 #define DISTRHO_UI_CUSTOM_WIDGET_TYPE DGL_NAMESPACE::ImGuiTopLevelWidget
-#define DISTRHO_UI_DEFAULT_WIDTH 1280
-#define DISTRHO_UI_DEFAULT_HEIGHT 820
+#define DISTRHO_UI_DEFAULT_WIDTH 640
+#define DISTRHO_UI_DEFAULT_HEIGHT 410
 #define DISTRHO_UI_USE_NANOVG 0
 #define DISTRHO_UI_FILE_BROWSER 1
 

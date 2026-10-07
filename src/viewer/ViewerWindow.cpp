@@ -38,17 +38,24 @@ public:
 	 * @param app Application
 	 * @param p Parameters
 	 * @param layersEnabled Vector of booleans representing which layers have been enabled
+	 * @param owner Native handle of a window that owns the viewer and keeps it in front, or 0
 	 */
-	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled)
+	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled, uintptr_t owner = 0)
 		: Window(app),
 		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
-		setTitle("Viewer");
-		setSize(1280, 720);
-		setResizable(true);
-		show();
+		const double scale = getScaleFactor();
 
-		setOffsetY(getOffsetY() - 720 / 2);
+		setTitle("Viewer");
+		setSize(640 * scale, 360 * scale);
+		setResizable(true);
+
+		if (owner != 0)
+			setTransientParent(owner);
+
+		// Near the top left of the main screen, so it is always visible
+		setOffset(80 * scale, 80 * scale);
+		show();
 	}
 
 	/**

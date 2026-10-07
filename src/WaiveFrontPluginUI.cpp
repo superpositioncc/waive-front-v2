@@ -71,8 +71,8 @@ public:
     {
         std::srand(std::time(0));
 
+        // The default size is the minimum; the window can grow, keeping its aspect ratio
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
-        setSize(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT);
 
         openViewerWindow();
 
@@ -476,6 +476,9 @@ protected:
         const float width = getWidth();
         const float height = getHeight();
 
+        // The font is loaded at 32 px; scale the text with the window
+        ImGui::GetIO().FontGlobalScale = width / (2.0f * DISTRHO_UI_DEFAULT_WIDTH);
+
         ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
         ImGui::SetNextWindowPos(ImVec2(0, 0));
 
@@ -709,7 +712,12 @@ private:
 
         if (viewerWindow == nullptr)
         {
-            viewerWindow = new ViewerWindow(app, parameters, &layersEnabled);
+            uintptr_t owner = 0;
+#ifdef DISTRHO_OS_WINDOWS
+            // Let the host's plugin window own the viewer, so the viewer stays in front of it
+            owner = (uintptr_t)GetAncestor((HWND)getWindow().getNativeWindowHandle(), GA_ROOT);
+#endif
+            viewerWindow = new ViewerWindow(app, parameters, &layersEnabled, owner);
         }
     }
 };
