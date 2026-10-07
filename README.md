@@ -15,13 +15,25 @@
 
 Follow these instructions to get started.
 
-### 1. Install the WAIVE-FRONT dataset
+### 1. Install the WAIVE-FRONT datasets
 <details>
 <summary>
 <i>Click to open instructions</i>
 </summary>
 
-First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into a folder called WAIVE in your Documents folder. You should be left with this structure:
+WAIVE-FRONT plays footage from datasets in a folder called `WAIVE` in your Documents folder. Each dataset is a separate download, so you can pick the ones you want.
+
+1. Make a folder called `WAIVE` in your Documents folder.
+2. Download [WAIVE-categories.zip](https://drive.google.com/file/d/1Bv2eMDq0rqNdMuvZMONEh8x8oZVxo0a_/view) and unzip it. Put `categories.json` in the `WAIVE` folder. Every dataset needs it.
+3. Download one or more datasets, unzip them, and put each folder in the `WAIVE` folder:
+
+| Dataset | Footage | Size |
+| --- | --- | --- |
+| [Nederlands Instituut voor Beeld en Geluid](https://drive.google.com/file/d/1gNC-kT3sONnIYjJAJvSYsSKZHraRkYOP/view) | 1,076 clips from 466 Dutch archive films, via Open Images | 1.1 GB |
+| [Stichting Natuurbeelden](https://drive.google.com/file/d/1TRYZakO6LTrtVY24AUKIea3ko9FrI6Bd/view) | 367 clips from 184 Dutch nature films, via Open Images | 560 MB |
+| [KBS Korean Broadcasting System](https://drive.google.com/file/d/19f7rZviR9VTdZKWZsR8PTnJcpBozCkAQ/view) | 234 clips from 59 videos by Korean public institutions, for the SeMA x Thunderboom Sound Lab | 790 MB |
+
+You should be left with this structure:
 
 ```
 Users/
@@ -29,17 +41,14 @@ Users/
 │  ├─ Documents/
 │  │  ├─ WAIVE/
 │  │  │  ├─ categories.json
+│  │  │  ├─ kbs_korean_broadcasting_system
 │  │  │  ├─ stichting_natuurbeelden
 │  │  │  ├─ ...
 ```
 
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them. If you run into any problems, this is the first thing you should check.**
 
-#### Korean footage (optional)
-
-For the SeMA x Thunderboom Sound Lab, there is a second dataset with footage from Korean public institutions: 234 clips from 59 videos. Download it from [here](https://drive.google.com/file/d/19f7rZviR9VTdZKWZsR8PTnJcpBozCkAQ/view) and unzip it into the same `WAIVE` folder, next to `stichting_natuurbeelden`. It uses the categories of the main dataset, so install that first.
-
-The footage is licensed under the Korea Open Government License, Type 1 or Type 2. Type 2 allows non-commercial use only. `CREDITS.md` in the folder lists every video with its institution, licence and source.
+The Korean footage is licensed under the Korea Open Government License, Type 1 or Type 2. Type 2 allows non-commercial use only. `CREDITS.md` in its folder lists every video with its institution, licence and source.
 </details>
 
 ### 2. Install WAIVE-FRONT
