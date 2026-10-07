@@ -13,7 +13,7 @@
 
 # Quick Start (for non-coders)
 
-Follow these instructions to get started.
+Follow these instructions to get started. WAIVE-FRONT runs on macOS 11 or later (Apple Silicon and Intel) and on 64-bit Windows, as a plugin in your DAW. On macOS there is also a standalone app.
 
 ### 1. Install the WAIVE-FRONT datasets
 <details>
@@ -58,16 +58,16 @@ The Korean footage is licensed under the Korea Open Government License, Type 1 o
 <i>Click to open instructions</i>
 </summary>
 
-Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page and place the plugin in the plugins folder of your DAW. On macOS there is a VST3, an Audio Unit (for Logic Pro and GarageBand) and a standalone app. On Windows there is a VST3. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page and place the plugin in the plugins folder of your DAW. On macOS there is a VST3, an Audio Unit (for Logic Pro and GarageBand) and a standalone app; put the app in your Applications folder. On Windows there is a VST3. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
 
-Common (system-wide) plugin paths:
+Common (system-wide) plugin paths. On macOS, `~/Library/Audio/Plug-Ins/VST3` and `~/Library/Audio/Plug-Ins/Components` work as well, without asking for your password.
 
 |         | VST3                                 | Audio Units                          |
 | ------- | ------------------------------------ | ------------------------------------ |
 | macOS   | `/Library/Audio/Plug-ins/VST3`       | `/Library/Audio/Plug-ins/Components` |
 | Windows | `C:\Program Files\Common Files\VST3` | _n/a_                                |
 
-In your DAW, rescan plugins if it does not automatically.
+In your DAW, rescan plugins if it does not automatically. The first time WAIVE-FRONT starts, macOS asks whether it may use your Documents folder, where the footage is; allow it.
 
 To show the visuals fullscreen, for instance on a projector: drag the Viewer window to that screen, then double-click it or press `F`. Press `Esc` or double-click again to leave fullscreen.
 
@@ -75,7 +75,7 @@ To show the visuals fullscreen, for instance on a projector: drag the Viewer win
 
 If you use both [WAIVE](https://github.com/ThunderboomRecords/WAIVE) and WAIVE-FRONT at the same time on the same computer, they should communicate out of the box if your project is playing in your DAW.
 
-WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, you can use   to control the visuals.
+WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, WAIVE, or any other software that sends OSC, can control the visuals.
 </details>
 
 &nbsp;
@@ -101,7 +101,7 @@ WAIVE-FRONT links FFmpeg statically, so the builds run without installing anythi
 
 1. Clone the Git repository.
    ```bash
-   git clone --recursive https://github.com/superpositioncc/waive-front-v2
+   git clone https://github.com/superpositioncc/waive-front-v2
    cd waive-front-v2
    ```
 2. Create the `build` directory and step into it.
