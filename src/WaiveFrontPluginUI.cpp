@@ -19,12 +19,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef WAIVE_FRONT_PLUGIN_UI_CPP
 #define WAIVE_FRONT_PLUGIN_UI_CPP
 
+// Before DPF: the macOS system headers it pulls in have their own Point
+#include "util/Screen.cpp"
+
 #ifndef __APPLE__
 #include <Windows.h>
 #include <GL/glew.h>
 #endif
 
 #include "DistrhoUI.hpp"
+#include "DistrhoPluginUtils.hpp"
+#include <cstring>
+#include <cmath>
 #include "viewer/ViewerWindow.cpp"
 #include "assets/themes/CinderTheme.cpp"
 #include "Application.hpp"
@@ -32,11 +38,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "video/VideoLoader.cpp"
 #include "video/VideoFrameDescription.h"
 
-#ifdef __APPLE__
 #include <filesystem>
-#else
-#include <experimental/filesystem>
-#endif
 
 #include <iostream>
 #include <chrono>
@@ -44,16 +46,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <dirent.h>
 #include "data/DataSources.hpp"
 #include "util/Logger.cpp"
+#include "util/Shortcuts.cpp"
 #include <vector>
 #include "osc/OSCServer.cpp"
 
 using namespace Util::Logger;
 
-#ifdef __APPLE__
-namespace fs = std::__fs::filesystem;
-#else
-namespace fs = std::experimental::filesystem;
-#endif
+namespace fs = std::filesystem;
 
 START_NAMESPACE_DISTRHO
 
@@ -79,8 +78,19 @@ public:
     {
         std::srand(std::time(0));
 
+        // The default size is the minimum; the window can grow, keeping its aspect ratio
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
-        setSize(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT);
+
+        isAudioUnit = std::strcmp(getPluginFormatName(), "AudioUnit") == 0;
+
+        // The standalone app opens at about the same physical size on every screen.
+        // Not the plugins: the screen under the mouse need not be where the host opens the
+        // window, and a new size at this moment can set the host's view and the plugin's
+        // view to different sizes. They open at the default size and can be resized.
+        // From the base size: DPF already applies the Retina scale factor to it.
+        const double density = getApp().isStandalone() ? Util::Screen::densityFactor() : 1.0;
+        if (density > 1.0)
+            setSize(DISTRHO_UI_DEFAULT_WIDTH * density, DISTRHO_UI_DEFAULT_HEIGHT * density);
 
         openViewerWindow();
 
@@ -110,12 +120,11 @@ public:
 
         loadDataSources(std::string(home) + "/Documents/WAIVE");
 
-        for (int i = 0; i < 3; i++)
-        {
-            int randomIndex = std::rand() % dataSources.categories.size();
+        if (dataSources.categories.empty())
+            warn("DATA", "No footage found. Install the WAIVE dataset in Documents/WAIVE.");
 
-            selectCategory(i, dataSources.categories[randomIndex]);
-        }
+        for (int i = 0; i < 3; i++)
+            randomizeCategory(i);
 
         oscServer = new OSCServer(8000, &dataSources);
     }
@@ -298,6 +307,9 @@ protected:
      */
     void randomizeCategory(int i)
     {
+        if (dataSources.categories.empty())
+            return;
+
         int randomIndex = std::rand() % dataSources.categories.size();
         selectCategory(i, dataSources.categories[randomIndex]);
     }
@@ -309,8 +321,84 @@ protected:
      */
     void randomizeItem(int i)
     {
+        if (selectedCategories[i] == nullptr || selectedCategories[i]->items.empty())
+            return;
+
         int randomIndex = std::rand() % selectedCategories[i]->items.size();
         selectItem(i, selectedCategories[i]->items[randomIndex]);
+    }
+
+    /**
+     * @brief Match the drawing to the screen the UI is on right now
+     *
+     * DPF fixes its scale factor when the plugin opens; macOS changes the pixel density of the
+     * view when the window moves to another screen. Without this, the UI is drawn at the wrong
+     * scale: too small in a corner, or too large and cut off. The layout keeps DPF's units;
+     * this tells ImGui how many real pixels each unit has, and corrects the mouse the same way.
+     */
+    void updateScreenScale()
+    {
+        Util::Screen::ViewMetrics view;
+        if (!Util::Screen::viewMetrics(getWindow().getNativeWindowHandle(), view))
+            return;
+
+        const double width = getWidth();
+        const double height = getHeight();
+        if (width <= 0 || height <= 0)
+            return;
+
+        // DPF's Audio Unit wrapper sizes the host's view with its own scale factor, which can
+        // differ from the screen's. The plugin's view has the right size; the host's view follows.
+        if (isAudioUnit)
+            Util::Screen::fitHostView(getWindow().getNativeWindowHandle());
+
+        // Draw into the part the host shows. When the plugin's view is taller than the host's,
+        // the host shows its bottom part, which is where OpenGL draws from.
+        pixelScaleX = view.visibleWidth * view.backing / width;
+        pixelScaleY = view.visibleHeight * view.backing / height;
+        mouseOffsetY = (view.height - view.visibleHeight) * view.backing;
+        ImGui::GetIO().DisplayFramebufferScale = ImVec2(pixelScaleX, pixelScaleY);
+    }
+
+    /**
+     * @brief Convert a mouse position from screen pixels to the UI's units
+     */
+    template <class Event>
+    Event toUiUnits(const Event &event) const
+    {
+        Event e = event;
+        e.pos = DGL_NAMESPACE::Point<double>(event.pos.getX() / pixelScaleX, (event.pos.getY() - mouseOffsetY) / pixelScaleY);
+        e.absolutePos = DGL_NAMESPACE::Point<double>(event.absolutePos.getX() / pixelScaleX, event.absolutePos.getY() / pixelScaleY);
+        return e;
+    }
+
+    bool onMouse(const MouseEvent &event) override
+    {
+        return UI::onMouse(toUiUnits(event));
+    }
+
+    bool onMotion(const MotionEvent &event) override
+    {
+        return UI::onMotion(toUiUnits(event));
+    }
+
+    bool onScroll(const ScrollEvent &event) override
+    {
+        return UI::onScroll(toUiUnits(event));
+    }
+
+    /**
+     * @brief Handle a key press
+     *
+     * @param event The keyboard event
+     * @return true if the event was handled
+     */
+    bool onKeyboard(const KeyboardEvent &event) override
+    {
+        if (quitOnCommandQ(getApp(), event))
+            return true;
+
+        return UI::onKeyboard(event);
     }
 
     /**
@@ -323,10 +411,18 @@ protected:
         {
             initialized = true;
 
-            Window &window = getWindow();
-            window.setOffsetY(window.getOffsetY() + 720 / 2 + 100);
+            // Below the viewer. Only for the standalone app: in a DAW the host places the window
+            if (getApp().isStandalone())
+            {
+                Window &window = getWindow();
+                window.setOffsetY(window.getOffsetY() + 720 / 2 + 100);
+            }
 
+            // Start from ImGui's own sizes: DPF scaled the style when the UI was created, by a
+            // factor that can change before the first frame. Scaled to the window below.
+            ImGui::GetStyle() = ImGuiStyle();
             cinderTheme(ImGui::GetStyle());
+            baseStyle = ImGui::GetStyle();
         }
 
         if (parameters[EnableLayer1] != layersEnabled[0])
@@ -476,8 +572,22 @@ protected:
             }
         }
 
+        updateScreenScale();
+
         const float width = getWidth();
         const float height = getHeight();
+
+        // The font is loaded at 32 px; scale the text with the window
+        ImGui::GetIO().FontGlobalScale = width / (2.0f * DISTRHO_UI_DEFAULT_WIDTH);
+
+        // Spacing and padding too, so the UI looks the same on every screen and at every size
+        const float styleScale = width / DISTRHO_UI_DEFAULT_WIDTH;
+        if (initialized && std::abs(styleScale - currentStyleScale) > 0.01f)
+        {
+            ImGui::GetStyle() = baseStyle;
+            ImGui::GetStyle().ScaleAllSizes(styleScale);
+            currentStyleScale = styleScale;
+        }
 
         ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
         ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -527,7 +637,9 @@ protected:
         {
             ImGui::SetNextWindowSizeConstraints(ImVec2(width / 4, 0), ImVec2(width / 4, height));
             ImGui::SetNextWindowPos(ImVec2((i + 1) * width / 4, 0));
-            ImGui::Begin(("Layer " + std::to_string(i + 1)).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+            // No scrollbar: with spacing scaled by a fraction, auto-size can come out a fraction
+            // of a pixel short and show an empty one. The mouse wheel still scrolls.
+            ImGui::Begin(("Layer " + std::to_string(i + 1)).c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
 
             std::string buttonLabel = layersEnabled[i] ? "Disable Layer " + std::to_string(i + 1) : "Enable Layer " + std::to_string(i + 1);
 
@@ -623,11 +735,14 @@ protected:
                 ImGui::Text("Item");
                 if (ImGui::BeginCombo(("Item " + std::to_string(i + 1)).c_str(), selectedItems[i] != nullptr ? selectedItems[i]->title.c_str() : "None"))
                 {
-                    for (DataItem *item : selectedCategories[i]->items)
+                    if (selectedCategories[i] != nullptr)
                     {
-                        if (ImGui::Selectable(item->title.c_str()))
+                        for (DataItem *item : selectedCategories[i]->items)
                         {
-                            selectItem(i, item);
+                            if (ImGui::Selectable(item->title.c_str()))
+                            {
+                                selectItem(i, item);
+                            }
                         }
                     }
 
@@ -676,6 +791,12 @@ protected:
 
 private:
     ViewerWindow *viewerWindow = nullptr; /**< The viewer window */
+    bool isAudioUnit = false;    /**< Running as an Audio Unit */
+    double pixelScaleX = 1.0;    /**< Screen pixels per UI unit, horizontally */
+    double pixelScaleY = 1.0;    /**< Screen pixels per UI unit, vertically */
+    double mouseOffsetY = 0.0;   /**< Screen pixels hidden above the visible part */
+    ImGuiStyle baseStyle;        /**< The theme before scaling to the window */
+    float currentStyleScale = 0.0f; /**< The scale applied to the style now; 0 until the first frame */
     bool initialized = false;             /**< Whether the UI has been initialized */
 
     ImFont *regular; /**< The regular font */
@@ -709,7 +830,12 @@ private:
 
         if (viewerWindow == nullptr)
         {
-            viewerWindow = new ViewerWindow(app, parameters, &layersEnabled);
+            uintptr_t owner = 0;
+#ifdef DISTRHO_OS_WINDOWS
+            // Let the host's plugin window own the viewer, so the viewer stays in front of it
+            owner = (uintptr_t)GetAncestor((HWND)getWindow().getNativeWindowHandle(), GA_ROOT);
+#endif
+            viewerWindow = new ViewerWindow(app, parameters, &layersEnabled, owner);
         }
     }
 };

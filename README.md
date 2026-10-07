@@ -15,13 +15,25 @@
 
 Follow these instructions to get started.
 
-### 1. Install the WAIVE-FRONT dataset
+### 1. Install the WAIVE-FRONT datasets
 <details>
 <summary>
 <i>Click to open instructions</i>
 </summary>
 
-First of all, download the footage and metadata zip from [here](https://drive.google.com/file/d/1h3WZgfrcJxJCwXs8iOBzoWD9DIgm0oJs/view?usp=sharing). Unzip it into a folder called WAIVE in your Documents folder. You should be left with this structure:
+WAIVE-FRONT plays footage from datasets in a folder called `WAIVE` in your Documents folder. Each dataset is a separate download, so you can pick the ones you want.
+
+1. Make a folder called `WAIVE` in your Documents folder.
+2. Download [WAIVE-categories.zip](https://drive.google.com/file/d/1Bv2eMDq0rqNdMuvZMONEh8x8oZVxo0a_/view) and unzip it. Put `categories.json` in the `WAIVE` folder. Every dataset needs it.
+3. Download one or more datasets, unzip them, and put each folder in the `WAIVE` folder:
+
+| Dataset | Footage | Size |
+| --- | --- | --- |
+| [Nederlands Instituut voor Beeld en Geluid](https://drive.google.com/file/d/1gNC-kT3sONnIYjJAJvSYsSKZHraRkYOP/view) | 1,076 clips from 466 Dutch archive films, via Open Images | 1.1 GB |
+| [Stichting Natuurbeelden](https://drive.google.com/file/d/1TRYZakO6LTrtVY24AUKIea3ko9FrI6Bd/view) | 367 clips from 184 Dutch nature films, via Open Images | 560 MB |
+| [KBS Korean Broadcasting System](https://drive.google.com/file/d/19f7rZviR9VTdZKWZsR8PTnJcpBozCkAQ/view) | 234 clips from 59 videos by Korean public institutions, for the SeMA x Thunderboom Sound Lab | 790 MB |
+
+You should be left with this structure:
 
 ```
 Users/
@@ -29,86 +41,31 @@ Users/
 │  ├─ Documents/
 │  │  ├─ WAIVE/
 │  │  │  ├─ categories.json
+│  │  │  ├─ kbs_korean_broadcasting_system
 │  │  │  ├─ stichting_natuurbeelden
 │  │  │  ├─ ...
 ```
 
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them. If you run into any problems, this is the first thing you should check.**
+
+The Korean footage is licensed under the Korea Open Government License, Type 1 or Type 2. Type 2 allows non-commercial use only. `CREDITS.md` in its folder lists every video with its institution, licence and source.
 </details>
 
-### 2. Install FFmpeg
+### 2. Install WAIVE-FRONT
 
 <details>
 <summary>
 <i>Click to open instructions</i>
 </summary>
 
-`ffmpeg` is an open-source library that WAIVE-FRONT depends upon to read and display video files. Before you can use WAIVE-FRONT, you need to install `ffmpeg`, specifically version 7.0.1. Follow the instructions for your operating system below.
-
-<details>
-<summary>
-<i>Click here if you are on MacOS</i>
-</summary>
-
-On macOS, the easiest way to install FFmpeg is using `homebrew`.
-
-1. Open the Terminal app
-
-   + Click on the magnifying glass icon in the top right corner of your screen
-   + Type "Terminal" and press Enter to open it
-
-2. Install Homebrew (if you haven't already)
-   + Copy and paste this command into Terminal:  
-      `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-
-   + Press Enter and follow any on-screen instructions  
-      *Note: if you're asked to type your password, you won't be able to see the characters you are typing. Just type your password and press Enter.*
-
-   + Type this command and press Enter:  
-      `brew update`
-
-3. Install ffmpeg 7.0.1 (if you haven't already)
-   + Type this command and press Enter:  
-      `brew install ffmpeg@7.0.1`
-   + Wait for the installation to complete. This may take a few minutes. You'll see text scrolling in the Terminal window.
-   + Once it's done, type this command and press Enter:  
-      `ffmpeg -version`  
-      You should see information about ffmpeg, including the version number 7.0.1
-
-That's it, you can continue on to step 3.
-</details>
-
-<details>
-<summary>
-<i>Click here if you are on Windows</i>
-</summary>
-Download the required ffmpeg dlls from [here](https://drive.google.com/file/d/1rDx3mzgxlll8r4aVG2g8qDa2BbFhSlgC/view?usp=share_link). Place the DLL files in the same folder as your DAW's exe file. This will usually be in your Program Files or ProgramData directory. For example, if Ableton Live was installed in `C:\ProgramData\Ableton\[Live Version]\Program`, place the DLL files right next to Ableton's exe file there. \*Note: Due to FFMPEG licensing restrictions, we cannot make this process easier at this point.
-</details>
-
-<details>
-<summary>
-<i>Click here if you are on Linux</i>
-</summary>
-Follow the instructions [here](https://www.geeksforgeeks.org/how-to-install-ffmpeg-in-linux/).
-</details>
-</details>
-
-### 3. Install WAIVE-FRONT
-
-<details>
-<summary>
-<i>Click to open instructions</i>
-</summary>
-
-Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page. Choose which plugin format you prefer and place it in the plugins path of your DAW. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page and place the plugin in the plugins folder of your DAW. On macOS there is a VST3, an Audio Unit (for Logic Pro and GarageBand) and a standalone app. On Windows there is a VST3. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
 
 Common (system-wide) plugin paths:
 
-|         | VST2                                 | VST3                                 | Audio Units                         |
-| ------- | ------------------------------------ | ------------------------------------ | ----------------------------------- |
-| macOS   | `/Library/Audio/Plug-ins/VST3`        | `/Library/Audio/Plug-ins/VST3`        | `/Library/Audio/Plug-ins/Components` |
-| Linux   | `/usr/lib/vst`                       | `/usr/lib/vst3`                      | _n/a_                               |
-| Windows | `C:\Program Files\Common Files\VST2` | `C:\Program Files\Common Files\VST3` | _n/a_                               |
+|         | VST3                                 | Audio Units                          |
+| ------- | ------------------------------------ | ------------------------------------ |
+| macOS   | `/Library/Audio/Plug-ins/VST3`       | `/Library/Audio/Plug-ins/Components` |
+| Windows | `C:\Program Files\Common Files\VST3` | _n/a_                                |
 
 In your DAW, rescan plugins if it does not automatically.
 
@@ -134,43 +91,53 @@ _Note: as of yet, Linux builds have been untested and therefore disabled in CMak
 
 The following steps have been written with MacOS users in mind. For Windows, the easiest way to build is to load the project into Visual Studio and run CMake from there -- it should work out of the box.
 
-1. **(MacOS)** Make sure you have `ffmpeg` version 7.0.1 installed. On MacOS, the easiest way to do this is using `homebrew`.
-2. Clone the Git repository.
+WAIVE-FRONT links FFmpeg statically, so the builds run without installing anything. You don't need to install FFmpeg yourself either:
+
+- **macOS:** CMake builds a small FFmpeg 8.1 from source (`scripts/build-ffmpeg.sh`, about a minute). You only need the Xcode command line tools. For a universal build, pass `-DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"` and install `nasm` (`brew install nasm`); without it the Intel part decodes more slowly.
+- **Windows:** without further options CMake downloads a shared FFmpeg and copies its DLLs next to the binaries. That is fine for development, but large. The release builds use a static FFmpeg made with `scripts/build-ffmpeg.sh` in MSYS2 and passed with `-DWAIVE_FFMPEG_ROOT=<prefix>`; see `.github/workflows/build.yml`.
+- To link against the FFmpeg on your system instead (e.g. from Homebrew), pass `-DWAIVE_SYSTEM_FFMPEG=ON`. The binaries then only run where the same FFmpeg is installed.
+
+1. Clone the Git repository.
    ```bash
    git clone --recursive https://github.com/superpositioncc/waive-front-v2
    cd waive-front-v2
    ```
-3. Create the `build` directory and step into it.
+2. Create the `build` directory and step into it.
    ```bash
    mkdir build && cd build
    ```
-4. Run CMake script. Required dependencies will automatically be downloaded according to your operating system.
+3. Run CMake script. Required dependencies will automatically be downloaded according to your operating system.
    ```bash
    cmake ..
    ```
-5. Run the generated Makefile.
+4. Run the generated Makefile.
    ```bash
    make
    ```
-6. Your binaries will be in the `build/bin` directory.
-7. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
+5. Your binaries will be in the `build/bin` directory.
+6. Documentation for the code can be built by running `doxygen` in the root directory of this repository.
+
+Every push and pull request is built for macOS (universal) and Windows by `.github/workflows/build.yml`. The builds can be downloaded from the run's artifacts.
 
 ## Development
 
 Want to add new features or improve on existing ones? Squash some bugs? Pull requests are very welcome! Documentation for the code is available [here](https://superpositioncc.github.io/waive-front-v2/).
 
-## Shipping on MacOS
+## Releasing
 
-Building a fully functional and production-ready version on MacOS requires a paid Apple Developer plan.
+1. Push a tag, for example `git tag v2.2 && git push origin v2.2`.
+2. The workflow builds macOS and Windows, signs and notarises the macOS builds, and makes a draft release with one zip per format.
+3. Check the draft on the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page and publish it.
 
-1. Copy `Icon.icns` from the `assets` folder into the App Bundle's `Contents/Resources` folder. Create the folder if it does not exist.
-2. Copy `Info.plist` from the `assets` folder into the App Bundle's `Contents` folder, overwriting the one that is already there.
-3. Obtain your Team ID and an app-specific password from the Apple Developer website. Create a Developer ID Application certificate and install on your system, using XCode.
-4. Run `security find-identity -p basic -v` and note the hash of the Developer ID Application certificate.
-5. Navigate to the folder that contains the app.
-6. Run `codesign --deep --force --options=runtime --entitlements <path_to_entitlements.plist> --sign <hash_of_certificate> --timestamp WAIVE-FRONT-V2.app` to sign the app bundle. Replace `entitlements.plist` can be found in the `assets` folder.
-7. Run `zip -r WAIVE-FRONT-V2.zip WAIVE-FRONT-V2.app` to create a zip archive.
-8. Run `xcrun notarytool submit WAIVE-FRONT-V2.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait` to send the app to Apple for notarization.
-9. If all went well, `spctl -vvv --assess --type exec WAIVE-FRONT-V2.app` should return `accepted`.
-10. Your zip file is ready to ship.
+Signing and notarising on macOS need a paid Apple Developer account and five repository secrets (Settings, Secrets and variables, Actions):
+
+| Secret | What |
+| --- | --- |
+| `MACOS_CERTIFICATE` | The Developer ID Application certificate with its private key, exported from Keychain Access as `.p12`, then base64: `base64 -i certificate.p12` |
+| `MACOS_CERTIFICATE_PASSWORD` | The password set when exporting the `.p12` |
+| `APPLE_ID` | The Apple ID of the developer account |
+| `APPLE_APP_PASSWORD` | An app-specific password for that Apple ID, made at account.apple.com |
+| `APPLE_TEAM_ID` | The team ID, on developer.apple.com under Membership details |
+
+Without them the builds are made unsigned. To sign on your own Mac instead, run `scripts/package-macos.sh build/bin <output dir>` with `MACOS_SIGN_IDENTITY`, `APPLE_ID`, `APPLE_APP_PASSWORD` and `APPLE_TEAM_ID` set.
 </details>

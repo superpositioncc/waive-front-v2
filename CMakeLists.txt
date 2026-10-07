@@ -18,7 +18,10 @@
 # ----------------------------- #
 # ----- Initial settings ------ #
 # ----------------------------- #
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.18)
+
+# std::filesystem needs macOS 10.15. Set before project() so it applies everywhere.
+set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum macOS version")
 
 set(NAME WAIVE-FRONT-V2)
 project(${NAME})
@@ -81,56 +84,62 @@ download_and_extract(dpf-widgets https://github.com/superpositioncc/DPF-Widgets/
 if (WINDOWS)
     download_and_extract(glew https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip ${CMAKE_BINARY_DIR})
     download_and_extract(dirent https://github.com/tronkko/dirent/archive/47480bb729db38120a5c0b6f1e201abf0982f6a8.zip ${CMAKE_BINARY_DIR})
-    download_and_extract(ffmpeg https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip ${CMAKE_BINARY_DIR})
-elseif (MACOS)
-    find_library(AVCODEC_LIBRARY avcodec)
-
-    if (NOT AVCODEC_LIBRARY)
-        find_program(HOMEBREW brew)
-
-        if (HOMEBREW)
-            message(FATAL_ERROR "FFMPEG libraries were not found. Install FFMPEG using homebrew.\n\nbrew install ffmpeg")
-        else()
-            message(FATAL_ERROR "FFMPEG libraries were not found. The best way to install FFMPEG on MacOS is using homebrew, but it is not installed on your system. Install it using the following command:\n\n/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n\nThen install FFMPEG using:\n\nbrew install ffmpeg")
-        endif()
-    endif()
 endif()
+
+include(cmake/FFmpeg.cmake)
 
 # --------------------------------- #
 # --- Set up the project itself --- #
 # --------------------------------- #
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WINDOWS)
+    # Link the C/C++ runtime statically, so users need no Visual C++ redistributable
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
     set(GLEW_USE_STATIC_LIBS ON)
 
-    set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/glew;${CMAKE_BINARY_DIR}/ffmpeg)
-    set(CMAKE_LIBRARY_PATH ${CMAKE_BINARY_DIR}/glew/lib/;${CMAKE_BINARY_DIR}/ffmpeg/lib/)
+    set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/glew)
+    set(CMAKE_LIBRARY_PATH ${CMAKE_BINARY_DIR}/glew/lib/)
 
     find_package(GLEW REQUIRED)
 endif()
 
-find_library(AVCODEC_LIBRARY avcodec)
-find_library(AVFILTER_LIBRARY avfilter)
-find_library(AVFORMAT_LIBRARY avformat)
-find_library(AVDEVICE_LIBRARY avdevice)
-find_library(AVUTIL_LIBRARY avutil)
-find_library(SWSCALE_LIBRARY swscale)
+# MSVC has no GL/glext.h, which DPF's OpenGL code needs. Use the Khronos headers.
+if (WINDOWS)
+    set(GL_HEADERS ${CMAKE_BINARY_DIR}/gl-headers)
 
-add_subdirectory(${CMAKE_BINARY_DIR}/dpf)
+    if (NOT EXISTS ${GL_HEADERS}/GL/glext.h)
+        file(DOWNLOAD https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/1cdd228e34966dd6b95bd203e9f84faba0f371a1/api/GL/glext.h
+            ${GL_HEADERS}/GL/glext.h EXPECTED_HASH SHA256=d7b6f15b1bb209e08bd6ada36983f8bb40429e66c24083aa2474d55205d97047)
+        file(DOWNLOAD https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/db3425b8246136faccb5e2782b5694960bd6edf1/api/KHR/khrplatform.h
+            ${GL_HEADERS}/KHR/khrplatform.h EXPECTED_HASH SHA256=7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83)
+    endif()
+
+    include_directories(${GL_HEADERS})
+endif()
+
+# DPF links the standalone app against SDL2 when pkg-config finds it, e.g. from
+# Homebrew, and the app then only runs where SDL2 is installed. On macOS and
+# Windows the built-in audio fallback (RtAudio) is enough, so hide pkg-config packages.
+if (MACOS OR WINDOWS)
+    set(ENV{PKG_CONFIG_LIBDIR} ${CMAKE_BINARY_DIR}/no-pkg-config)
+endif()
+
+add_subdirectory(${CMAKE_BINARY_DIR}/dpf ${CMAKE_BINARY_DIR}/dpf-build)
 
 if (WINDOWS)
-    set(TARGETS jack vst2 vst3)
+    set(TARGETS jack vst3)
 else()
-    set(TARGETS jack vst2 vst3 au)
+    set(TARGETS jack vst3 au)
 endif()
 
 if (MACOS)
     add_definitions(-DDGL_USE_OPENGL3)
 else()
-	add_definitions(-DIMGUI_IMPL_OPENGL_ES3 -DGLEW_STATIC -D_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING -D_WINSOCKAPI_)
+	add_definitions(-DIMGUI_IMPL_OPENGL_ES3 -DGLEW_STATIC -D_WINSOCKAPI_)
 endif()
 
 dpf_add_plugin(${NAME}
@@ -143,7 +152,13 @@ dpf_add_plugin(${NAME}
         src/data/DataSources.cpp
         src/data/DataSource.cpp
         ${CMAKE_BINARY_DIR}/tinyosc/tinyosc.c
+        src/util/DelayLoad.cpp
 )
+
+if (FFMPEG_DEPENDS)
+    add_dependencies(${NAME}-ui ${FFMPEG_DEPENDS})
+    add_dependencies(${NAME}-dsp ${FFMPEG_DEPENDS})
+endif()
 
 # ----------------------------- #
 # --- Include dependencies ---- #
@@ -154,14 +169,11 @@ target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/dpf-widgets/opengl
 target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/tinyosc)
 target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/json/include)
 
-if (MACOS)
-    find_path(FFMPEG_INCLUDE_DIR libavcodec/avcodec.h)
-    target_include_directories(${NAME} PUBLIC ${FFMPEG_INCLUDE_DIR})
-elseif(WINDOWS)
+target_include_directories(${NAME} PUBLIC ${FFMPEG_INCLUDE_DIRS})
+
+if (WINDOWS)
     target_include_directories(${NAME} PUBLIC ${GLEW_INCLUDE_DIRS})
     target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/dirent/include)
-    target_include_directories(${NAME} PUBLIC ${CMAKE_BINARY_DIR}/ffmpeg/include)
-    # target_include_directories(${NAME} PUBLIC glew/include)
 endif()
 
 
@@ -169,14 +181,34 @@ endif()
 # ----- Link dependencies ----- #
 # ----------------------------- #
 
-target_link_libraries(${NAME} PUBLIC ${AVCODEC_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVFILTER_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVFORMAT_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${SWSCALE_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVUTIL_LIBRARY})
-target_link_libraries(${NAME} PUBLIC ${AVDEVICE_LIBRARY})
+target_link_libraries(${NAME} PUBLIC ${FFMPEG_LIBRARIES})
+
+if (MACOS)
+    # Screen size and density, see src/util/Screen.cpp
+    target_link_libraries(${NAME} PUBLIC "-framework CoreGraphics")
+endif()
 
 if (WINDOWS)
     target_link_libraries(${NAME} PUBLIC ${GLEW_LIBRARIES})
     target_link_libraries(${NAME} PUBLIC Ws2_32)
+    # A static FFmpeg uses BCryptGenRandom
+    target_link_libraries(${NAME} PUBLIC bcrypt)
+endif()
+
+# A shared FFmpeg on Windows: load its DLLs from the folder of each binary
+# (see src/util/DelayLoad.cpp) and copy them there.
+if (FFMPEG_DLLS)
+    target_link_libraries(${NAME} PUBLIC delayimp)
+
+    foreach (dll ${FFMPEG_DLLS})
+        get_filename_component(dll_name ${dll} NAME)
+        target_link_options(${NAME} INTERFACE /DELAYLOAD:${dll_name})
+    endforeach()
+
+    foreach (format jack vst3)
+        if (TARGET ${NAME}-${format})
+            add_custom_command(TARGET ${NAME}-${format} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${FFMPEG_DLLS} $<TARGET_FILE_DIR:${NAME}-${format}>)
+        endif()
+    endforeach()
 endif()

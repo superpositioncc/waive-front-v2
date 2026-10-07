@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef VIEWER_WINDOW_CPP
 #define VIEWER_WINDOW_CPP
 
+#include "../util/Screen.cpp"
 #include "DistrhoUI.hpp"
 #include "ViewerWidget.cpp"
 #include <vector>
@@ -38,17 +39,26 @@ public:
 	 * @param app Application
 	 * @param p Parameters
 	 * @param layersEnabled Vector of booleans representing which layers have been enabled
+	 * @param owner Native handle of a window that owns the viewer and keeps it in front, or 0
 	 */
-	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled)
-		: Window(app),
+	ViewerWindow(Application &app, float (&p)[Parameters::NumParameters], std::vector<bool> *layersEnabled, uintptr_t owner = 0)
+		// Created resizable: on macOS the drawing surface only follows the window
+		// when the window is resizable from the start; setResizable() later is too late
+		: Window(app, 0, 640, 360, 0.0, true),
 		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
-		setTitle("Viewer");
-		setSize(1280, 720);
-		setResizable(true);
-		show();
+		const double scale = getScaleFactor() * Util::Screen::densityFactor();
 
-		setOffsetY(getOffsetY() - 720 / 2);
+		setTitle("Viewer");
+		setSize(640 * scale, 360 * scale);
+		setResizable(true);
+
+		if (owner != 0)
+			setTransientParent(owner);
+
+		// Near the top left of the main screen, so it is always visible
+		setOffset(80 * scale, 80 * scale);
+		show();
 	}
 
 	/**
