@@ -27,6 +27,7 @@ var hierarchy =
     ] ],
     [ "VideoFrameDescription", "structVideoFrameDescription.html", null ],
     [ "VideoLoader", "classVideoLoader.html", null ],
+    [ "Util::Screen::ViewMetrics", "structUtil_1_1Screen_1_1ViewMetrics.html", null ],
     [ "Window", null, [
       [ "ViewerWindow", "classViewerWindow.html", null ]
     ] ]

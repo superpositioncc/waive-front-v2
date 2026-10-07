@@ -11,12 +11,13 @@ var searchData=
   ['color_8',['color',['../main_8frag.html#a0a3e99eab94835ffca469f09cb4a24ef',1,'main.frag']]],
   ['color_2ecpp_9',['Color.cpp',['../Color_8cpp.html',1,'']]],
   ['colorindex_10',['colorIndex',['../structShader_1_1ShaderUniforms.html#a99c60cfe26663c70c52bf0cd7e2bf40f',1,'Shader::ShaderUniforms::colorIndex()'],['../main_8frag.html#a163d463def43ba44364538cd43033b2d',1,'colorIndex():&#160;main.frag']]],
-  ['colors_11',['colors',['../classVideoLoader.html#ad58920d84a98aaf28e3b2feda0a41699',1,'VideoLoader::colors()'],['../main_8frag.html#a0587cfd4ae1ca4dde97af223753aa448',1,'colors():&#160;main.frag'],['../structFrameData.html#ad1584ae56446bd8c8121d70850e4fc3f',1,'FrameData::colors()'],['../structShader_1_1ShaderUniforms.html#aaa3a800eb33ce90651dd2b54c6548380',1,'Shader::ShaderUniforms::colors()']]],
+  ['colors_11',['colors',['../structFrameData.html#ad1584ae56446bd8c8121d70850e4fc3f',1,'FrameData::colors()'],['../main_8frag.html#a0587cfd4ae1ca4dde97af223753aa448',1,'colors():&#160;main.frag'],['../classVideoLoader.html#ad58920d84a98aaf28e3b2feda0a41699',1,'VideoLoader::colors()'],['../structShader_1_1ShaderUniforms.html#aaa3a800eb33ce90651dd2b54c6548380',1,'Shader::ShaderUniforms::colors()']]],
   ['common_2eglsl_12',['common.glsl',['../common_8glsl.html',1,'']]],
   ['compile_13',['compile',['../classShader_1_1ShaderSource.html#a44bacbddb5ad6b16b89e465a372ac736',1,'Shader::ShaderSource']]],
   ['context_14',['context',['../classVideoLoader.html#a13377f92f2c4637fdb36c866df2b463a',1,'VideoLoader']]],
   ['converttorgb_15',['convertToRGB',['../classVideoLoader.html#a3a2d8d2567f5d17968fb9a806a30258b',1,'VideoLoader']]],
   ['createplugin_16',['createPlugin',['../WaiveFrontPlugin_8cpp.html#a1c23be578dae03149d92254515247d03',1,'WaiveFrontPlugin.cpp']]],
   ['createui_17',['createUI',['../WaiveFrontPluginUI_8cpp.html#a612f4e6b71416986bddb3181f2a94673',1,'WaiveFrontPluginUI.cpp']]],
-  ['cyan_18',['CYAN',['../Logger_8cpp.html#ad243f93c16bc4c1d3e0a13b84421d760',1,'Logger.cpp']]]
+  ['currentstylescale_18',['currentStyleScale',['../classWaiveFrontPluginUI.html#af76cb8dea807da06692d09c481c75ddf',1,'WaiveFrontPluginUI']]],
+  ['cyan_19',['CYAN',['../Logger_8cpp.html#ad243f93c16bc4c1d3e0a13b84421d760',1,'Logger.cpp']]]
 ];

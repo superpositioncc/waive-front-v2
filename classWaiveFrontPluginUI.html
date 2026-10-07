@@ -152,6 +152,22 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a59109b2422bd3881263736b4015166d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a59109b2422bd3881263736b4015166d4">randomizeItem</a> (int i)</td></tr>
 <tr class="memdesc:a59109b2422bd3881263736b4015166d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Randomize an item.  <br /></td></tr>
 <tr class="separator:a59109b2422bd3881263736b4015166d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa46cd59198c24bc0b286de7f884a1eaa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#aa46cd59198c24bc0b286de7f884a1eaa">updateScreenScale</a> ()</td></tr>
+<tr class="memdesc:aa46cd59198c24bc0b286de7f884a1eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match the drawing to the screen the UI is on right now.  <br /></td></tr>
+<tr class="separator:aa46cd59198c24bc0b286de7f884a1eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf08fb7b3a29184dd4650a5fdb756505"><td class="memTemplParams" colspan="2">template&lt;class Event &gt; </td></tr>
+<tr class="memitem:acf08fb7b3a29184dd4650a5fdb756505"><td class="memTemplItemLeft" align="right" valign="top">Event&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#acf08fb7b3a29184dd4650a5fdb756505">toUiUnits</a> (const Event &amp;event) const</td></tr>
+<tr class="memdesc:acf08fb7b3a29184dd4650a5fdb756505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a mouse position from screen pixels to the UI's units.  <br /></td></tr>
+<tr class="separator:acf08fb7b3a29184dd4650a5fdb756505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aee149edc98030c75378aa3a8252b0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a4aee149edc98030c75378aa3a8252b0c">onMouse</a> (const MouseEvent &amp;event) override</td></tr>
+<tr class="separator:a4aee149edc98030c75378aa3a8252b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5bff6fd691ecb2af2a32149c65b2f6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#ab5bff6fd691ecb2af2a32149c65b2f6a">onMotion</a> (const MotionEvent &amp;event) override</td></tr>
+<tr class="separator:ab5bff6fd691ecb2af2a32149c65b2f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a8a2bf37fe28638872c153e7fd3a0ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a0a8a2bf37fe28638872c153e7fd3a0ff">onScroll</a> (const ScrollEvent &amp;event) override</td></tr>
+<tr class="separator:a0a8a2bf37fe28638872c153e7fd3a0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dfda065078169fd1e261676240ca120"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a9dfda065078169fd1e261676240ca120">onKeyboard</a> (const KeyboardEvent &amp;event) override</td></tr>
+<tr class="memdesc:a9dfda065078169fd1e261676240ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a key press.  <br /></td></tr>
+<tr class="separator:a9dfda065078169fd1e261676240ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f44c742da2d446b53f55ba13e2b0894"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a8f44c742da2d446b53f55ba13e2b0894">onImGuiDisplay</a> () override</td></tr>
 <tr class="memdesc:a8f44c742da2d446b53f55ba13e2b0894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display the ImGui UI.  <br /></td></tr>
 <tr class="separator:a8f44c742da2d446b53f55ba13e2b0894"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +194,18 @@ Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a1c28be353ac2c71f8604b0ee232a3b72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classViewerWindow.html">ViewerWindow</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a1c28be353ac2c71f8604b0ee232a3b72">viewerWindow</a> = nullptr</td></tr>
 <tr class="separator:a1c28be353ac2c71f8604b0ee232a3b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac314f72caa51f78cab20b92ed3b43130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#ac314f72caa51f78cab20b92ed3b43130">isAudioUnit</a> = false</td></tr>
+<tr class="separator:ac314f72caa51f78cab20b92ed3b43130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d117877f854d7d039ff0c0d2ee2972f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a6d117877f854d7d039ff0c0d2ee2972f">pixelScaleX</a> = 1.0</td></tr>
+<tr class="separator:a6d117877f854d7d039ff0c0d2ee2972f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6ee7698b3766369b4675e9dfcc9a9c2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#ab6ee7698b3766369b4675e9dfcc9a9c2">pixelScaleY</a> = 1.0</td></tr>
+<tr class="separator:ab6ee7698b3766369b4675e9dfcc9a9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2fd6bc5875026b46316b4d788b5629a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#ad2fd6bc5875026b46316b4d788b5629a">mouseOffsetY</a> = 0.0</td></tr>
+<tr class="separator:ad2fd6bc5875026b46316b4d788b5629a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0a239476db1de77fda400bdc378a01"><td class="memItemLeft" align="right" valign="top">ImGuiStyle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#afe0a239476db1de77fda400bdc378a01">baseStyle</a></td></tr>
+<tr class="separator:afe0a239476db1de77fda400bdc378a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76cb8dea807da06692d09c481c75ddf"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#af76cb8dea807da06692d09c481c75ddf">currentStyleScale</a> = 0.0f</td></tr>
+<tr class="separator:af76cb8dea807da06692d09c481c75ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdc522187f806ff453cde0113ff1d0a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#acdc522187f806ff453cde0113ff1d0a0">initialized</a> = false</td></tr>
 <tr class="separator:acdc522187f806ff453cde0113ff1d0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c760ac1fe61540928c90e865367a7a6"><td class="memItemLeft" align="right" valign="top">ImFont *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWaiveFrontPluginUI.html#a6c760ac1fe61540928c90e865367a7a6">regular</a></td></tr>
@@ -351,6 +379,119 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Display the ImGui UI. </p>
+
+</div>
+</div>
+<a id="a9dfda065078169fd1e261676240ca120" name="a9dfda065078169fd1e261676240ca120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dfda065078169fd1e261676240ca120">&#9670;&#160;</a></span>onKeyboard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WaiveFrontPluginUI::onKeyboard </td>
+          <td>(</td>
+          <td class="paramtype">const KeyboardEvent &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle a key press. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The keyboard event </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the event was handled </dd></dl>
+
+</div>
+</div>
+<a id="ab5bff6fd691ecb2af2a32149c65b2f6a" name="ab5bff6fd691ecb2af2a32149c65b2f6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5bff6fd691ecb2af2a32149c65b2f6a">&#9670;&#160;</a></span>onMotion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WaiveFrontPluginUI::onMotion </td>
+          <td>(</td>
+          <td class="paramtype">const MotionEvent &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4aee149edc98030c75378aa3a8252b0c" name="a4aee149edc98030c75378aa3a8252b0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4aee149edc98030c75378aa3a8252b0c">&#9670;&#160;</a></span>onMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WaiveFrontPluginUI::onMouse </td>
+          <td>(</td>
+          <td class="paramtype">const MouseEvent &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0a8a2bf37fe28638872c153e7fd3a0ff" name="a0a8a2bf37fe28638872c153e7fd3a0ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a8a2bf37fe28638872c153e7fd3a0ff">&#9670;&#160;</a></span>onScroll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WaiveFrontPluginUI::onScroll </td>
+          <td>(</td>
+          <td class="paramtype">const ScrollEvent &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -584,6 +725,64 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="acf08fb7b3a29184dd4650a5fdb756505" name="acf08fb7b3a29184dd4650a5fdb756505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf08fb7b3a29184dd4650a5fdb756505">&#9670;&#160;</a></span>toUiUnits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Event &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Event WaiveFrontPluginUI::toUiUnits </td>
+          <td>(</td>
+          <td class="paramtype">const Event &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convert a mouse position from screen pixels to the UI's units. </p>
+
+</div>
+</div>
+<a id="aa46cd59198c24bc0b286de7f884a1eaa" name="aa46cd59198c24bc0b286de7f884a1eaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa46cd59198c24bc0b286de7f884a1eaa">&#9670;&#160;</a></span>updateScreenScale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WaiveFrontPluginUI::updateScreenScale </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Match the drawing to the screen the UI is on right now. </p>
+<p>DPF fixes its scale factor when the plugin opens; macOS changes the pixel density of the view when the window moves to another screen. Without this, the UI is drawn at the wrong scale: too small in a corner, or too large and cut off. The layout keeps DPF's units; this tells ImGui how many real pixels each unit has, and corrects the mouse the same way. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a582b5cbdd078c15608348720141cf63b" name="a582b5cbdd078c15608348720141cf63b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a582b5cbdd078c15608348720141cf63b">&#9670;&#160;</a></span>allowOSC</h2>
@@ -605,6 +804,52 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>Whether to allow OSC control </p>
+
+</div>
+</div>
+<a id="afe0a239476db1de77fda400bdc378a01" name="afe0a239476db1de77fda400bdc378a01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0a239476db1de77fda400bdc378a01">&#9670;&#160;</a></span>baseStyle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ImGuiStyle WaiveFrontPluginUI::baseStyle</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The theme before scaling to the window </p>
+
+</div>
+</div>
+<a id="af76cb8dea807da06692d09c481c75ddf" name="af76cb8dea807da06692d09c481c75ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76cb8dea807da06692d09c481c75ddf">&#9670;&#160;</a></span>currentStyleScale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float WaiveFrontPluginUI::currentStyleScale = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The scale applied to the style now; 0 until the first frame </p>
 
 </div>
 </div>
@@ -643,6 +888,29 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>Whether the UI has been initialized </p>
+
+</div>
+</div>
+<a id="ac314f72caa51f78cab20b92ed3b43130" name="ac314f72caa51f78cab20b92ed3b43130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac314f72caa51f78cab20b92ed3b43130">&#9670;&#160;</a></span>isAudioUnit</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WaiveFrontPluginUI::isAudioUnit = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Running as an Audio Unit </p>
 
 </div>
 </div>
@@ -738,6 +1006,29 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="ad2fd6bc5875026b46316b4d788b5629a" name="ad2fd6bc5875026b46316b4d788b5629a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2fd6bc5875026b46316b4d788b5629a">&#9670;&#160;</a></span>mouseOffsetY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double WaiveFrontPluginUI::mouseOffsetY = 0.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Screen pixels hidden above the visible part </p>
+
+</div>
+</div>
 <a id="a7505ea682c784f740149fc8e25c6e736" name="a7505ea682c784f740149fc8e25c6e736"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7505ea682c784f740149fc8e25c6e736">&#9670;&#160;</a></span>oscServer</h2>
 
@@ -765,6 +1056,52 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 <p>The parameters of the plugin </p>
+
+</div>
+</div>
+<a id="a6d117877f854d7d039ff0c0d2ee2972f" name="a6d117877f854d7d039ff0c0d2ee2972f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d117877f854d7d039ff0c0d2ee2972f">&#9670;&#160;</a></span>pixelScaleX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double WaiveFrontPluginUI::pixelScaleX = 1.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Screen pixels per UI unit, horizontally </p>
+
+</div>
+</div>
+<a id="ab6ee7698b3766369b4675e9dfcc9a9c2" name="ab6ee7698b3766369b4675e9dfcc9a9c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6ee7698b3766369b4675e9dfcc9a9c2">&#9670;&#160;</a></span>pixelScaleY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double WaiveFrontPluginUI::pixelScaleY = 1.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Screen pixels per UI unit, vertically </p>
 
 </div>
 </div>

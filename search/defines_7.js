@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['waive_5ffront_5fplugin_5fui_5fcpp_0',['WAIVE_FRONT_PLUGIN_UI_CPP',['../WaiveFrontPluginUI_8cpp.html#a3c1cb71ace2ef3f95a5d58f07331fae1',1,'WaiveFrontPluginUI.cpp']]],
-  ['white_1',['WHITE',['../Logger_8cpp.html#a87b537f5fa5c109d3c05c13d6b18f382',1,'Logger.cpp']]]
+  ['viewer_5fwidget_5fcpp_0',['VIEWER_WIDGET_CPP',['../ViewerWidget_8cpp.html#a8b51e21c8cb0144c1af2682462b22994',1,'ViewerWidget.cpp']]],
+  ['viewer_5fwindow_5fcpp_1',['VIEWER_WINDOW_CPP',['../ViewerWindow_8cpp.html#ae0448c12fab82a96c79f7e31629edd2d',1,'ViewerWindow.cpp']]]
 ];

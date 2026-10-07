@@ -5,7 +5,7 @@ var classViewerWidget =
     [ "init", "classViewerWidget.html#ac5927f810c1a09312dfd5469461b7184", null ],
     [ "isInitialized", "classViewerWidget.html#a49824379ccada1bb075259ffe5707266", null ],
     [ "onDisplay", "classViewerWidget.html#a2a11a758f6ce4be1c1585fdd5efbde73", null ],
-    [ "onMotion", "classViewerWidget.html#a4d42aab1d7ed4b8a82efbb1a9c0daf11", null ],
+    [ "onKeyboard", "classViewerWidget.html#ad1b7afe216164a010068c3f9a20ca549", null ],
     [ "setFrame", "classViewerWidget.html#a05285f48909a622c057edc0387a4d9b2", null ],
     [ "update", "classViewerWidget.html#a9617d73f3ff6ab0194ced4f5ae047938", null ],
     [ "updateFrameData", "classViewerWidget.html#ac97c882c8c338e4a5d01f219f08ac10f", null ],

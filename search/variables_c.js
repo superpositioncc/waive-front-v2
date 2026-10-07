@@ -1,8 +1,13 @@
 var searchData=
 [
-  ['rawcategories_0',['rawCategories',['../structOSCMessage.html#af61fa108a399c057955060aa00c32381',1,'OSCMessage']]],
-  ['ready_1',['ready',['../structVideoFrameDescription.html#a98decdf1db498ac6937ee238ec28bafa',1,'VideoFrameDescription']]],
-  ['rectangle_2',['rectangle',['../classViewerWidget.html#accfdb0d94208b733cb04211475f39e33',1,'ViewerWidget']]],
-  ['regular_3',['regular',['../classWaiveFrontPluginUI.html#a6c760ac1fe61540928c90e865367a7a6',1,'WaiveFrontPluginUI']]],
-  ['rgb_5fframe_4',['rgb_frame',['../classVideoLoader.html#a15d6b7f2b81c8baae209d9ff47af15bd',1,'VideoLoader']]]
+  ['packet_0',['packet',['../classVideoLoader.html#a3fc72539130668e49753d54f7cb61718',1,'VideoLoader']]],
+  ['paletteframe_1',['paletteFrame',['../classVideoLoader.html#a741480027583bb59e7a13edc919d35de',1,'VideoLoader']]],
+  ['parameters_2',['parameters',['../classViewerWidget.html#a8faefca71e146b859ebd339124a816d8',1,'ViewerWidget::parameters()'],['../classWaiveFrontPlugin.html#a53c0eaf63e0902affa2c6ba845b5d718',1,'WaiveFrontPlugin::parameters()'],['../classWaiveFrontPluginUI.html#adaf230785548eada0b8b78b16c518ef9',1,'WaiveFrontPluginUI::parameters()']]],
+  ['parser_3',['parser',['../classVideoLoader.html#a022cf0bba2def8c3c11a9971cdd2a2ad',1,'VideoLoader']]],
+  ['path_4',['path',['../classDataSource.html#a298dfdca1edff6c46d98124f1b785bbb',1,'DataSource']]],
+  ['pixelscalex_5',['pixelScaleX',['../classWaiveFrontPluginUI.html#a6d117877f854d7d039ff0c0d2ee2972f',1,'WaiveFrontPluginUI']]],
+  ['pixelscaley_6',['pixelScaleY',['../classWaiveFrontPluginUI.html#ab6ee7698b3766369b4675e9dfcc9a9c2',1,'WaiveFrontPluginUI']]],
+  ['prandomizecategory_7',['pRandomizeCategory',['../classWaiveFrontPluginUI.html#a6aa2e0813ab71286eae2c922ef190acd',1,'WaiveFrontPluginUI']]],
+  ['prandomizeitem_8',['pRandomizeItem',['../classWaiveFrontPluginUI.html#a7c708ce46dc80d8c76a31407a1a1b598',1,'WaiveFrontPluginUI']]],
+  ['presentationname_9',['presentationName',['../classDataCategory.html#a33e4a648776959846c6538d1dfdf9c3d',1,'DataCategory']]]
 ];

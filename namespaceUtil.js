@@ -8,5 +8,6 @@ var namespaceUtil =
       [ "print", "namespaceUtil_1_1Logger.html#a3f98403883274cc594534e67951e456a", null ],
       [ "print", "namespaceUtil_1_1Logger.html#af87744383fe681fec9cfba258f8302f2", null ],
       [ "warn", "namespaceUtil_1_1Logger.html#af58d781d8bba70480a17fee9369bc769", null ]
-    ] ]
+    ] ],
+    [ "Screen", "namespaceUtil_1_1Screen.html", "namespaceUtil_1_1Screen" ]
 ];

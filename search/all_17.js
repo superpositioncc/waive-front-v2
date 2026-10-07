@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7eoscserver_0',['~OSCServer',['../classOSCServer.html#a44608c23b90674a651e4b5b4c271fcae',1,'OSCServer']]]
+  ['zoom_0',['Zoom',['../DistrhoPluginInfo_8h.html#acaed7d3152c9c62c6c16554bdb1c4c93abd15f932e056b89c5687c535ba3a53ea',1,'DistrhoPluginInfo.h']]]
 ];

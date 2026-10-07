@@ -7,5 +7,6 @@ var searchData=
   ['color_4',['color',['../main_8frag.html#a0a3e99eab94835ffca469f09cb4a24ef',1,'main.frag']]],
   ['colorindex_5',['colorIndex',['../structShader_1_1ShaderUniforms.html#a99c60cfe26663c70c52bf0cd7e2bf40f',1,'Shader::ShaderUniforms::colorIndex()'],['../main_8frag.html#a163d463def43ba44364538cd43033b2d',1,'colorIndex():&#160;main.frag']]],
   ['colors_6',['colors',['../structShader_1_1ShaderUniforms.html#aaa3a800eb33ce90651dd2b54c6548380',1,'Shader::ShaderUniforms::colors()'],['../classVideoLoader.html#ad58920d84a98aaf28e3b2feda0a41699',1,'VideoLoader::colors()'],['../structFrameData.html#ad1584ae56446bd8c8121d70850e4fc3f',1,'FrameData::colors()'],['../main_8frag.html#a0587cfd4ae1ca4dde97af223753aa448',1,'colors():&#160;main.frag']]],
-  ['context_7',['context',['../classVideoLoader.html#a13377f92f2c4637fdb36c866df2b463a',1,'VideoLoader']]]
+  ['context_7',['context',['../classVideoLoader.html#a13377f92f2c4637fdb36c866df2b463a',1,'VideoLoader']]],
+  ['currentstylescale_8',['currentStyleScale',['../classWaiveFrontPluginUI.html#af76cb8dea807da06692d09c481c75ddf',1,'WaiveFrontPluginUI']]]
 ];

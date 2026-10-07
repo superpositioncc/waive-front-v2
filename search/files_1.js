@@ -7,5 +7,6 @@ var searchData=
   ['datasources_2ecpp_4',['DataSources.cpp',['../DataSources_8cpp.html',1,'']]],
   ['datasources_2ehpp_5',['DataSources.hpp',['../DataSources_8hpp.html',1,'']]],
   ['datatag_2ehpp_6',['DataTag.hpp',['../DataTag_8hpp.html',1,'']]],
-  ['distrhoplugininfo_2eh_7',['DistrhoPluginInfo.h',['../DistrhoPluginInfo_8h.html',1,'']]]
+  ['delayload_2ecpp_7',['DelayLoad.cpp',['../DelayLoad_8cpp.html',1,'']]],
+  ['distrhoplugininfo_2eh_8',['DistrhoPluginInfo.h',['../DistrhoPluginInfo_8h.html',1,'']]]
 ];

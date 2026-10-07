@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['waivefrontplugin_0',['WaiveFrontPlugin',['../classWaiveFrontPlugin.html#af578d553b20a3fc32035e6e0d001b8b7',1,'WaiveFrontPlugin']]],
-  ['waivefrontpluginui_1',['WaiveFrontPluginUI',['../classWaiveFrontPluginUI.html#a26ce3489f916b1e4a12f92685e269ae0',1,'WaiveFrontPluginUI']]],
-  ['warn_2',['warn',['../namespaceUtil_1_1Logger.html#af58d781d8bba70480a17fee9369bc769',1,'Util::Logger']]]
+  ['update_0',['update',['../classViewerWidget.html#a9617d73f3ff6ab0194ced4f5ae047938',1,'ViewerWidget']]],
+  ['updateframedata_1',['updateFrameData',['../classViewerWidget.html#ac97c882c8c338e4a5d01f219f08ac10f',1,'ViewerWidget']]],
+  ['updatescreenscale_2',['updateScreenScale',['../classWaiveFrontPluginUI.html#aa46cd59198c24bc0b286de7f884a1eaa',1,'WaiveFrontPluginUI']]],
+  ['use_3',['use',['../classShader_1_1ShaderProgram.html#a41e2a5e982d0bbd5e5aa0e8904220c83',1,'Shader::ShaderProgram::use()'],['../classShader_1_1ShaderUniform.html#abcaa2826a5047afefc6f62ecbd724034',1,'Shader::ShaderUniform::use()'],['../structShader_1_1ShaderUniforms.html#af0f01c1b46834fca870bf2665a2a6fa9',1,'Shader::ShaderUniforms::use()']]]
 ];

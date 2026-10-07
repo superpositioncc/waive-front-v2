@@ -8,6 +8,11 @@ var annotated_dup =
       [ "ShaderUniform", "classShader_1_1ShaderUniform.html", "classShader_1_1ShaderUniform" ],
       [ "ShaderUniforms", "structShader_1_1ShaderUniforms.html", "structShader_1_1ShaderUniforms" ]
     ] ],
+    [ "Util", "namespaceUtil.html", [
+      [ "Screen", "namespaceUtil_1_1Screen.html", [
+        [ "ViewMetrics", "structUtil_1_1Screen_1_1ViewMetrics.html", "structUtil_1_1Screen_1_1ViewMetrics" ]
+      ] ]
+    ] ],
     [ "DataCategory", "classDataCategory.html", "classDataCategory" ],
     [ "DataItem", "classDataItem.html", "classDataItem" ],
     [ "DataSource", "classDataSource.html", "classDataSource" ],
