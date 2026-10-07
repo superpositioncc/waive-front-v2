@@ -600,7 +600,9 @@ protected:
 
         ImGui::PushFont(regular);
 
-        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+        // No scrollbar: the window keeps its aspect ratio and everything scales with it, so the
+        // column always fits; rounding could still show an empty bar. The mouse wheel still scrolls.
+        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
 
         ImGui::Text("Blur Size");
         ImGui::SetNextItemWidth(width / 4);
