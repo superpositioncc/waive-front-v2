@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef VIEWER_WINDOW_CPP
 #define VIEWER_WINDOW_CPP
 
+#include "../util/Screen.cpp"
 #include "DistrhoUI.hpp"
 #include "ViewerWidget.cpp"
 #include <vector>
@@ -44,7 +45,7 @@ public:
 		: Window(app),
 		  viewerWidget(new ViewerWidget(*this, p, layersEnabled))
 	{
-		const double scale = getScaleFactor();
+		const double scale = getScaleFactor() * Util::Screen::densityFactor();
 
 		setTitle("Viewer");
 		setSize(640 * scale, 360 * scale);

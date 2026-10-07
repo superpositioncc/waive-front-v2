@@ -30,7 +30,7 @@ jobs:
       - name: Check that nothing outside macOS is linked
         run: |
           status=0
-          for f in build/bin/WAIVE-FRONT-V2 build/bin/*.vst3/Contents/MacOS/* build/bin/*.vst/Contents/MacOS/* build/bin/*.component/Contents/MacOS/*; do
+          for f in build/bin/WAIVE-FRONT-V2 build/bin/*.vst3/Contents/MacOS/* build/bin/*.component/Contents/MacOS/*; do
             lipo -archs "$f"
             if otool -L "$f" | grep $'^\t' | grep -v -e '/System/' -e '/usr/lib/'; then
               echo "::error::$f links against a library that users will not have"
@@ -74,7 +74,6 @@ jobs:
           mkdir release
           ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.app release/WAIVE-FRONT-V2.MacOS.App.zip
           ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.component release/WAIVE-FRONT-V2.MacOS.AU.zip
-          ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.vst release/WAIVE-FRONT-V2.MacOS.VST.zip
           ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.vst3 release/WAIVE-FRONT-V2.MacOS.VST3.zip
 
       - uses: actions/upload-artifact@v4
@@ -134,7 +133,6 @@ jobs:
           New-Item -ItemType Directory release | Out-Null
           # No standalone app: DPF leaves out its Windows audio fallback when built with MSVC,
           # so the .exe only starts where JACK is installed. Windows users use the plugins.
-          Compress-Archive -Path build/bin/WAIVE-FRONT-V2-vst2.dll -DestinationPath release/WAIVE-FRONT-V2.Windows.VST.zip
           Compress-Archive -Path build/bin/WAIVE-FRONT-V2.vst3 -DestinationPath release/WAIVE-FRONT-V2.Windows.VST3.zip
 
       - uses: actions/upload-artifact@v4

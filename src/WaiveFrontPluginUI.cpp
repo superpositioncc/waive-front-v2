@@ -19,6 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef WAIVE_FRONT_PLUGIN_UI_CPP
 #define WAIVE_FRONT_PLUGIN_UI_CPP
 
+// Before DPF: the macOS system headers it pulls in have their own Point
+#include "util/Screen.cpp"
+
 #ifndef __APPLE__
 #include <Windows.h>
 #include <GL/glew.h>
@@ -73,6 +76,10 @@ public:
 
         // The default size is the minimum; the window can grow, keeping its aspect ratio
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
+
+        const double density = Util::Screen::densityFactor();
+        if (density > 1.0)
+            setSize(getWidth() * density, getHeight() * density);
 
         openViewerWindow();
 

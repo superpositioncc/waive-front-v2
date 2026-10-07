@@ -35,7 +35,7 @@ BIN="$1"
 OUT="$2"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 NAME=WAIVE-FRONT-V2
-BUNDLES=("$NAME.app" "$NAME.vst3" "$NAME.vst" "$NAME.component")
+BUNDLES=("$NAME.app" "$NAME.vst3" "$NAME.component")
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
@@ -48,7 +48,7 @@ cp "$ROOT/assets/Info.plist" "$APP/Contents/Info.plist"
 cp "$ROOT/assets/Icon.icns" "$APP/Contents/Resources/Icon.icns"
 plutil -replace LSMinimumSystemVersion -string "${MACOSX_DEPLOYMENT_TARGET:-11.0}" "$APP/Contents/Info.plist"
 
-for bundle in "$NAME.vst3" "$NAME.vst" "$NAME.component"; do
+for bundle in "$NAME.vst3" "$NAME.component"; do
     ditto "$BIN/$bundle" "$OUT/$bundle"
 done
 

@@ -131,9 +131,9 @@ endif()
 add_subdirectory(${CMAKE_BINARY_DIR}/dpf ${CMAKE_BINARY_DIR}/dpf-build)
 
 if (WINDOWS)
-    set(TARGETS jack vst2 vst3)
+    set(TARGETS jack vst3)
 else()
-    set(TARGETS jack vst2 vst3 au)
+    set(TARGETS jack vst3 au)
 endif()
 
 if (MACOS)
@@ -183,6 +183,11 @@ endif()
 
 target_link_libraries(${NAME} PUBLIC ${FFMPEG_LIBRARIES})
 
+if (MACOS)
+    # Screen size and density, see src/util/Screen.cpp
+    target_link_libraries(${NAME} PUBLIC "-framework CoreGraphics")
+endif()
+
 if (WINDOWS)
     target_link_libraries(${NAME} PUBLIC ${GLEW_LIBRARIES})
     target_link_libraries(${NAME} PUBLIC Ws2_32)
@@ -200,7 +205,7 @@ if (FFMPEG_DLLS)
         target_link_options(${NAME} INTERFACE /DELAYLOAD:${dll_name})
     endforeach()
 
-    foreach (format jack vst2 vst3)
+    foreach (format jack vst3)
         if (TARGET ${NAME}-${format})
             add_custom_command(TARGET ${NAME}-${format} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${FFMPEG_DLLS} $<TARGET_FILE_DIR:${NAME}-${format}>)
