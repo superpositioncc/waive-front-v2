@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef VIEWER_WIDGET_CPP
 #define VIEWER_WIDGET_CPP
 
+#include "../util/Shortcuts.cpp"
 #include "DistrhoUI.hpp"
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -126,6 +127,17 @@ public:
 
 protected:
 	/**
+	 * @brief Handle a key press
+	 *
+	 * @param event The keyboard event
+	 * @return true if the event was handled
+	 */
+	bool onKeyboard(const KeyboardEvent &event) override
+	{
+		return quitOnCommandQ(getApp(), event);
+	}
+
+	/**
 	 * @brief Display the widget
 	 *
 	 */
@@ -139,19 +151,6 @@ protected:
 
 		update();
 		draw();
-	}
-
-	/**
-	 * @brief Handle a window resize event
-	 *
-	 * @param event The window resize event
-	 * @return true
-	 * @return false
-	 */
-	bool onMotion(const MotionEvent &event) override
-	{
-		setSize(getWindow().getWidth(), getWindow().getHeight());
-		return true;
 	}
 
 private:

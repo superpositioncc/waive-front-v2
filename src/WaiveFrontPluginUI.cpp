@@ -43,6 +43,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <dirent.h>
 #include "data/DataSources.hpp"
 #include "util/Logger.cpp"
+#include "util/Shortcuts.cpp"
 #include <vector>
 #include "osc/OSCServer.cpp"
 
@@ -316,6 +317,20 @@ protected:
 
         int randomIndex = std::rand() % selectedCategories[i]->items.size();
         selectItem(i, selectedCategories[i]->items[randomIndex]);
+    }
+
+    /**
+     * @brief Handle a key press
+     *
+     * @param event The keyboard event
+     * @return true if the event was handled
+     */
+    bool onKeyboard(const KeyboardEvent &event) override
+    {
+        if (quitOnCommandQ(getApp(), event))
+            return true;
+
+        return UI::onKeyboard(event);
     }
 
     /**
