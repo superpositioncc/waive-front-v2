@@ -49,7 +49,7 @@ The footage is licensed under the Korea Open Government License, Type 1 or Type 
 <i>Click to open instructions</i>
 </summary>
 
-Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page. Choose which plugin format you prefer and place it in the plugins path of your DAW. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
+Download the build for your operating system from the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page. Choose which plugin format you prefer and place it in the plugins path of your DAW. On macOS there is also a standalone app. On Windows there is none: use the VST3 or VST in your DAW. On macOS, the simplest way to open these folders is by opening Finder and then pressing `cmd+shift+g`, and pasting the path from below.
 
 Common (system-wide) plugin paths:
 

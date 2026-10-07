@@ -132,7 +132,8 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory release | Out-Null
-          Compress-Archive -Path build/bin/WAIVE-FRONT-V2.exe -DestinationPath release/WAIVE-FRONT-V2.Windows.App.zip
+          # No standalone app: DPF leaves out its Windows audio fallback when built with MSVC,
+          # so the .exe only starts where JACK is installed. Windows users use the plugins.
           Compress-Archive -Path build/bin/WAIVE-FRONT-V2-vst2.dll -DestinationPath release/WAIVE-FRONT-V2.Windows.VST.zip
           Compress-Archive -Path build/bin/WAIVE-FRONT-V2.vst3 -DestinationPath release/WAIVE-FRONT-V2.Windows.VST3.zip
 
