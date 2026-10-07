@@ -77,9 +77,10 @@ public:
         // The default size is the minimum; the window can grow, keeping its aspect ratio
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
 
+        // From the base size: DPF already applies the Retina scale factor to it
         const double density = Util::Screen::densityFactor();
         if (density > 1.0)
-            setSize(getWidth() * density, getHeight() * density);
+            setSize(DISTRHO_UI_DEFAULT_WIDTH * density, DISTRHO_UI_DEFAULT_HEIGHT * density);
 
         openViewerWindow();
 
