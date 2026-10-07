@@ -34,6 +34,12 @@ Users/
 ```
 
 ⚠️ **Make sure these files are in the correct place, otherwise WAIVE-FRONT won't be able to find them. If you run into any problems, this is the first thing you should check.**
+
+#### Korean footage (optional)
+
+For the SeMA x Thunderboom Sound Lab, there is a second dataset with footage from Korean public institutions: 234 clips from 59 videos. Download it from [here](https://drive.google.com/file/d/19f7rZviR9VTdZKWZsR8PTnJcpBozCkAQ/view) and unzip it into the same `WAIVE` folder, next to `stichting_natuurbeelden`. It uses the categories of the main dataset, so install that first.
+
+The footage is licensed under the Korea Open Government License, Type 1 or Type 2. Type 2 allows non-commercial use only. `CREDITS.md` in the folder lists every video with its institution, licence and source.
 </details>
 
 ### 2. Install WAIVE-FRONT
