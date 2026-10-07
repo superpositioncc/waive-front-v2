@@ -109,18 +109,21 @@ Every push and pull request is built for macOS (universal) and Windows by `.gith
 
 Want to add new features or improve on existing ones? Squash some bugs? Pull requests are very welcome! Documentation for the code is available [here](https://superpositioncc.github.io/waive-front-v2/).
 
-## Shipping on MacOS
+## Releasing
 
-Building a fully functional and production-ready version on MacOS requires a paid Apple Developer plan.
+1. Push a tag, for example `git tag v2.2 && git push origin v2.2`.
+2. The workflow builds macOS and Windows, signs and notarises the macOS builds, and makes a draft release with one zip per format.
+3. Check the draft on the [releases](https://github.com/superpositioncc/waive-front-v2/releases) page and publish it.
 
-1. Copy `Icon.icns` from the `assets` folder into the App Bundle's `Contents/Resources` folder. Create the folder if it does not exist.
-2. Copy `Info.plist` from the `assets` folder into the App Bundle's `Contents` folder, overwriting the one that is already there.
-3. Obtain your Team ID and an app-specific password from the Apple Developer website. Create a Developer ID Application certificate and install on your system, using XCode.
-4. Run `security find-identity -p basic -v` and note the hash of the Developer ID Application certificate.
-5. Navigate to the folder that contains the app.
-6. Run `codesign --deep --force --options=runtime --entitlements <path_to_entitlements.plist> --sign <hash_of_certificate> --timestamp WAIVE-FRONT-V2.app` to sign the app bundle. Replace `entitlements.plist` can be found in the `assets` folder.
-7. Run `zip -r WAIVE-FRONT-V2.zip WAIVE-FRONT-V2.app` to create a zip archive.
-8. Run `xcrun notarytool submit WAIVE-FRONT-V2.zip --apple-id <your_apple_id_email_address> --password <your_app_specific_password> --team-id <your_team_id> --wait` to send the app to Apple for notarization.
-9. If all went well, `spctl -vvv --assess --type exec WAIVE-FRONT-V2.app` should return `accepted`.
-10. Your zip file is ready to ship.
+Signing and notarising on macOS need a paid Apple Developer account and five repository secrets (Settings, Secrets and variables, Actions):
+
+| Secret | What |
+| --- | --- |
+| `MACOS_CERTIFICATE` | The Developer ID Application certificate with its private key, exported from Keychain Access as `.p12`, then base64: `base64 -i certificate.p12` |
+| `MACOS_CERTIFICATE_PASSWORD` | The password set when exporting the `.p12` |
+| `APPLE_ID` | The Apple ID of the developer account |
+| `APPLE_APP_PASSWORD` | An app-specific password for that Apple ID, made at account.apple.com |
+| `APPLE_TEAM_ID` | The team ID, on developer.apple.com under Membership details |
+
+Without them the builds are made unsigned. To sign on your own Mac instead, run `scripts/package-macos.sh build/bin <output dir>` with `MACOS_SIGN_IDENTITY`, `APPLE_ID`, `APPLE_APP_PASSWORD` and `APPLE_TEAM_ID` set.
 </details>

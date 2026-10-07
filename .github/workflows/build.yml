@@ -2,6 +2,10 @@ name: Build
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 
@@ -64,14 +68,19 @@ jobs:
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          scripts/package-macos.sh build/bin WAIVE-FRONT-V2-macOS
-          # ditto keeps permissions and the stapled tickets; the artifact upload alone would not
-          ditto -c -k --sequesterRsrc --keepParent WAIVE-FRONT-V2-macOS WAIVE-FRONT-V2-macOS.zip
+          scripts/package-macos.sh build/bin package
+          # One zip per format, as in earlier releases. ditto keeps permissions and
+          # the stapled tickets; the artifact upload alone would not.
+          mkdir release
+          ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.app release/WAIVE-FRONT-V2.MacOS.App.zip
+          ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.component release/WAIVE-FRONT-V2.MacOS.AU.zip
+          ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.vst release/WAIVE-FRONT-V2.MacOS.VST.zip
+          ditto -c -k --sequesterRsrc --keepParent package/WAIVE-FRONT-V2.vst3 release/WAIVE-FRONT-V2.MacOS.VST3.zip
 
       - uses: actions/upload-artifact@v4
         with:
           name: WAIVE-FRONT-V2-macOS
-          path: WAIVE-FRONT-V2-macOS.zip
+          path: release
 
   windows:
     runs-on: windows-2022
@@ -119,7 +128,35 @@ jobs:
           }
           exit $status
 
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory release | Out-Null
+          Compress-Archive -Path build/bin/WAIVE-FRONT-V2.exe -DestinationPath release/WAIVE-FRONT-V2.Windows.App.zip
+          Compress-Archive -Path build/bin/WAIVE-FRONT-V2-vst2.dll -DestinationPath release/WAIVE-FRONT-V2.Windows.VST.zip
+          Compress-Archive -Path build/bin/WAIVE-FRONT-V2.vst3 -DestinationPath release/WAIVE-FRONT-V2.Windows.VST3.zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: WAIVE-FRONT-V2-Windows
-          path: build/bin
+          path: release
+
+  # Pushing a tag like v2.2 makes a draft release with all zips. Check it and publish it on GitHub.
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [macos, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release/*.zip --repo "$GITHUB_REPOSITORY" \
+            --draft --title "$GITHUB_REF_NAME" --generate-notes
