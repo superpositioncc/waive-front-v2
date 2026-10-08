@@ -74,12 +74,28 @@ public:
      *
      */
     WaiveFrontPluginUI()
+#ifdef DISTRHO_OS_WINDOWS
+        // No automatic scaling from DPF: see below
+        : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, false)
+#else
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
+#endif
     {
         std::srand(std::time(0));
 
-        // The default size is the minimum; the window can grow, keeping its aspect ratio
+        // The default size is the minimum; the window can grow, keeping its aspect ratio.
+#ifdef DISTRHO_OS_WINDOWS
+        // On Windows sizes are in pixels, so the size follows the display scaling. Set here in
+        // one go: when DPF scales automatically and that is switched off afterwards, its sizes
+        // stay at the unscaled ones until the next resize. On a scaled display the UI is then
+        // drawn small and cut off, and the mouse misses, until the window is resized.
+        const double scale = getScaleFactor();
+        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH * scale, DISTRHO_UI_DEFAULT_HEIGHT * scale, true);
+        if (scale > 1.0)
+            setSize(DISTRHO_UI_DEFAULT_WIDTH * scale, DISTRHO_UI_DEFAULT_HEIGHT * scale);
+#else
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
+#endif
 
         isAudioUnit = std::strcmp(getPluginFormatName(), "AudioUnit") == 0;
 
@@ -594,7 +610,9 @@ protected:
 
         ImGui::PushFont(regular);
 
-        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+        // No scrollbar: the window keeps its aspect ratio and everything scales with it, so the
+        // column always fits; rounding could still show an empty bar. The mouse wheel still scrolls.
+        ImGui::Begin("WAIVE-FRONT V2", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
 
         ImGui::Text("Blur Size");
         ImGui::SetNextItemWidth(width / 4);
