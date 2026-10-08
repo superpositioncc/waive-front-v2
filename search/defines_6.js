@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['screen_5fcpp_0',['SCREEN_CPP',['../Screen_8cpp.html#a456961c9ae4d1144e68b2eae4d9c11e5',1,'Screen.cpp']]],
-  ['shortcuts_5fcpp_1',['SHORTCUTS_CPP',['../Shortcuts_8cpp.html#a6bd0c91db13cb754163242689646dacc',1,'Shortcuts.cpp']]]
+  ['red_0',['RED',['../Logger_8cpp.html#a8d23feea868a983c8c2b661e1e16972f',1,'Logger.cpp']]],
+  ['reset_1',['RESET',['../Logger_8cpp.html#ab702106cf3b3e96750b6845ded4e0299',1,'Logger.cpp']]]
 ];

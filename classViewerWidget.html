@@ -129,6 +129,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ad1b7afe216164a010068c3f9a20ca549"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#ad1b7afe216164a010068c3f9a20ca549">onKeyboard</a> (const KeyboardEvent &amp;event) override</td></tr>
 <tr class="memdesc:ad1b7afe216164a010068c3f9a20ca549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a key press.  <br /></td></tr>
 <tr class="separator:ad1b7afe216164a010068c3f9a20ca549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa298006928c90f754d6c2ac14377b401"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#aa298006928c90f754d6c2ac14377b401">onMouse</a> (const MouseEvent &amp;event) override</td></tr>
+<tr class="memdesc:aa298006928c90f754d6c2ac14377b401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch fullscreen on and off with a double-click.  <br /></td></tr>
+<tr class="separator:aa298006928c90f754d6c2ac14377b401"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a11a758f6ce4be1c1585fdd5efbde73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#a2a11a758f6ce4be1c1585fdd5efbde73">onDisplay</a> () override</td></tr>
 <tr class="memdesc:a2a11a758f6ce4be1c1585fdd5efbde73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display the widget.  <br /></td></tr>
 <tr class="separator:a2a11a758f6ce4be1c1585fdd5efbde73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +153,10 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a01aa9c92309f16ca1d927f77e00d088a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Fullscreen.html">Util::Fullscreen</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#a01aa9c92309f16ca1d927f77e00d088a">fullscreen</a></td></tr>
+<tr class="separator:a01aa9c92309f16ca1d927f77e00d088a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8516c5f0d4663fd198c334433cf9c1e0"><td class="memItemLeft" align="right" valign="top">std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#a8516c5f0d4663fd198c334433cf9c1e0">lastClick</a></td></tr>
+<tr class="separator:a8516c5f0d4663fd198c334433cf9c1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8faefca71e146b859ebd339124a816d8"><td class="memItemLeft" align="right" valign="top">float(&amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#a8faefca71e146b859ebd339124a816d8">parameters</a> )[Parameters::NumParameters]</td></tr>
 <tr class="separator:a8faefca71e146b859ebd339124a816d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ca96f7fb05250831293e8430b1d0478"><td class="memItemLeft" align="right" valign="top">std::vector&lt; bool &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewerWidget.html#a6ca96f7fb05250831293e8430b1d0478">layersEnabled</a></td></tr>
@@ -369,6 +376,41 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="aa298006928c90f754d6c2ac14377b401" name="aa298006928c90f754d6c2ac14377b401"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa298006928c90f754d6c2ac14377b401">&#9670;&#160;</a></span>onMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ViewerWidget::onMouse </td>
+          <td>(</td>
+          <td class="paramtype">const MouseEvent &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Switch fullscreen on and off with a double-click. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The mouse event </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the event was a double-click </dd></dl>
+
+</div>
+</div>
 <a id="a05285f48909a622c057edc0387a4d9b2" name="a05285f48909a622c057edc0387a4d9b2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05285f48909a622c057edc0387a4d9b2">&#9670;&#160;</a></span>setFrame()</h2>
 
@@ -513,6 +555,29 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="a01aa9c92309f16ca1d927f77e00d088a" name="a01aa9c92309f16ca1d927f77e00d088a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01aa9c92309f16ca1d927f77e00d088a">&#9670;&#160;</a></span>fullscreen</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1Fullscreen.html">Util::Fullscreen</a> ViewerWidget::fullscreen</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Fullscreen for the viewer's window </p>
+
+</div>
+</div>
 <a id="aa85553e19fcdd5035113bdec9d662a25" name="aa85553e19fcdd5035113bdec9d662a25"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa85553e19fcdd5035113bdec9d662a25">&#9670;&#160;</a></span>initialized</h2>
 
@@ -533,6 +598,29 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>Whether the widget has been initialized </p>
+
+</div>
+</div>
+<a id="a8516c5f0d4663fd198c334433cf9c1e0" name="a8516c5f0d4663fd198c334433cf9c1e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8516c5f0d4663fd198c334433cf9c1e0">&#9670;&#160;</a></span>lastClick</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::steady_clock::time_point ViewerWidget::lastClick</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>When the mouse was last pressed, for double-clicks </p>
 
 </div>
 </div>

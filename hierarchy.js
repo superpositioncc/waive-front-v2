@@ -6,6 +6,7 @@ var hierarchy =
     [ "DataSources", "classDataSources.html", null ],
     [ "DataTag", "classDataTag.html", null ],
     [ "FrameData", "structFrameData.html", null ],
+    [ "Util::Fullscreen", "classUtil_1_1Fullscreen.html", null ],
     [ "OSCMessage", "structOSCMessage.html", null ],
     [ "OSCServer", "classOSCServer.html", null ],
     [ "Plugin", null, [

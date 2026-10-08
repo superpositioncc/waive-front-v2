@@ -11,7 +11,8 @@ var annotated_dup =
     [ "Util", "namespaceUtil.html", [
       [ "Screen", "namespaceUtil_1_1Screen.html", [
         [ "ViewMetrics", "structUtil_1_1Screen_1_1ViewMetrics.html", "structUtil_1_1Screen_1_1ViewMetrics" ]
-      ] ]
+      ] ],
+      [ "Fullscreen", "classUtil_1_1Fullscreen.html", "classUtil_1_1Fullscreen" ]
     ] ],
     [ "DataCategory", "classDataCategory.html", "classDataCategory" ],
     [ "DataItem", "classDataItem.html", "classDataItem" ],

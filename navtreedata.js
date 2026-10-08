@@ -61,7 +61,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CinderTheme_8cpp.html",
-"classShader_1_1ShaderUniform.html#abcaa2826a5047afefc6f62ecbd724034"
+"classShader_1_1ShaderUniform.html#a82336dd9a8fff9f3445deac097c1e062",
+"structVideoFrameDescription.html#a52bc858d6bbc5ead0a1744aea58b838e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
