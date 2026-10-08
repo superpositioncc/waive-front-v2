@@ -74,18 +74,28 @@ public:
      *
      */
     WaiveFrontPluginUI()
+#ifdef DISTRHO_OS_WINDOWS
+        // No automatic scaling from DPF: see below
+        : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, false)
+#else
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true)
+#endif
     {
         std::srand(std::time(0));
 
         // The default size is the minimum; the window can grow, keeping its aspect ratio.
-        // On Windows sizes are in pixels, so the minimum follows the display scaling.
 #ifdef DISTRHO_OS_WINDOWS
-        const double minimumScale = getScaleFactor();
+        // On Windows sizes are in pixels, so the size follows the display scaling. Set here in
+        // one go: when DPF scales automatically and that is switched off afterwards, its sizes
+        // stay at the unscaled ones until the next resize. On a scaled display the UI is then
+        // drawn small and cut off, and the mouse misses, until the window is resized.
+        const double scale = getScaleFactor();
+        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH * scale, DISTRHO_UI_DEFAULT_HEIGHT * scale, true);
+        if (scale > 1.0)
+            setSize(DISTRHO_UI_DEFAULT_WIDTH * scale, DISTRHO_UI_DEFAULT_HEIGHT * scale);
 #else
-        const double minimumScale = 1.0;
+        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
 #endif
-        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH * minimumScale, DISTRHO_UI_DEFAULT_HEIGHT * minimumScale, true);
 
         isAudioUnit = std::strcmp(getPluginFormatName(), "AudioUnit") == 0;
 
