@@ -483,7 +483,7 @@ protected:
         {
             pRandomizeCategory[1] = parameters[RandomizeCategory2];
 
-            randomizeCategory(0);
+            randomizeCategory(1);
         }
         else if (!parameters[RandomizeCategory2])
         {
@@ -494,7 +494,7 @@ protected:
         {
             pRandomizeCategory[2] = parameters[RandomizeCategory3];
 
-            randomizeCategory(0);
+            randomizeCategory(2);
         }
         else if (!parameters[RandomizeCategory3])
         {
@@ -516,7 +516,7 @@ protected:
         {
             pRandomizeItem[1] = parameters[RandomizeItem2];
 
-            randomizeItem(0);
+            randomizeItem(1);
         }
         else if (!parameters[RandomizeItem2])
         {
@@ -527,7 +527,7 @@ protected:
         {
             pRandomizeItem[2] = parameters[RandomizeItem3];
 
-            randomizeItem(0);
+            randomizeItem(2);
         }
         else if (!parameters[RandomizeItem3])
         {
