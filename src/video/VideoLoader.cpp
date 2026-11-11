@@ -61,6 +61,9 @@ private:
 	 */
 	int convertToRGB(AVFrame *frame, AVFrame **rgb_frame)
 	{
+		// Free the previous frame first: one per video frame would add up to gigabytes a day
+		av_frame_free(rgb_frame);
+
 		// Allocate an AVFrame structure
 		*rgb_frame = av_frame_alloc();
 		if (*rgb_frame == NULL)
