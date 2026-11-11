@@ -49,6 +49,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "util/Shortcuts.cpp"
 #include <vector>
 #include "osc/OSCServer.cpp"
+#include "autopilot/Autopilot.cpp"
 
 using namespace Util::Logger;
 
@@ -143,6 +144,10 @@ public:
             randomizeCategory(i);
 
         oscServer = new OSCServer(8000, &dataSources);
+
+        // The standalone app remembers the autopilot, so an exhibition computer can start straight into it
+        if (getApp().isStandalone() && autopilot.load())
+            autopilot.start(nowSeconds());
     }
 
 protected:
@@ -311,6 +316,14 @@ protected:
      */
     void parameterChanged(uint32_t index, float value) override
     {
+        // A change from the host, such as automation, holds what it changed while the autopilot
+        // runs. Only a real change: hosts also send the current values, for example when the UI opens.
+        if (hostValueKnown[index] && value != hostValues[index])
+            holdForParameter(index);
+
+        hostValues[index] = value;
+        hostValueKnown[index] = true;
+
         parameters[index] = value;
 
         repaint();
@@ -552,6 +565,8 @@ protected:
 
             if (layer != -1)
             {
+                autopilot.holdLayer(layer, nowSeconds());
+
                 if (lastMessages[layer] != message.rawCategories)
                 {
                     lastMessages[layer] = message.rawCategories;
@@ -565,6 +580,9 @@ protected:
                 }
             }
         }
+
+        if (autopilot.isOn())
+            runAutopilot();
 
         int64_t currentTime = getCurrentTime();
 
@@ -618,21 +636,25 @@ protected:
         ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Blur Size", &parameters[BlurSize], 0.0f, 1.0f))
             setParameterValue(BlurSize, parameters[BlurSize]);
+        holdWhileActive(Autopilot::AP_Blur);
 
         ImGui::Text("Focus Distance");
         ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Focus Distance", &parameters[FocusDistance], 0.0f, 1.0f))
             setParameterValue(FocusDistance, parameters[FocusDistance]);
+        holdWhileActive(Autopilot::AP_Focus);
 
         ImGui::Text("Space");
         ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Space", &parameters[Space], 0.0f, 0.2f))
             setParameterValue(Space, parameters[Space]);
+        holdWhileActive(Autopilot::AP_Space);
 
         ImGui::Text("Zoom");
         ImGui::SetNextItemWidth(width / 4);
         if (ImGui::SliderFloat("Zoom", &parameters[Zoom], 0.0f, 1.0f))
             setParameterValue(Zoom, parameters[Zoom]);
+        holdWhileActive(Autopilot::AP_Zoom);
 
         ImGui::Text("Background Color");
         ImGui::SetNextItemWidth(width / 4);
@@ -647,8 +669,27 @@ protected:
             parameters[BackgroundSaturation] = hsv[1];
             parameters[BackgroundValue] = hsv[2];
         }
+        holdWhileActive(Autopilot::AP_Background);
 
         ImGui::Toggle((std::string("OSC is ") + std::string(allowOSC ? "enabled" : "disabled")).c_str(), &allowOSC);
+
+        bool autopilotOn = autopilot.isOn();
+        if (ImGui::Toggle((std::string("Autopilot is ") + std::string(autopilotOn ? "on" : "off")).c_str(), &autopilotOn))
+            setAutopilot(autopilotOn);
+
+        if (autopilot.isOn())
+        {
+            ImGui::SetNextItemWidth(width / 4);
+            ImGui::SliderFloat("##Autopilot Speed", &autopilot.speed, 0.1f, 4.0f, "Speed %.2f");
+            if (ImGui::IsItemDeactivatedAfterEdit())
+                saveAutopilot();
+
+            ImGui::SetNextItemWidth(width / 4);
+            ImGui::SliderFloat("##Autopilot Chaos", &autopilot.chaos, 0.0f, 1.0f, "Chaos %.2f");
+            if (ImGui::IsItemDeactivatedAfterEdit())
+                saveAutopilot();
+        }
+
         ImGui::End();
 
         for (int i = 0; i < 3; i++)
@@ -663,6 +704,7 @@ protected:
 
             if (ImGui::Button(buttonLabel.c_str()))
             {
+                autopilot.holdLayer(i, nowSeconds());
                 layersEnabled[i] = !layersEnabled[i];
 
                 if (i == 0)
@@ -738,6 +780,7 @@ protected:
                     {
                         if (ImGui::Selectable(category->presentationName.c_str()))
                         {
+                            autopilot.holdLayer(i, nowSeconds());
                             selectCategory(i, category);
                         }
                     }
@@ -747,6 +790,7 @@ protected:
 
                 if (ImGui::Button(("Select Random Category " + std::to_string(i + 1)).c_str()))
                 {
+                    autopilot.holdLayer(i, nowSeconds());
                     randomizeCategory(i);
                 }
 
@@ -759,6 +803,7 @@ protected:
                         {
                             if (ImGui::Selectable(item->title.c_str()))
                             {
+                                autopilot.holdLayer(i, nowSeconds());
                                 selectItem(i, item);
                             }
                         }
@@ -769,6 +814,7 @@ protected:
 
                 if (ImGui::Button(("Select Random Item " + std::to_string(i + 1)).c_str()))
                 {
+                    autopilot.holdLayer(i, nowSeconds());
                     randomizeItem(i);
                 }
 
@@ -828,6 +874,10 @@ private:
     std::vector<int> layerNotes;           /**< Which note each layer should respond to */
     std::vector<std::string> lastMessages; /**< The last messages received */
 
+    Autopilot autopilot;                                 /**< Keeps the visualisation changing by itself */
+    float hostValues[Parameters::NumParameters];         /**< The values the host sent last */
+    bool hostValueKnown[Parameters::NumParameters] = {}; /**< Whether the host sent a value yet */
+
     /**
      * @brief Get the current time
      *
@@ -836,6 +886,149 @@ private:
     int64_t getCurrentTime()
     {
         return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    }
+
+    /**
+     * @brief Get the current time in seconds
+     */
+    double nowSeconds()
+    {
+        return getCurrentTime() / 1e6;
+    }
+
+    /**
+     * @brief Switch the autopilot on or off
+     *
+     * Off leaves the picture as it is and tells the host where everything ended up, so the host
+     * and the UI agree again. From then on everything works as without the autopilot.
+     *
+     * @param on Whether to switch it on
+     */
+    void setAutopilot(bool on)
+    {
+        if (on)
+        {
+            autopilot.start(nowSeconds());
+        }
+        else
+        {
+            autopilot.stop();
+
+            for (uint32_t index = BlurSize; index <= EnableLayer3; index++)
+            {
+                setParameterValue(index, parameters[index]);
+                hostValues[index] = parameters[index];
+                hostValueKnown[index] = true;
+            }
+        }
+
+        saveAutopilot();
+    }
+
+    /**
+     * @brief Save the autopilot settings; only the standalone app remembers them
+     */
+    void saveAutopilot()
+    {
+        if (getApp().isStandalone())
+            autopilot.save();
+    }
+
+    /**
+     * @brief Hold the visual parameter or layer that a parameter belongs to
+     *
+     * @param index The index of the parameter
+     */
+    void holdForParameter(uint32_t index)
+    {
+        const int group = Autopilot::groupOf(index);
+        if (group != -1)
+            autopilot.holdGroup(group, nowSeconds());
+
+        const int layer = Autopilot::layerOf(index);
+        if (layer != -1)
+            autopilot.holdLayer(layer, nowSeconds());
+    }
+
+    /**
+     * @brief Hold a visual parameter while its control, the last ImGui item, is in use
+     *
+     * @param group The autopilot group of the parameter
+     */
+    void holdWhileActive(int group)
+    {
+        if (ImGui::IsItemActive())
+            autopilot.holdGroup(group, nowSeconds());
+    }
+
+    /**
+     * @brief One frame of the autopilot: drive the visual parameters and change the content
+     */
+    void runAutopilot()
+    {
+        const Autopilot::Moves moves = autopilot.update(nowSeconds(), parameters, layersEnabled);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (moves.newCategory[i])
+                autopilotCategory(i);
+            else if (moves.newItem[i])
+                autopilotItem(i);
+        }
+
+        if (moves.toggleLayer != -1)
+        {
+            const int i = moves.toggleLayer;
+            layersEnabled[i] = moves.toggleOn;
+            parameters[EnableLayer1 + i] = moves.toggleOn ? 1.0f : 0.0f;
+
+            // A layer comes back with something new
+            if (moves.toggleOn)
+                autopilotCategory(i);
+        }
+    }
+
+    /**
+     * @brief Play the next category from the autopilot's deck on a layer
+     *
+     * @param i The index of the layer
+     */
+    void autopilotCategory(int i)
+    {
+        const int count = dataSources.categories.size();
+
+        for (int tries = 0; tries < count; tries++)
+        {
+            const int index = autopilot.drawCategory(count);
+            if (index < 0)
+                return;
+
+            DataCategory *category = dataSources.categories[index];
+            if (!category->items.empty())
+            {
+                selectCategory(i, category);
+                return;
+            }
+        }
+    }
+
+    /**
+     * @brief Play another item from the layer's category
+     *
+     * @param i The index of the layer
+     */
+    void autopilotItem(int i)
+    {
+        DataCategory *category = selectedCategories[i];
+        if (category == nullptr || category->items.empty())
+            return;
+
+        const int count = category->items.size();
+        int index = std::rand() % count;
+        if (count > 1 && category->items[index] == selectedItems[i])
+            index = (index + 1 + std::rand() % (count - 1)) % count;
+
+        selectItem(i, category->items[index]);
     }
 
     /**
