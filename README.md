@@ -76,6 +76,14 @@ To show the visuals fullscreen, for instance on a projector: drag the Viewer win
 If you use both [WAIVE](https://github.com/ThunderboomRecords/WAIVE) and WAIVE-FRONT at the same time on the same computer, they should communicate out of the box if your project is playing in your DAW.
 
 WAIVE-FRONT needs UDP port 8000 to be available, because it will listen for OSC messages there. This way, WAIVE, or any other software that sends OSC, can control the visuals.
+
+### Autopilot
+
+Switch on **Autopilot** at the bottom of the left column and WAIVE-FRONT VJs by itself. It uses all footage in `Documents/WAIVE`. It changes the category and item of each layer, switches layers on and off, and keeps Blur Size, Focus Distance, Space, Zoom and the background colour moving. Every category comes up once before any category comes up again. **Speed** sets how fast things change; **Chaos** sets how far the sliders swing.
+
+You can still play along. Move a slider, pick a category or item, or switch a layer, and the autopilot leaves that slider or layer alone for 8 seconds. Then it takes over again, gliding back in 2 seconds. Host automation does the same for the parameter it changes. An OSC message does the same for the layer it plays on, so as long as WAIVE keeps playing a layer, the autopilot leaves that layer to WAIVE. Switch the autopilot off and everything stays where it is.
+
+The standalone app remembers the autopilot, Speed and Chaos between launches. On macOS they are in `~/Library/Application Support/WAIVE-FRONT V2/autopilot.txt`. A computer in an exhibition can start straight into the autopilot: switch it on once, and add the app to the login items. In a DAW the autopilot always starts switched off.
 </details>
 
 &nbsp;

@@ -61,6 +61,9 @@ private:
 	 */
 	int convertToRGB(AVFrame *frame, AVFrame **rgb_frame)
 	{
+		// Free the previous frame first: one per video frame would add up to gigabytes a day
+		av_frame_free(rgb_frame);
+
 		// Allocate an AVFrame structure
 		*rgb_frame = av_frame_alloc();
 		if (*rgb_frame == NULL)
@@ -118,27 +121,28 @@ private:
 		return 0;
 	}
 
-	AVFormatContext *format;			/**< Format context */
-	AVCodecParameters *codecParameters; /**< Codec parameters */
-	const AVCodec *codec;				/**< Codec */
-	AVCodecContext *context;			/**< Codec context */
-	AVCodecParserContext *parser;		/**< Parser context */
-	AVPacket *packet;					/**< Packet */
-	AVFrame *frame;						/**< Frame */
-	AVFrame *rgb_frame;					/**< RGB frame */
-	uint8_t *data;						/**< Data */
-	int videoStreamIndex;				/**< Video stream index */
-	int status;							/**< Status */
+	// Null until allocated: a second load frees them, also when the first video never showed a frame
+	AVFormatContext *format = nullptr;			  /**< Format context */
+	AVCodecParameters *codecParameters = nullptr; /**< Codec parameters */
+	const AVCodec *codec = nullptr;				  /**< Codec */
+	AVCodecContext *context = nullptr;			  /**< Codec context */
+	AVCodecParserContext *parser = nullptr;		  /**< Parser context */
+	AVPacket *packet = nullptr;					  /**< Packet */
+	AVFrame *frame = nullptr;					  /**< Frame */
+	AVFrame *rgb_frame = nullptr;				  /**< RGB frame */
+	uint8_t *data = nullptr;					  /**< Data */
+	int videoStreamIndex = -1;					  /**< Video stream index */
+	int status = 0;								  /**< Status: 1 when a video is loaded */
 
 	int64_t lastFrameTime = 0; /**< Last frame time */
 	int64_t frameDuration = 0; /**< Frame duration */
 
 	// For the palettegen filter
-	AVFilterGraph *filterGraph;							   /**< Filter graph for the palettegen filter */
-	AVFilterContext *bufferSrcContext, *bufferSinkContext; /**< Buffer source and sink contexts */
-	const AVFilter *bufferSrc, *bufferSink;				   /**< Buffer source and sink */
-	AVFrame *paletteFrame;								   /**< Palette frame */
-	AVFilterInOut *outputs, *inputs;					   /**< Filter in/out */
+	AVFilterGraph *filterGraph = nullptr;										 /**< Filter graph for the palettegen filter */
+	AVFilterContext *bufferSrcContext = nullptr, *bufferSinkContext = nullptr; /**< Buffer source and sink contexts */
+	const AVFilter *bufferSrc = nullptr, *bufferSink = nullptr;				 /**< Buffer source and sink */
+	AVFrame *paletteFrame = nullptr;											 /**< Palette frame */
+	AVFilterInOut *outputs = nullptr, *inputs = nullptr;						 /**< Filter in/out */
 
 public:
 	/**
@@ -167,6 +171,9 @@ public:
 	 */
 	void rewind()
 	{
+		if (status != 1)
+			return;
+
 		avcodec_flush_buffers(context);
 		av_seek_frame(format, videoStreamIndex, 0, AVSEEK_FLAG_BACKWARD);
 
@@ -540,7 +547,11 @@ public:
 	 */
 	void getReadyForNextLoad()
 	{
+		// Nothing to show until the next video has loaded; it may fail
+		status = 0;
+
 		av_parser_close(parser);
+		parser = nullptr;
 		avcodec_free_context(&context);
 		av_frame_free(&frame);
 		av_packet_free(&packet);

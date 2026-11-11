@@ -269,6 +269,7 @@ private:
 		float *background = Util::Color::HSVtoRGB(parameters[Parameters::BackgroundHue], parameters[Parameters::BackgroundSaturation], parameters[Parameters::BackgroundValue]);
 
 		glClearColor(background[0], background[1], background[2], 1.0f);
+		delete[] background;
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
